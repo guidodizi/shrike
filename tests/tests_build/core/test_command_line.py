@@ -163,3 +163,12 @@ def test_normalize_path(path, dir, expected):
     rv = CommandForExecution().normalize_path(path, dir)
 
     assert expected == rv
+
+
+def test_workspace_not_configured(caplog):
+    with caplog.at_level("ERROR"):
+        CommandForExecution().attach_workspace()
+    assert (
+        "Workspace is not configured. Please update in your PATH/TO/CONFIGURATION_FILE using `--configuration-file PATH/TO/CONFIGURATION_FILE`."
+        in caplog.text
+    )

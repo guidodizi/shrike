@@ -2,6 +2,7 @@
 # Licensed under the MIT license.
 
 from shrike.build.core.configuration import load_configuration_from_args_and_env
+import pytest
 
 
 def test_load_configuration_from_args_and_env_respects_args():
@@ -79,24 +80,29 @@ def test_load_configuration_from_args_and_env_deprecation(caplog, tmp_path):
     args3 = ["--allow-duplicate-versions", "--configuration-file", str(config_path)]
     args4 = ["--configuration-file", str(config_path)]
 
-    with caplog.at_level("INFO"):
+    with pytest.warns(UserWarning) as record:
         config1 = load_configuration_from_args_and_env(args1, {})
 
     assert config1.fail_if_version_exists == False
-    assert "We recommend against" in caplog.text
-    assert "Please refer to" in caplog.text
+    warning_message = [str(i.message) for i in record]
+    assert (
+        "We recommend against using the parameter allow_duplicate_versions. Please specify fail_if_version_exists instead."
+        in warning_message
+    )
 
-    config2 = load_configuration_from_args_and_env(args2, {})
-    assert config2.fail_if_version_exists
+    with pytest.raises(ValueError):
+        config2 = load_configuration_from_args_and_env(args2, {})
+        assert config2.fail_if_version_exists
 
-    config3 = load_configuration_from_args_and_env(args3, {})
-    assert config3.fail_if_version_exists
+    with pytest.raises(ValueError):
+        config3 = load_configuration_from_args_and_env(args3, {})
+        assert config3.fail_if_version_exists
 
     config4 = load_configuration_from_args_and_env(args4, {})
     assert config4.fail_if_version_exists
 
 
-def test_configuration_path_does_not_exist(caplog, tmp_path):
+def test_configuration_path_does_not_exist(capsys, tmp_path):
     config_path = tmp_path / "file_does_not_exist.yaml"
     args = [
         "--configuration-file",
@@ -104,8 +110,9 @@ def test_configuration_path_does_not_exist(caplog, tmp_path):
         "--component-specification-glob",
         "*.yaml",
     ]
-    with caplog.at_level("ERROR"):
-        config = load_configuration_from_args_and_env(args, {})
+    config = load_configuration_from_args_and_env(args, {})
+    captured = capsys.readouterr()
 
+    assert config.component_specification_glob == "*.yaml"
     assert config.configuration_file == str(config_path)
-    assert "Workspace is not configured." in caplog.text
+    assert "ERROR: the configuration file path provided" in captured.out

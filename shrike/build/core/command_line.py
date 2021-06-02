@@ -47,8 +47,15 @@ class Command(ABC):
         Run `az ml folder attach` to the configured workspace ID. Default to the
         first configured workspace if none is provided.
         """
+        working_direcotry = self.config.working_directory
         if workspace_id is None:
-            workspace_id = self.config.workspaces[0]
+            try:
+                workspace_id = self.config.workspaces[0]
+            except IndexError:
+                self.register_error(
+                    f"No workspaces are configured. Please include them in your configuration file and ensure the path to your configuration file is correct relative to the working directory {working_direcotry} using `--configuration-file PATH/TO/CONFIGURATION_FILE`."
+                )
+                return
 
         (subscription_id, resource_group, workspace) = self.parse_workspace_arm_id(
             workspace_id

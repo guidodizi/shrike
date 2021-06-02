@@ -7,6 +7,7 @@ import os
 from omegaconf.omegaconf import OmegaConf
 import sys
 from typing import Any, Dict, List
+import warnings
 
 
 log = logging.getLogger(__name__)
@@ -89,29 +90,37 @@ def load_configuration_from_args_and_env(
     """
 
     default_config = Configuration()
-
     cli_config = load_configuration_from_args(args)
+    working_directory = (
+        cli_config.get("working_directory") or default_config.working_directory
+    )
 
     cli_config_path = cli_config.get("configuration_file")
-    if cli_config_path is not None and os.path.isfile(cli_config_path):
-        log.info("Loading user provided configuration file")
-        file_config = OmegaConf.load(cli_config_path)
+    file_config = None
+    if cli_config_path is not None:
+        try:
+            print("Loading user provided configuration file")
+            file_config = OmegaConf.load(cli_config_path)
+        except FileNotFoundError:
+            print(
+                f"***ERROR: the configuration file path provided {cli_config_path} does not exist in your working directory {working_directory}, so both preparation and registration will fail."
+            )
     elif os.path.isfile(default_config.configuration_file):
-        log.info(
-            "Configuration file does not exist. Loading default configuration file aml-build-configuration.yml."
+        print(
+            "Configuration file does not exist. Loading default configuration file aml-build-configuration.yml.",
         )
         file_config = OmegaConf.load(default_config.configuration_file)
     else:
-        log.info(
-            "User provided/default configuration file does not exist. Using default configuration."
+        warnings.warn(
+            "User provided/default configuration file does not exist. Using default configuration.",
+            UserWarning,
         )
-        file_config = None
 
     if file_config is None:
-        log.info("Configuration file is empty. Using default configuration.")
+        print("Configuration file is empty. Using default configuration.")
         cli_and_file_config = cli_config
     else:
-        log.info("Overriding default configuration by configuration file.")
+        print("Overriding default configuration by configuration file.")
         cli_and_file_config = OmegaConf.merge(file_config, cli_config)
 
     if cli_and_file_config.get("workspaces") is None:  # type: ignore
@@ -128,14 +137,15 @@ def load_configuration_from_args_and_env(
                     )
                 }
             )
-            log.warning(
-                "We recommend against using the parameter allow_duplicate_versions. Please specify fail_if_version_exists instead."
+            warnings.warn(
+                "We recommend against using the parameter allow_duplicate_versions. Please specify fail_if_version_exists instead.",
+                UserWarning,
             )
         else:
-            log.error(
-                "Please don't specify both allow_duplicate_versions and fail_if_version_exists."
+            raise ValueError(
+                "Please don't specify both allow_duplicate_versions and fail_if_version_exists. Check out https://aka.ms/aml/amlbuild for more information."
             )
-        log.info("Please refer to https://aka.ms/aml/amlbuild for more information.")
+        print("Please refer to https://aka.ms/aml/amlbuild for more information.")
 
     config = OmegaConf.merge(default_config, cli_and_file_config)
     config = Configuration(**config)  # type: ignore
@@ -144,7 +154,7 @@ def load_configuration_from_args_and_env(
     if "BUILD_SOURCEBRANCH" in env.keys():
         config = replace(config, source_branch=env["BUILD_SOURCEBRANCH"])
     else:
-        log.warning("BUILD_SOURCEBRANCH is not in the environment variable list.")
+        warnings.warn("BUILD_SOURCEBRANCH is not in the environment variable list.")
 
     # Load the environment variable of build number into config, if user_build_number=True
     if config.use_build_number:
@@ -155,6 +165,8 @@ def load_configuration_from_args_and_env(
                 )
             config = replace(config, all_component_version=env["BUILD_BUILDNUMBER"])
         else:
-            log.error("BUILD_BUILDNUMBER is not in the environment variable list.")
+            raise ValueError(
+                "BUILD_BUILDNUMBER is not in the environment variable list."
+            )
 
     return config
