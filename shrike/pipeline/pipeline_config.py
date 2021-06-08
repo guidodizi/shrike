@@ -68,10 +68,11 @@ class pipeline_compute_config:  # pylint: disable=invalid-name
     hdi_conf: Optional[Any] = MISSING
 
     parallel_node_count: int = 10
-    parallel_process_count_per_node: int = 1
+    parallel_process_count_per_node: Optional[int] = MISSING
     parallel_run_invocation_timeout: int = 10800
     parallel_run_max_try: int = 3
     parallel_mini_batch_size: int = 1
+    parallel_error_threshold: int = -1
 
     datatransfer_target: Optional[str] = MISSING
 

@@ -417,6 +417,7 @@ class AMLPipelineHelper:
         mini_batch_size=None,
         run_invocation_timeout=None,
         run_max_try=None,
+        error_threshold=None,
         input_mode=None,
         output_mode=None,
         **custom_runtime_arguments,
@@ -434,6 +435,10 @@ class AMLPipelineHelper:
             mini_batch_size (int): force mini_batch_size over hydra conf
             run_invocation_timeout (int): force run_invocation_timeout over hydra conf
             run_max_try (int): force run_max_try over hydra conf
+            error_threshold (int): The number of file failures for the input FileDataset that should be ignored during processing.
+                If the error count goes above this value, then the job will be aborted.
+                Error threshold is for the entire input and not for individual mini-batches sent to run() method.
+                The range is [-1, int.max]. -1 indicates ignoring all failures during processing.
             input_mode (str): force input_mode over hydra conf
             output_mode (str): force output_mode over hydra conf
             custom_runtime_arguments (dict): any additional custom args
@@ -481,7 +486,11 @@ class AMLPipelineHelper:
             else self.config.compute.parallel_node_count,
             process_count_per_node=process_count_per_node
             if process_count_per_node is not None
-            else self.config.compute.parallel_process_count_per_node,
+            else (
+                self.config.compute.parallel_process_count_per_node
+                if "parallel_process_count_per_node" in self.config.compute
+                else None
+            ),
             mini_batch_size=str(
                 mini_batch_size
                 if mini_batch_size is not None
@@ -493,6 +502,9 @@ class AMLPipelineHelper:
             run_max_try=run_max_try
             if run_max_try is not None
             else self.config.compute.parallel_run_max_try,
+            error_threshold=error_threshold
+            if error_threshold is not None
+            else self.config.compute.parallel_error_threshold,
             **custom_runtime_arguments,
         )
 

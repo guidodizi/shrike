@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://componentsdk.blob.core.windows.net/jsonschema/ParallelComponent.json
+$schema: http://azureml/sdk-1-5/ParallelComponent.json
+name: prscomponentlinux
+version: 0.0.1
+display_name: PRSComponentLinux
+
+type: ParallelComponent
+
+is_deterministic: True
+
+tags:
+  Office:
+  contact: aml-ds@microsoft.com
+
+inputs:
+  input_dir:
+    type: path
+    description: the path for input data directory
+  
+outputs:
+  output_dir:
+    type: path
+    description: the path for the output data directory
+
+environment:
+  docker:
+    enabled: true
+    image: polymerprod.azurecr.io/polymercd/prod_official/azureml_base_gpu_openmpi312cuda101cudnn7_mcr:latest # for eyes-off experiments
+    #image: mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04 # for eyes-on experiments
+  conda:
+    userManagedDependencies: false
+    conda_dependencies_file: module_env.yaml
+  os: Linux
+
+parallel:
+  input_data: inputs.input_dir
+  output_data: outputs.output_dir
+  entry: run.py
+  args: >-
+    --output_dir {outputs.output_dir}

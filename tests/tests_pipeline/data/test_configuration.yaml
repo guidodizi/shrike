@@ -1,0 +1,87 @@
+aml:
+  subscription_id: 48bbc269-ce89-4f6f-9a12-c6f91fcb772d
+  resource_group: aml1p-rg
+  workspace_name: aml1p-ml-eus2
+  tenant: 72f988bf-86f1-41af-91ab-2d7cd011db47
+  auth: interactive
+  force: false
+
+run:
+  regenerate_outputs: false
+  continue_on_failure: false
+  disable_telemetry: false
+  verbose: false
+  submit: true
+  resume: false
+  canary: false
+  export: null
+  silent: false
+  wait: false
+  experiment_name: test_experiment
+  pipeline_run_id: null
+  tags: test_tag
+
+compute:
+  default_compute_target: cpu-cluster
+  linux_cpu_dc_target: cpu-cluster
+  linux_cpu_prod_target: cpu-cluster
+  linux_gpu_dc_target: gpu-cluster
+  linux_gpu_prod_target: gpu-cluster
+  linux_input_mode: download
+  linux_output_mode: upload
+  windows_cpu_prod_target: cpu-win
+  windows_cpu_dc_target: cpu-win
+  windows_input_mode: download
+  windows_output_mode: upload
+  hdi_prod_target: hdi-cluster
+  hdi_driver_memory: 2g
+  hdi_driver_cores: 2
+  hdi_executor_memory: 2g
+  hdi_executor_cores: 2
+  hdi_number_executors: 2
+  hdi_conf: "{\n  \"spark.yarn.maxAppAttempts\": 1,\n  \"spark.sql.shuffle.partitions\"\
+    : 1000,\n  \"spark.yarn.appMasterEnv.PYSPARK_PYTHON\": \"/usr/bin/anaconda/envs/py37/bin/python3\"\
+    ,\n  \"spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON\": \"/usr/bin/anaconda/envs/py37/bin/python3\"\
+    \n}\n"
+  parallel_node_count: 10
+  parallel_process_count_per_node: null
+  parallel_run_invocation_timeout: 10800
+  parallel_run_max_try: 3
+  parallel_mini_batch_size: 1
+  parallel_error_threshold: -1
+  datatransfer_target: data-factory
+  compliant_datastore: workspaceblobstore
+  noncompliant_datastore: null
+
+module_loader:
+  use_local: '*'
+  force_default_module_version: null
+  force_all_module_version: null
+  local_steps_folder: tests/tests_pipeline/sample/steps
+
+modules:
+  manifest:
+  - key: MultiNodeTrainer # internal key used for component_load()
+    name: microsoft.com.amlds.multinodetrainer # registered name
+    yaml: "multinode_trainer/module_spec.yaml" # path to yaml spec
+    version: null # null by default
+  - key: SparkHelloWorld
+    name: microsoft.com.azure.ml.hdi-probe
+    yaml: "spark_hello/module_spec.yaml"
+    version: null
+  - key: stats_passthrough
+    name: stats_passthrough # if key is not specified, use name in component_load()
+    yaml: "stats_passthrough/module_spec.yaml"
+    version: null
+  - key: stats_passthrough_windows
+    name: stats_passthrough_windows
+    yaml: "stats_passthrough_windows/module_spec.yaml"
+    version: null
+  - key: convert2ss
+    name: convert2ss
+    yaml: "convert_tsv_to_ss/module_spec.yaml"
+    version: null
+  - key: prscomponentlinux
+    name: prscomponentlinux
+    yaml: "prscomponentlinux/module_spec.yaml"
+    version: null

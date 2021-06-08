@@ -13,7 +13,7 @@
 [![license: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
 Compliant Machine Learning is the practice of training, validating and deploying
-machine learning models withou seeing the private data. It is needed in many
+machine learning models without seeing the private data. It is needed in many
 enterprises to satsify the strict compliance and privacy guarantees that 
 they provide to their customers.
 
@@ -24,7 +24,7 @@ library mainly contains three components, that are
 
 -  `shrike.compliant_logging`: utlities for compliant logging and 
 exception handling;
--  `shrike.pipeline`: helper code for manging, validating and submitting Azure
+-  `shrike.pipeline`: helper code for managing, validating and submitting Azure
 Machine Learning pipelines based on 
 [azure-ml-component](https://aka.ms/azure-ml-component-reference);
 -  `shrike.build`: helper code for packaging, building, validating, signing and
@@ -36,7 +36,7 @@ please see the [docs page](http://azure.github.io/shrike).
 
 ## Installation
 
-The library `shrike` is publicly available in PyPi. There are three optional extra dependenciies - `pipeline`, `build` and `dev`, 
+The library `shrike` is publicly available in PyPi. There are three optional extra dependencies - `pipeline`, `build` and `dev`, 
 among which  `pipeline` is for submitting Azure Machine Learning pipelines, `build` is for signing and registering components, 
 and `dev` is for the development environment of `shrike`.
 

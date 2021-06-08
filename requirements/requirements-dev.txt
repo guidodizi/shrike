@@ -10,11 +10,13 @@ semver~=2.13
 black==21.4b0
 flake8==3.9.1
 typeguard==2.11.1
+typing-extensions~=3.10
 
 # Documentation
 markdown-include==0.6.0
 mkdocstrings==0.15.0
 mkdocs-material==7.1.3
+livereload==2.6.3
 
 # Unit tests
 pytest~=6.2
