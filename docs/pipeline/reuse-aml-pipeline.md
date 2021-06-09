@@ -2,7 +2,7 @@
 
 ## Motivations
 
-Essentially, an AML experiment is made of:
+Essentially, an experiment is made of:
 - a runnable python script,
 - a configuration file.
 
@@ -10,10 +10,10 @@ They are checked in a repository, making it reusable and shareable in your team.
 
 ## 1. Branch from an existing experiment
 
-In this section, we'll assume you have identified an existing runnable script (ex: `baseline.py`) and a configuration file (ex: `conf/reference/baseline.yaml`)
+In this section, we'll assume you have identified an existing runnable script (_e.g._: `demograph_eyesoff.py` [here](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fexperiments%2Fdemograph_eyesoff.py) in the accelerator repo) and a configuration file (_e.g._ `demograph_eyesoff.yaml` [there](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fconfig%2Fexperiments%2Fdemograph_eyesoff.yaml) in the accelerator repo)
 1. Create a new branch in your team's repository (to avoid conflicts).
 
-2. In the `conf/reference/` or `conf/experiments/` folders, identify a config file you want to start from.
+2. In the `config/experiments/` [folder](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fconfig%2Fexperiments), identify a config file you want to start from.
 
 3. Copy this file into a new configuration file of your own.
 
@@ -21,21 +21,21 @@ In this section, we'll assume you have identified an existing runnable script (e
 
     ```yaml
     defaults:
-      - aml: eyesoff
-      - compute: eyesoff
-      - modules: baseline # list of modules + versions, see conf/modules/
+      - aml: eyesoff # default aml references
+      - compute: eyesoff # default compute target names
+      - modules: module_defaults # list of modules + versions, see config/modules/
     ```
 
-    Copy the file under `conf/modules/baseline.yaml` to a file of your own (ex: `baseline-modelX.yaml`), and rename the name under `defaults` in your experiment config accordingly.
+    Copy the file under `config/experiments/demograph_eyesoff.yaml` to a file of your own (ex: `demograph_eyesoff_modelX.yaml`), and rename the name under `defaults` in your experiment config accordingly.
 
     ```yaml
     defaults:
-      - aml: eyesoff
-      - compute: eyesoff
-      - modules: baseline-modelX # <<< modify here
+      - aml: eyesoff # default aml references
+      - compute: eyesoff # default compute target names
+      - modules: modules_modelX # <<< modify here
     ```
 
-    In the following sections, you will be able to pin each module in this manifest to a particular version number, different from your colleagues version numbers.
+    In the following sections, you will be able to pin each component in this manifest to a particular version number, different from your colleagues version numbers.
 
 4. In the `run` section, modify your experiment name:
 
@@ -49,7 +49,7 @@ In this section, we'll assume you have identified an existing runnable script (e
 5. That's it, at this point we invite you to try running the script for validating the graph (see below as an example):
 
     ```powershell
-    python pipelines/reference/baseline.py --config-dir ./conf --config-name experiments/modelX
+    python pipelines/experiments/demograph_eyesoff.py --config-dir pipelines/config --config-name experiments/demograph_eyesoff_modelX
     ```
 
     This will try to build the graph, but will not submit it as an experiment. You're ready to modify the experiment now.
@@ -58,35 +58,35 @@ In this section, we'll assume you have identified an existing runnable script (e
 
 Here's a couple recommendations depending on what you want to do.
 
-## Your experiment consists in modifying modules only
+## Your experiment consists in modifying components only
 
-If your experiment consists in modifying one or several modules only (not the structure of the graph).
+If your experiment consists in modifying one or several components only (not the structure of the graph).
 
-- work in a branch containing your module code
+- work in a branch containing your component code
 - use local code to experiment
-- create a specific configuration file for your experiment that shows which module versions to use
+- create a specific configuration file for your experiment that shows which component versions to use
 - when satisfied, merge in to main/master and register the new versions for your team to share.
 
 ## Your experiment consists in modifying the graph structure
 
 - work in a branch containing your graph
 - identify conflicts of versions with your team and either create a new graph or modify the existing one with options to switch on/off your changes
-- create a specific configuration file for your experiment that shows which module versions to use
+- create a specific configuration file for your experiment that shows which component versions to use
 - when satisfied, merge in to main/master so that the team can reuse the new graph
 
 # 3. Experiment with local code
 
-If you want to modify a particular module for your experiment, we recommend to iterate on the module code using detonation chamber.
+If you want to modify a particular component for your experiment, we recommend to iterate on the component code using detonation chamber.
 
-**IMPORTANT**: this is NOT possible for HDI modules. If you want to modify HDI modules, we recommend to test those first in eyes-on, or to register new versions of those HDI modules in parallel of your experiment branch (create a specific branch for your new module versions).
+**IMPORTANT**: this is NOT possible for HDI components. If you want to modify HDI components, we recommend to test those first in eyes-on, or to register new versions of those HDI components in parallel of your experiment branch (create a specific branch for your new component versions).
 
-To use the local code for a given module:
+To use the local code for a given component:
 
-## Identify the module key
+## Identify the component key
 
-Identify the module **key**, this is the key used to map to the module in the graphs/subgraphs code.
+Identify the component **key**, this is the key used to map to the component in the graphs/subgraphs code.
 
-1. Go to the graph or subgraph you want to modify, check in the `build()` function to identify the module load key used. For instance below we want to modify `VocabGenerator`:
+1. Go to the graph or subgraph you want to modify, check in the `build()` function to identify the component load key used. For instance below we want to modify `VocabGenerator`:
 
     ```python
     def build(self, config):
@@ -109,9 +109,9 @@ Identify the module **key**, this is the key used to map to the module in the gr
             },
     ```
 
-    The key here is `VocabGenerator`, which is not the module name, but its key in the required modules dictionary.
+    The key here is `VocabGenerator`, which is not the component name, but its key in the required modules dictionary.
 
-3. If your pipeline uses a module manifest in yaml (recommended!), this key will map to an entry in the modules manifest file `conf/modules/baseline-modelX.yaml`:
+3. If your pipeline uses a module manifest in YAML (recommended!), this key will map to an entry in the modules manifest file `config/modules/modules_modelX.yaml`:
 
     ```yaml
     manifest:
@@ -123,16 +123,16 @@ Identify the module **key**, this is the key used to map to the module in the gr
       # ...
     ```
 
-    The key here is `VocabGenerator`, which is not the module name, but its key in the required modules dictionary.
+    The key here is `VocabGenerator`, which is not the component name, but its key in the required modules dictionary.
 
     > Note: if no `key` is specified, the `name` is used as key.
 
-## Use module key to run this module locally
+## Use component key to run this component locally
 
 1. Use the `use_local` command with that key. You can either add it to the command line:
 
     ```powershell
-    python pipelines/reference/baseline.py --config-dir ./conf --config-name experiments/modelX module_loader.use_local="VocabGenerator"
+    python pipelines/experiments/demograph_eyesoff.py --config-dir pipelines/config --config-name experiments/demograph_eyesoff_modelX module_loader.use_local="VocabGenerator"
     ```
 
     Or you can write it in your configuration file:
@@ -145,36 +145,38 @@ Identify the module **key**, this is the key used to map to the module in the gr
       use_local: "VocabGenerator"
     ```
 
-2. When running the experiment, watch-out in the logs for a line that will indicate this module has loaded from local code:
+    > Note: this is example for illustrative purposesonly; the accelerator repo and the demo eyes-off graph do not really have a `VocabGenerator` component.
+
+2. When running the experiment, watch-out in the logs for a line that will indicate this component has loaded from local code:
 
     ```
     Building subgraph [Encoding as EncodingHdiPipeline]...
     --- Building module from local code at spark_vocab_generator/module_spec.yaml
     ```
 
-# 4. Experiment with different versions of (registered) modules
+# 4. Experiment with different versions of (registered) components
 
-The way the helper code decides which version to use for a given module M is (in order):
+The way the helper code decides which version to use for a given component M is (in order):
 
-- if `module_loader.force_all_module_version` is set, use it as version for module M (and all others)
-- if a version is set under module M in `modules.manifest`, use it
-- if a version is hardcoded in `required_modules()` for module M, use it
-- if `module_loader.force_default_module_version` is set, use it as version for module M (and all others non specified versions)
-- else, use default version registered in AML (usually, the latest).
+- if `module_loader.force_all_module_version` is set, use it as version for component M (and all others)
+- if a version is set under component M in `modules.manifest`, use it
+- if a version is hardcoded in `required_modules()` for component M, use it
+- if `module_loader.force_default_module_version` is set, use it as version for component M (and all others non specified versions)
+- else, use default version registered in Azure ML (usually, the latest).
 
-Version management for your experiment modules can have multiple use cases.
+Version management for your experiment components can have multiple use cases.
 
 ## Use a specific version for all unspecified (`force_default_module_version`)
 
-If all your modules versions are synchronized in the registration build, you can use this to use a single version number accross all the graph for all modules that have unspecified versions (`version:null`). If you want to pin down a specific version number outside of this, you can add a specific version in your module manifest, or in the `required_modules()` method.
+If all your components versions are synchronized in the registration build, you can use this to use a single version number accross all the graph for all components that have unspecified versions (`version:null`). If you want to pin down a specific version number outside of this, you can add a specific version in your module manifest, or in the `required_modules()` method.
 
-## Use a specific version for all modules
+## Use a specific version for all components
 
-If all your modules versions are synchronized in the registration build, you can use this to use a single version number accross all the graph for all modules. This will give you an exact replication of the modules at a particular point in time. This will override all other version settings.
+If all your components versions are synchronized in the registration build, you can use this to use a single version number accross all the graph for all components. This will give you an exact replication of the components at a particular point in time. This will override all other version settings.
 
-## Use specific versions for some modules
+## Use specific versions for some components
 
-If you want to pin down a specific version number for some particular modules, specify this version in the module manifest:
+If you want to pin down a specific version number for some particular components, specify this version in the module manifest:
 
 ```yaml
 # @package _group_

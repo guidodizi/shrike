@@ -17,7 +17,7 @@ Now we will go through the config file linked above and explain each section.
 At the beginning of the config file, it is suggested to provide a brief comment explaining which pipeline this config file is used for, and also provide an example command to run the pipeline with this config file. See below for an example:
 
 ```yaml
-# This yaml file configures the accelerator tutorial pipeline for eyes-on
+# This YAML file configures the accelerator tutorial pipeline for eyes-on
 
 # command for running the pipeline:
 # python pipelines/experiments/demograph_eyeson.py --config-dir pipelines/config --config-name experiments/demograph_eyeson run.submit=True
@@ -34,7 +34,7 @@ defaults:
   - modules: module_defaults # list of modules + versions
 ```
 
-See below for the contents of the `aml` config file. You will need to update the info based on your own aml resources. To find your workspace name, subscription Id, and resource group, go to your AML workspace, then click the "change subscription" icon in the top right (between the settings and question mark), then "Download config file". You will find the 3 values in this file. The Torus TenantId for _eyes-off_ workspaces is `cdc5aeea-15c5-4db6-b079-fcadd2505dc2`, whereas the `72f988bf-86f1-41af-91ab-2d7cd011db47` used below is the Microsoft TenantId that you will use for personal workspaces.
+See below for the contents of the `aml` config file. You will need to update the info based on your own aml resources. To find your workspace name, subscription Id, and resource group, go to your Azure ML workspace, then click the "change subscription" icon in the top right (between the settings and question mark), then "Download config file". You will find the 3 values in this file. The Torus TenantId for _eyes-off_ workspaces is `cdc5aeea-15c5-4db6-b079-fcadd2505dc2`, whereas the `72f988bf-86f1-41af-91ab-2d7cd011db47` used below is the Microsoft TenantId that you will use for personal workspaces.
 
 ```yaml
 # @package _group_

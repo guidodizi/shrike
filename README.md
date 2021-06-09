@@ -13,12 +13,12 @@
 
 Compliant Machine Learning is the practice of training, validating and deploying
 machine learning models without seeing the private data. It is needed in many
-enterprises to satsify the strict compliance and privacy guarantees that 
+enterprises to satisfy the strict compliance and privacy guarantees that 
 they provide to their customers.
 
-The library `shrike` is a set of Python utilities for compliant machine
-learning, with a special emphasis on running pipeline in the platform of 
-[Azure Machine Learning](https://github.com/Azure/azureml-examples). This
+The `shrike` library is a set of Python utilities for compliant machine
+learning, with a special emphasis on running experiments in the 
+[Azure Machine Learning](https://github.com/Azure/azureml-examples) platform. This
 library mainly contains three components, that are
 
 -  `shrike.compliant_logging`: utlities for compliant logging and 
@@ -35,7 +35,7 @@ please see the [docs page](http://azure.github.io/shrike).
 
 ## Installation
 
-The library `shrike` is publicly available in PyPi. There are three optional extra dependencies - `pipeline`, `build` and `dev`, 
+The `shrike` library is publicly available in PyPi. There are three optional extra dependencies - `pipeline`, `build` and `dev`, 
 among which  `pipeline` is for submitting Azure Machine Learning pipelines, `build` is for signing and registering components, 
 and `dev` is for the development environment of `shrike`.
 
@@ -57,7 +57,9 @@ pip install shrike[pipeline,build,dev]
 ```
 
 ## Migration from `aml-build-tooling`, `aml-ds-pipeline-contrib`, and `confidential-ml-utils`
-If you have been using "aml-build-tooling", "aml-ds-pipeline-contrib", and `confidential-ml-utils` libraries, please use the migration script ([migration.py](https://github.com/Azure/shrike/blob/main/migration.py)) to convert your repo or file and adopt the `shrike` package with one simple command:
+If you have been using the `aml-build-tooling`, `aml-ds-pipeline-contrib`, or `confidential-ml-utils` libraries, 
+please use the migration script ([migration.py](https://github.com/Azure/shrike/blob/main/migration.py)) to convert your repo or files and
+adopt the `shrike` package with one simple command:
 ```pwsh
 python migraton.py --input_path PATH/TO/YOUR/REPO/OR/FILE
 ```

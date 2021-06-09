@@ -9,25 +9,26 @@ To enjoy this doc, you need to:
 > **Note:** If your AML workspace is a newly created workspace, you would have to first run one  sample pipeline from the designer page of the workspace to warm up (more details available [here](../Getting-Started/Setup-your-personal-AML-workspace.md)). Otherwise your submitted job would get stuck with the "Not Started" status. This is a known caveat and AML has a [work item](https://dev.azure.com/msdata/Vienna/_workitems/edit/1039037) to track this.
 
 ## Motivation
-The AML pipeline helper class (`shrike.pipeline`) was developed with the goal of helping data scientists to more easily create reusable pipelines. These instructions explain how to use the AML pipeline helper class.
+The Azure ML pipeline helper class `AMLPipelineHelper` in the `shrike` package was developed with the goal of helping data scientists to more easily create reusable pipelines. These instructions explain how to use the Azure ML pipeline helper class.
 
-## 1. Review an existing  AML pipeline created using AML pipeline helper class
-The [accelerator repository](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation&version=GBmain&_a=contents) already has examples of pipelines created using the pipeline helper code. We will now have an overview of the structure of the two most important directories (`components` and `pipelines`, under `aml-ds/recipes/compliant-experimentation`) and go over the key files defining these pipelines.
+## 1. Review an existing  Azure ML pipeline created using the Azure ML pipeline helper class
+The [accelerator repository](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation&version=GBmain&_a=contents) already has examples of pipelines created using the pipeline helper class. We will now have an overview of the structure of the two most important directories (`components` and `pipelines`, under `aml-ds/recipes/compliant-experimentation`) and go over the key files defining these pipelines.
 
 ### 1.1 "components" directory
 This is where the components are defined, one folder per component. Each folder contains the following files:
 
-- `component_spec.yaml`: this is where the component's inputs, outputs and parameters are defined. This is the AML equivalent to the component manifest in Aether. 
+- `component_spec.yaml`: this is where the component's inputs, outputs and parameters are defined. This is the Azure ML equivalent to the component manifest in &AElig;ther. 
 - `component_env.yaml`: this is where the component dependencies are listed (not required for HDI components).
-- `run.py`: this is the python file actually run in AML; in most cases, it is just importing a python file from elsewhere in the repo.
+- `run.py`: this is the python file actually run in Azure ML; in most cases, it is just importing a python file from elsewhere in the repo.
 
 Further reading on components is available [here](https://aka.ms/aml/creatingnewmodules).
 
 ### 1.2 "pipelines" directory
 
 This is where the graphs, a.k.a. pipelines, are defined. Here is what you will find in its subdirectories:
-- The `config` directory contains the config files which contain the parameter values, organized in four sub-folders: `experiments` which contains the overall graph configs, then `aml` and `compute` which contain auxiliary config files referred to in the graph configs. The `modules` folder hosts the file where the components are defined (by their key, name, default version, and location of the component specification file). _Once you have created new modules, you will need to add them to that file._
-- The `subgraphs` directory contain python files that define graphs that are not meant to be used on their own but as part of larger graphs. There is a demo subgraph available there, which consists of 2 `probe` modules chained after each other.
+
+- The `config` directory contains the config files which contain the parameter values, organized in four sub-folders: `experiments` which contains the overall graph configs, then `aml` and `compute` which contain auxiliary config files referred to in the graph configs. The `modules` folder hosts the file where the components are defined (by their key, name, default version, and location of the component specification file). _Once you have created new components, you will need to add them to that file._
+- The `subgraphs` directory contain python files that define graphs that are not meant to be used on their own but as part of larger graphs. There is a demo subgraph available there, which consists of 2 `probe` components chained after each other.
 - The `experiments` directory contain the python files whichactually define the graphs.
 
 Now let's take a closer look at the definition of a graph in python. We will stick with the demo graph for eyes-off and open the `demograph_eyesoff.py` file in the `experiments` folder. The key parts are listed below.
@@ -68,7 +69,7 @@ Finally, below is the command to run this existing pipeline (a very basic demo p
 
 `python pipelines/experiments/demograph_eyesoff.py --config-dir pipelines/config --config-name experiments/demograph_eyesoff run.submit=True`
 
-## 2. Create your own simple AML pipeline using the pipeline helper class and an already existing module
+## 2. Create your own simple Azure ML pipeline using the pipeline helper class and an already existing component
 
 In this section, We will create a pipeline graph consisting of a single component called `probe`, which is readily available in the accelerator repository. We will pass the parameters through a config file.
 
@@ -76,9 +77,9 @@ In this section, We will create a pipeline graph consisting of a single componen
 
 - [1] For creating your own pipeline, we invite you to start from an already existing pipeline definition such as [`demograph_eyeson.py`](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fexperiments%2Fdemograph_eyeson.py&version=GBmain&_a=contents) and build from there. Just copy `demograph_eyeson.py`, rename it as `demograph_workshop.py`, update the contents accordingly, and put it under the same directory (i.e., `pipelines/experiments`).
 The important parts to modify for this file are those listed in the section on key files above: `build()`, and `pipeline_instance()` (since we won't be using a subgraph, we don't need to worry about the `required_subgraphs` part).
-- [2] To prepare the yaml config file, start from an existing example, such as [`demograph_eyeson.yaml`](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fconfig%2Fexperiments%2Fdemograph_eyeson.yaml&version=GBmain&_a=contents). Just copy `demograph_eyeson.yaml`, rename it as `demograph_eyeson_workshop.yaml`, update the contents accordingly, and put it under the same directory (i.e., `pipelines/config/experiments`). 
+- [2] To prepare the YAML config file, start from an existing example, such as [`demograph_eyeson.yaml`](https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fconfig%2Fexperiments%2Fdemograph_eyeson.yaml&version=GBmain&_a=contents). Just copy `demograph_eyeson.yaml`, rename it as `demograph_eyeson_workshop.yaml`, update the contents accordingly, and put it under the same directory (i.e., `pipelines/config/experiments`). 
 The important parts are defining the component parameter values, and declaring that we want to use the local version of the component (argument `use_local`) for `probe`. 
-    > Note: you will also need to update two auxiliary config files (`eyesoff.yaml`/`eyeson.yaml` file under directory `pipelines/config/aml` and `eyesoff.yaml`/`eyeson.yaml` under directory `pipelines/config/compute`), referenced by this main config file `demograph_eyeson.yaml`, to point to the AML workspace and compute targets to which you have access.
+    > Note: you will also need to update two auxiliary config files (`eyesoff.yaml`/`eyeson.yaml` file under directory `pipelines/config/aml` and `eyesoff.yaml`/`eyeson.yaml` under directory `pipelines/config/compute`), referenced by this main config file `demograph_eyeson.yaml`, to point to the Azure ML workspace and compute targets to which you have access.
 
 And now you should be able to run your pipeline using the following command:
 

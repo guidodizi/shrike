@@ -21,8 +21,8 @@ if __name__ == "__main__":
 
 ## Logging
 
-Call `shrike.compliant_logging.enable_compliant_logging` to set up data
-category-aware logging. Then continue to use standard Python logging
+Call `shrike.compliant_logging.enable_compliant_logging` to set up 
+data-category-aware logging. Then continue to use standard Python logging
 functionality as before! Add a `category=DataCategory.PUBLIC` argument to have
 your log lines prefixed with `SystemLog:`. Here is a full-fledged example:
 
@@ -41,6 +41,7 @@ The simplest use case (wrap your `main` method in a decorator) is:
 ### Prefixing stack trace
 
 Some configuration options around prefixing the stack trace. You can:
+
 -  customize the prefix and the exception message
 -  keep the original exception message (don't scrub)
 -  pass an allow_list of strings. Exception messages will be scrubbed unless the message or the
@@ -83,7 +84,7 @@ print the stack trace, exception type and optionally exception message (careful
 as  exception messages may also potentially hold private data.)
 
 ```python
-from compliant_ml_utils.stack_trace_extractor import StacktraceExtractor
+from shrike.compliant_logging.stack_trace_extractor import StacktraceExtractor
 
 extractor = StacktraceExtractor()
 extractor.extract("log_file")
