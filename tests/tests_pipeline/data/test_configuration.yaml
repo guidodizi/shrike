@@ -85,3 +85,7 @@ modules:
     name: prscomponentlinux
     yaml: "prscomponentlinux/module_spec.yaml"
     version: null
+  - key: dummy_key
+    name: dummy_name
+    yaml: "dummy/module_spec.yaml"
+    version: null

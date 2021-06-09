@@ -265,7 +265,7 @@ class AMLPipelineHelper:
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
+            module_instance (Module): the AML module we need to add settings to
             mpi (bool): is job mpi ?
             target (str): force target compute over hydra conf
             node_count (int): force node_count over hydra conf
@@ -336,11 +336,11 @@ class AMLPipelineHelper:
         output_mode=None,
         **custom_runtime_arguments,
     ):
-        """Applies settings for a hdi module.
+        """Applies settings for a HDI module.
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
+            module_instance (Module): the AML module we need to add settings to
             target (str): force target compute over hydra conf
             driver_cores (int): force driver_cores over hydra conf
             driver_memory (str): force driver_memory over hydra conf
@@ -353,7 +353,7 @@ class AMLPipelineHelper:
             custom_runtime_arguments (dict): any additional custom args
         """
         print(
-            f"Using hdi compute target {self.config.compute.hdi_prod_target} to run {module_name} from pipeline class {self.__class__.__name__}"
+            f"Using HDI compute target {self.config.compute.hdi_prod_target} to run {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
             print(f"Adding custom runtime arguments {custom_runtime_arguments}")
@@ -426,9 +426,9 @@ class AMLPipelineHelper:
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
-            windows (bool): is the module using windows compute?
-            gpu (bool): is the module using gpu compute?
+            module_instance (Module): the AML module we need to add settings to
+            windows (bool): is the module using Windows compute?
+            gpu (bool): is the module using GPU compute?
             target (str): force target compute over hydra conf
             node_count (int): force node_count over hydra conf
             process_count_per_node (int): force process_count_per_node over hydra conf
@@ -447,7 +447,7 @@ class AMLPipelineHelper:
             if windows:
                 if gpu:
                     raise ValueError(
-                        "A gpu compute target with Windows OS is not available yet!"
+                        "A GPU compute target with Windows OS is not available yet!"
                     )
                 else:
                     _target = self.config.compute.windows_cpu_dc_target
@@ -460,7 +460,7 @@ class AMLPipelineHelper:
             if windows:
                 if gpu:
                     raise ValueError(
-                        "A gpu compute target with Windows OS is not available yet!"
+                        "A GPU compute target with Windows OS is not available yet!"
                     )
                 else:
                     _target = self.config.compute.windows_cpu_prod_target
@@ -530,9 +530,9 @@ class AMLPipelineHelper:
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
+            module_instance (Module): the AML module we need to add settings to
             mpi (bool): is the job mpi?
-            gpu (bool): is the job using gpu?
+            gpu (bool): is the job using GPU?
             target (str): force target compute over hydra conf
             node_count (int): force node_count over hydra conf
             process_count_per_node (int): force process_count_per_node over hydra conf
@@ -624,7 +624,7 @@ class AMLPipelineHelper:
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
+            module_instance (Module): the AML module we need to add settings to
             input_mode (str): force input_mode over hydra conf
             output_mode (str): force output_mode over hydra conf
             scope_param (str): Parameters to pass to scope e.g. Nebula parameters, VC allocation parameters etc.
@@ -657,11 +657,11 @@ class AMLPipelineHelper:
         output_mode=None,
         **custom_runtime_arguments,
     ):
-        """Applies settings for a hdi module.
+        """Applies settings for a HDI module.
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
+            module_instance (Module): the AML module we need to add settings to
             target (str): force target compute over hydra conf
             input_mode (str): force input_mode over hydra conf
             output_mode (str): force output_mode over hydra conf
@@ -704,6 +704,65 @@ class AMLPipelineHelper:
                 f"During build() of graph class {self.__class__.__name__}, call to self.apply_recommended_runsettings() is wrong: key used as first argument ('{module_key}') maps to a module reference {module_manifest_entry} which name is different from the module instance provided as 2nd argument (name={module_instance.name}), did you use the wrong module key as first argument?"
             )
 
+    def _get_component_name_from_instance(self, component_instance):
+        component_manifest_list = self.config.modules.manifest
+        component_name = component_instance.name
+        for component_manifest_entry in component_manifest_list:
+            try:
+                if component_manifest_entry["name"] == component_name:
+                    return component_manifest_entry["key"] or component_name
+                if "namespace" in component_manifest_entry:
+                    component_entry_name = (
+                        component_manifest_entry["namespace"]
+                        + "://"
+                        + component_manifest_entry["name"]
+                    )
+                    if component_entry_name == component_name:
+                        return component_manifest_entry["key"] or component_name
+            except:
+                pass
+        raise ValueError(
+            f"Could not find component matching {component_name}. Please check your spelling."
+        )
+
+    def apply_smart_runsettings(
+        self,
+        component_instance,
+        gpu=False,  # can't autodetect that
+        hdi="auto",
+        windows="auto",
+        parallel="auto",
+        mpi="auto",
+        scope="auto",
+        datatransfer="auto",
+        **custom_runtime_arguments,
+    ):
+        """Applies regular settings for a given component.
+
+        Args:
+            component_instance (Component): the AML component we need to add settings to
+            gpu (bool): is the component using GPU?
+            hdi (bool): is the component using HDI/Spark?
+            windows (bool): is the component using Windows compute?
+            parallel (bool): is the component using ParallelRunStep?
+            mpi (bool): is the component using Mpi?
+            custom_runtime_arguments (dict): any additional custom args
+        """
+        # infer component_name
+        component_name = self._get_component_name_from_instance(component_instance)
+        self.apply_recommended_runsettings(
+            component_name,
+            component_instance,
+            gpu,
+            hdi,
+            windows,
+            parallel,
+            mpi,
+            scope,
+            datatransfer,
+            **custom_runtime_arguments,
+        )
+
     def apply_recommended_runsettings(
         self,
         module_name,
@@ -721,10 +780,10 @@ class AMLPipelineHelper:
 
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
-            module_instance (Module): the aml module we need to add settings to
-            gpu (bool): is the module using gpu?
-            hdi (bool): is the module using hdi/spark?
-            windows (bool): is the module using windows compute?
+            module_instance (Module): the AML module we need to add settings to
+            gpu (bool): is the module using GPU?
+            hdi (bool): is the module using HDI/Spark?
+            windows (bool): is the module using Windows compute?
             parallel (bool): is the module using ParallelRunStep?
             mpi (bool): is the module using Mpi?
             custom_runtime_arguments (dict): any additional custom args
@@ -759,7 +818,7 @@ class AMLPipelineHelper:
                 or str(module_instance.type) == "ScopeComponent"
                 or str(module_instance.type) == "DataTransferComponent"
             ):
-                # hdi/scope/datatransfer modules might not have that environment object
+                # HDI/scope/datatransfer modules might not have that environment object
                 windows = False
             else:
                 windows = (

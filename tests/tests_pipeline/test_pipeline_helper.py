@@ -7,8 +7,14 @@ import pytest
 import sys
 from omegaconf import OmegaConf
 from pathlib import Path
-
 from shrike.pipeline.pipeline_helper import AMLPipelineHelper
+
+# Load the testing configuration YAML file
+config = OmegaConf.load(Path(__file__).parent / "data/test_configuration.yaml")
+
+# Initiate AMLPipelineHelper class with the testing configuration
+pipeline_helper = AMLPipelineHelper(config=config)
+pipeline_helper.connect()
 
 
 def test_validate_experiment_name():
@@ -29,13 +35,6 @@ def test_validate_experiment_name():
 )
 def test_apply_parallel_runsettings(capsys, windows, gpu):
     """Unit tests for _apply_parallel_runsettings()"""
-    # Load the testing configuration YAML file
-    config = OmegaConf.load(Path(__file__).parent / "data/test_configuration.yaml")
-
-    # Initiate AMLPipelineHelper class with the testing configuration
-    pipeline_helper = AMLPipelineHelper(config=config)
-    pipeline_helper.connect()
-
     # Create a module instance
     module_instance_fun = pipeline_helper.component_load(
         component_key="prscomponentlinux"
@@ -79,3 +78,10 @@ def test_apply_parallel_runsettings(capsys, windows, gpu):
             assert module_instance.runsettings.target == "gpu-cluster"
         elif not windows and not gpu:
             assert module_instance.runsettings.target == "cpu-cluster"
+
+
+def test_get_component_name_from_instance():
+    component_instance = pipeline_helper.component_load(component_key="dummy_key")
+    step_instance = component_instance()
+    component_name = pipeline_helper._get_component_name_from_instance(step_instance)
+    assert component_name == "dummy_key"

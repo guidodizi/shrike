@@ -101,8 +101,7 @@ class ConvertTsvToSSPipeline(AMLPipelineHelper):
             )
             # each module should be followed by this call
             # in enabled the helper class to fill-up all the settings for this module instance
-            self.apply_recommended_runsettings(
-                "convert2ss",
+            self.apply_smart_runsettings(
                 convert2ss_step,
                 scope=True,
                 adla_account_name="",  # TODO: config.

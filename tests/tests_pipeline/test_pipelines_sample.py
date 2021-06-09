@@ -18,6 +18,7 @@ from shrike.pipeline.testing.pipeline_class_test import (
 from .sample.pipeline.passthrough_test import CanaryPipelineStatsPassthrough
 from .sample.pipeline.multinode_training_test import MultiNodeTrainingPipeline
 from .sample.pipeline.spark_hello import SparkHelloPipeline
+from .sample.pipeline.convert_tsv_to_ss_test import ConvertTsvToSSPipeline
 
 ### Tests on the AMLPipelineHelper classes methods (unit tests)
 
@@ -25,6 +26,7 @@ PIPELINE_CLASSES = [
     CanaryPipelineStatsPassthrough,
     MultiNodeTrainingPipeline,
     SparkHelloPipeline,
+    ConvertTsvToSSPipeline,
 ]
 
 
@@ -117,3 +119,18 @@ def test_spark_hello_build_local(pipeline_config_path):
     # will do everything except submit :)
     with patch.object(sys, "argv", testargs):
         SparkHelloPipeline.main()
+
+
+def test_covert2ss_build_local(pipeline_config_path):
+    """Tests the graph by running the main function itself (which does .validate())"""
+    testargs = [
+        "prog",
+        "--config-dir",
+        pipeline_config_path,
+        "--config-name",
+        "pipelines/convert_tsv_to_ss_test",
+        "module_loader.use_local='*'",
+    ]
+    # will do everything except submit :)
+    with patch.object(sys, "argv", testargs):
+        ConvertTsvToSSPipeline.main()

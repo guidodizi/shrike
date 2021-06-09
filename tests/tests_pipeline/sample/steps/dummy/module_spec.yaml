@@ -1,0 +1,9 @@
+$schema: http://azureml/sdk-2-0/CommandComponent.json
+name: dummy_name
+version: 0.0.1
+display_name: dummy
+type: CommandComponent
+description: dummy component
+is_deterministic: true
+tags: {}
+command: python -V
