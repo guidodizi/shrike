@@ -1,8 +1,15 @@
-trigger:
-  batch: true
-  branches:
-    include:
-    - main
+# This ci gate build, which runs in the Azure DevOps,
+# is on the way to deprecation
+
+# trigger:
+#   batch: true
+#   branches:
+#     include:
+#     - main
+
+# Disable trigger and PR
+trigger: none
+pr: none
 
 pool:
   name: Vienna-DataScience-Combined-1ES

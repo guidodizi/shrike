@@ -1,4 +1,4 @@
-name: python
+name: Shrike Gated Build
 
 on:
   push:
@@ -9,84 +9,211 @@ on:
 
 jobs:
 
-  build:
+  Format:
+
+    runs-on: ubuntu-latest
+    name: Format check
+
+    steps:
+
+    - uses: actions/checkout@v2
+      # Keep entire history for better code coverage reports.
+      with:
+        fetch-depth: 0
+
+    - name: Check License Lines
+      uses: kt3k/license_checker@v1.0.6
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2.2.1
+      with:
+        python-version: 3.8
+  
+    - name: Pip install
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[pipeline,build,dev]
+
+    - name: Format check (black)
+      run: |
+        black --check .
+  
+    - name: Format check (flake8)
+      run: |
+        flake8 .
+      if: always()
+
+    # This and the next step follow:
+    # https://gist.github.com/alukach/6f3a371e9af600e417aca1b36806ad72
+    - name: Setup node.js for pyright
+      uses: actions/setup-node@v2.1.5
+      with:
+        node-version: 12
+
+    - name: Pyright
+      run: |
+        npm install -g pyright
+        pyright
+
+    - name: Build wheel
+      run: |
+        python setup.py sdist bdist_wheel
+
+    - name: Upload wheel
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist
+
+  Compliant_logging:
 
     strategy:
       matrix:
         # https://ncorti.com/blog/howto-github-actions-build-matrix
         os: [macos-latest, ubuntu-latest, windows-latest]
-        # python-version: [3.6, 3.7, 3.8, 3.9]
         python-version: [3.6, 3.7, 3.8]
     runs-on: ${{ matrix.os }}
+    needs: Format
+    name: Test shrike.compliant_logging
 
     steps:
+
     - uses: actions/checkout@v2
       # Keep entire history for better code coverage reports.
       with:
         fetch-depth: 0
-    - name: Check License Lines
-      uses: kt3k/license_checker@v1.0.6
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2.2.1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: pip install
+  
+    - name: Pip install
       run: |
         python -m pip install --upgrade pip
         pip install .[pipeline,build,dev]
-    - name: black
-      run: |
-        black --check .
-    - name: flake8
-      run: |
-        flake8 .
-      if: always()
+
     # See: https://github.com/codecov/example-python
-    - name: pytest
+    - name: Unit test for shrike.compliant_logging
       run: |
         python -m pytest tests/tests_compliant_logging --cov --junitxml=test-logging-result.xml
       if: always()
-    - name: publish test results
+
+    - name: Publish test results for shrike.compliant_logging
       if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8' }}
       uses: EnricoMi/publish-unit-test-result-action@v1.9
       with:
         check_name: Unit Test Results for Logging
         github_token: ${{ secrets.GITHUB_TOKEN }}
         files: test-logging-result.xml
-    - name: upload code coverage
+
+    - name: Upload code coverage
       uses: codecov/codecov-action@v1
       with:
         fail_ci_if_error: true
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
       if: ${{ always() && matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8' }}
 
-    # This and the next step follow:
-    # https://gist.github.com/alukach/6f3a371e9af600e417aca1b36806ad72
-    - name: setup node.js for pyright
-      uses: actions/setup-node@v2.1.5
-      with:
-        node-version: 12
-    - name: pyright
-      run: |
-        npm install -g pyright
-        pyright
+  Build:
 
-    - name: build wheel
-      run: |
-        python setup.py sdist bdist_wheel
-    - name: upload wheel
-      uses: actions/upload-artifact@v2
-      with:
-        name: dist
-        path: dist
+    runs-on: windows-latest
+    needs: Format
+    name: Test shrike.build
 
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
     steps:
 
-    - name: download wheel
+    - uses: actions/checkout@v2
+      # Keep entire history for better code coverage reports.
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2.2.1
+      with:
+        python-version: 3.8
+  
+    - name: Pip install
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[pipeline,build,dev]
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # See: https://github.com/codecov/example-python
+    - name: Unit test for shrike.build
+      run: |
+        python -m pytest -s tests/tests_build --cov=shrike/build --junitxml=test-build-result.xml
+      if: always()
+
+    - name: Publish test results for shrike.build
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1
+      with:
+        check_name: Unit Test Results for Build
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: test-build-result.xml
+
+    - name: Upload code coverage for shrike.build
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+
+  Pipeline:
+
+    runs-on: windows-latest
+    needs: Format
+    name: Test shrike.pipeline
+
+    steps:
+
+    - uses: actions/checkout@v2
+      # Keep entire history for better code coverage reports.
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2.2.1
+      with:
+        python-version: 3.8
+  
+    - name: Pip install
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[pipeline,build,dev]
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # See: https://github.com/codecov/example-python
+    - name: Unit test for shrike.pipeline
+      run: |
+        pytest -s tests/tests_pipeline --cov=shrike/pipeline --junitxml=test-pipeline-result.xml
+      if: always()
+
+    - name: Publish test results for shrike.pipeline
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1
+      with:
+        check_name: Unit Test Results for shrike.pipeline
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: test-pipeline-result.xml
+
+    - name: Upload code coverage for shrike.pipeline
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+
+  Publish:
+    needs: [Build, Pipeline, Compliant_logging]
+    runs-on: ubuntu-latest
+    name: Publish shrike to PyPi
+  
+    steps:
+
+    - name: Download wheel
       uses: actions/download-artifact@v2
 
     # Follow:
@@ -95,7 +222,7 @@ jobs:
     # 'if' condition, and add a 'with'
     # repository_url: https://test.pypi.org/legacy, and use the password
     # test_pypi_password to verify that publication to test.pypi.org works.
-    - name: publish to pypi
+    - name: Publish to PyPi
       if: startsWith(github.ref, 'refs/tags')
       uses: pypa/gh-action-pypi-publish@master
       with:

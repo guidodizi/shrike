@@ -4,7 +4,6 @@
 [![docs](https://github.com/Azure/shrike/actions/workflows/docs.yml/badge.svg)](https://github.com/Azure/shrike/actions/workflows/docs.yml)
 [![python](https://github.com/Azure/shrike/actions/workflows/python.yml/badge.svg)](https://github.com/Azure/shrike/actions/workflows/python.yml)
 [![Component Governance](https://dev.azure.com/msdata/Vienna/_apis/build/status/aml-ds/Azure.shrike%20Component%20Governance?branchName=main)](https://dev.azure.com/msdata/Vienna/_build/latest?definitionId=16088&branchName=main)
-[![ci-gate](https://dev.azure.com/msdata/Vienna/_apis/build/status/aml-ds/Azure.shrike%20ci-gate?branchName=main)](https://dev.azure.com/msdata/Vienna/_build/latest?definitionId=16115&branchName=main)
 [![Python versions](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/)
 [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/Azure/shrike/branch/main/graph/badge.svg?token=sSq0BKlfTu)](https://codecov.io/gh/Azure/shrike)

@@ -23,7 +23,7 @@ from shrike.build.core.configuration import (
 )
 
 
-CANARY_WORKSPACE = "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
+TESTING_WORKSPACE = "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/github-ci-rg/providers/Microsoft.MachineLearningServices/workspaces/github-ci-ml-wus2"
 
 
 def test_validate_branch_not_match():
@@ -64,7 +64,7 @@ def test_find_signed_component_specification_files(caplog, mode):
 
     reg = register.Register()
     reg.config = Configuration()
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     with caplog.at_level("INFO"):
         reg.find_signed_component_specification_files()
@@ -82,7 +82,7 @@ def test_find_signed_component_specification_files(caplog, mode):
 def test_list_registered_component(caplog):
     reg = register.Register()
     reg.config = Configuration()
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     with caplog.at_level("INFO"):
         reg.list_registered_component()
@@ -126,7 +126,7 @@ def test_register_all_signed_components_already_exist_component_version(caplog):
     # Start registration
     reg = register.Register()
     reg.config = Configuration(fail_if_version_exists=True)
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     already_exist_component_path = str(
         get_target_path_in_steps_directory("component4/.build/spec.yaml")
@@ -181,7 +181,7 @@ def test_register_all_signed_components_use_build_number(caplog):
             "BUILD_BUILDNUMBER": build_number,
         },
     )
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     component_path = str(
         get_target_path_in_steps_directory("component4/.build/spec.yaml")
@@ -243,7 +243,7 @@ def test_set_default_version_given_prod(caplog):
     # Start registration
     reg = register.Register()
     reg.config = Configuration()
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     component_path = [
         str(get_target_path_in_steps_directory(f"tmp_dir/.build/spec{idx}.yaml"))
@@ -302,7 +302,7 @@ def test_set_default_version_given_dev(caplog):
     # Start registration
     reg = register.Register()
     reg.config = Configuration()
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     component_path = [
         str(get_target_path_in_steps_directory(f"tmp_dir/.build/spec{idx}.yaml"))
@@ -393,7 +393,7 @@ def test_register_component_command(caplog):
     # Start registration
     reg = register.Register()
     reg.config = Configuration()
-    reg.attach_workspace(CANARY_WORKSPACE)
+    reg.attach_workspace(TESTING_WORKSPACE)
 
     component_path_1 = str(
         get_target_path_in_steps_directory("tmp_dir/.build/spec.yaml")
@@ -473,7 +473,7 @@ def test_run_with_config_runs_end_to_end(caplog):
     # Start registration
     reg = register.Register()
     reg.config = Configuration(
-        workspaces=[CANARY_WORKSPACE], source_branch="refs/heads/main"
+        workspaces=[TESTING_WORKSPACE], source_branch="refs/heads/main"
     )
     with caplog.at_level("INFO"):
         reg.run_with_config()

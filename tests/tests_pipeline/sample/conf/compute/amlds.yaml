@@ -1,7 +1,7 @@
 # @package _group_
 default_compute_target: "cpu-cluster" # name of default target
-compliant_datastore: "adlsgen1datastore" # where intermediary output is written
-noncompliant_datastore: "adlsgen1datastore"
+compliant_datastore: "workspaceblobstore" # where intermediary output is written
+noncompliant_datastore: "workspaceblobstore"
 
 # Linux targets
 linux_cpu_dc_target: "cpu-d14-v2"
@@ -22,4 +22,4 @@ windows_input_mode: "download"
 windows_output_mode: "upload"
 
 # hdi cluster
-hdi_prod_target: "hdi-cluster"
+hdi_prod_target: "cpu-cluster"

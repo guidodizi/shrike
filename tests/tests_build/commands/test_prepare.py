@@ -18,6 +18,8 @@ from git import Repo
 from shrike.build.commands import prepare
 from shrike.build.core.configuration import Configuration
 
+TESTING_WORKSPACE = "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/github-ci-rg/providers/Microsoft.MachineLearningServices/workspaces/github-ci-ml-wus2"
+
 
 def clean() -> None:
     """
@@ -648,9 +650,7 @@ def test_validate_all_components_works_on_invalid_component():
     prep = prepare.Prepare()
     prep.config = Configuration()
 
-    prep.attach_workspace(
-        "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
-    )
+    prep.attach_workspace(TESTING_WORKSPACE)
     success = prep.validate_all_components([component_path])
 
     assert not success
@@ -667,9 +667,7 @@ def test_validate_all_components_works_on_valid_component(caplog):
     prep = prepare.Prepare()
     prep.config = Configuration()
 
-    prep.attach_workspace(
-        "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
-    )
+    prep.attach_workspace(TESTING_WORKSPACE)
 
     with caplog.at_level("INFO"):
         prep.validate_all_components([component_path])
@@ -697,9 +695,7 @@ def test_validate_all_components_code_snapshot_parameter(caplog):
     prep = prepare.Prepare()
     prep.config = Configuration()
 
-    prep.attach_workspace(
-        "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
-    )
+    prep.attach_workspace(TESTING_WORKSPACE)
 
     with caplog.at_level("INFO"):
         prep.validate_all_components([tmp_dir + "/spec.yaml"])
@@ -724,9 +720,7 @@ def test_validate_all_components_code_Section(caplog):
     prep = prepare.Prepare()
     prep.config = Configuration()
 
-    prep.attach_workspace(
-        "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
-    )
+    prep.attach_workspace(TESTING_WORKSPACE)
 
     with caplog.at_level("INFO"):
         prep.validate_all_components([component_path])
@@ -761,11 +755,7 @@ def test_run_with_config_runs_end_to_end(caplog):
     clean()
 
     prep = prepare.Prepare()
-    prep.config = Configuration(
-        workspaces=[
-            "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
-        ]
-    )
+    prep.config = Configuration(workspaces=[TESTING_WORKSPACE])
 
     with caplog.at_level("INFO"):
         prep.run_with_config()
@@ -792,9 +782,7 @@ def test_add_repo_and_last_pr_to_tags():
     )
     prep = prepare.Prepare()
     prep.config = Configuration()
-    prep.attach_workspace(
-        "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/aml1p-rg/providers/Microsoft.MachineLearningServices/workspaces/aml1p-ml-eus2"
-    )
+    prep.attach_workspace(TESTING_WORKSPACE)
     prep.add_repo_and_last_pr_to_tags([component_path])
     with open(component_path) as f:
         spec_file = yaml.load(f)

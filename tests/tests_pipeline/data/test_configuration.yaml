@@ -1,7 +1,7 @@
 aml:
   subscription_id: 48bbc269-ce89-4f6f-9a12-c6f91fcb772d
-  resource_group: aml1p-rg
-  workspace_name: aml1p-ml-eus2
+  resource_group: github-ci-rg
+  workspace_name: github-ci-ml-wus2
   tenant: 72f988bf-86f1-41af-91ab-2d7cd011db47
   auth: interactive
   force: false
@@ -33,7 +33,7 @@ compute:
   windows_cpu_dc_target: cpu-win
   windows_input_mode: download
   windows_output_mode: upload
-  hdi_prod_target: hdi-cluster
+  hdi_prod_target: cpu-cluster
   hdi_driver_memory: 2g
   hdi_driver_cores: 2
   hdi_executor_memory: 2g

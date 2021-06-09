@@ -22,4 +22,4 @@ module_loader: # module loading params
   force_all_module_version: null
 
 passthrough:
-  input_dataset: 1d12576d-80d8-4098-a36a-a9216c1e2530
+  input_dataset: 788843d3-b3d5-4f7b-98d1-026c2b52a1e4

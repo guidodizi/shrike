@@ -304,7 +304,7 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                 repo.head.ref
             )  # when running from our build the repo head is detached so this will throw an exception
         except TypeError:
-            current_branch = os.environ.get("BUILD_SOURCEBRANCH")
+            current_branch = os.environ.get("BUILD_SOURCEBRANCH") or os.environ.get("GITHUB_REF")
         log.info("The current branch is: '" + str(current_branch) + "'.")
         # Identify the compliant branch
         if not (self.config.compliant_branch.startswith("^refs/heads/")) or not (
