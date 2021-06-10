@@ -116,3 +116,43 @@ def test_configuration_path_does_not_exist(capsys, tmp_path):
     assert config.component_specification_glob == "*.yaml"
     assert config.configuration_file == str(config_path)
     assert "ERROR: the configuration file path provided" in captured.out
+
+
+def test_load_configuration_from_env_and_override_behaviour(capsys, tmp_path):
+    config_file_path = tmp_path / "aml-build-configuration.yml"
+    config_file_path.write_text(
+        "fail_if_version_exists: True\nactivation_method: smart\nverbose: False"
+    )
+    cli_args = [
+        "--verbose",
+        "--signing-mode",
+        "aether",
+        "--configuration-file",
+        str(config_file_path),
+    ]
+    env = {"ACTIVATION_METHOD": "all", "signing_mode": "aml"}
+
+    config = load_configuration_from_args_and_env(cli_args, env)
+    captured = capsys.readouterr()
+
+    # Testing loading configuration from env is successful
+    assert (
+        "Merge the config in the environment variables with the config in the command line."
+        in captured.out
+    )
+    assert (
+        "Load the config in the environment variables: {'activation_method': 'all', 'signing_mode': 'aml'}"
+        in captured.out
+    )
+
+    # Testing cli overrides env
+    assert config.signing_mode == "aether"
+
+    # Testing env overrides config file
+    assert config.activation_method == "all"
+
+    # Testing cli overrides config file
+    assert config.verbose is True
+
+    # Testing config file overrides default config
+    assert config.fail_if_version_exists is True

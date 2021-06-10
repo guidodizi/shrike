@@ -16,6 +16,11 @@ jobs:
 
     steps:
 
+    - uses: fauguste/auto-cancellation-running-action@0.1.4
+      # auto-cancellation-running-action
+      with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+
     - uses: actions/checkout@v2
       # Keep entire history for better code coverage reports.
       with:
@@ -78,6 +83,11 @@ jobs:
 
     steps:
 
+    - uses: fauguste/auto-cancellation-running-action@0.1.4
+      # auto-cancellation-running-action
+      with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+
     - uses: actions/checkout@v2
       # Keep entire history for better code coverage reports.
       with:
@@ -121,6 +131,11 @@ jobs:
     name: Test shrike.build
 
     steps:
+
+    - uses: fauguste/auto-cancellation-running-action@0.1.4
+      # auto-cancellation-running-action
+      with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: actions/checkout@v2
       # Keep entire history for better code coverage reports.

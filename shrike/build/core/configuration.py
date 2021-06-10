@@ -86,16 +86,30 @@ def load_configuration_from_args_and_env(
     highest:
     - default value
     - configuration file
+    - environment variables
     - command line arguments (highest priority)
     """
-
+    # Create default config 
     default_config = Configuration()
+
+    # Load config from command line
     cli_config = load_configuration_from_args(args)
+
+    # Load config parameters specified in environment variables
+    env_config = {key.lower():value for key, value in env.items() if key.lower() in asdict(default_config).keys()}
+    print(f"Load the config in the environment variables: {env_config}")
+
+    # Merge cli config and env config
+    # Priority: cli > env
+    if env_config:
+        print("Merge the config in the environment variables with the config in the command line.")
+        cli_config = OmegaConf.merge(env_config, cli_config)
+
     working_directory = (
-        cli_config.get("working_directory") or default_config.working_directory
+        cli_config.get("working_directory") or default_config.working_directory # type: ignore
     )
 
-    cli_config_path = cli_config.get("configuration_file")
+    cli_config_path = cli_config.get("configuration_file") # type: ignore
     file_config = None
     if cli_config_path is not None:
         try:
