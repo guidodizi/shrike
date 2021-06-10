@@ -12,21 +12,26 @@ import re
 import webbrowser
 import uuid
 
-from dataclasses import dataclass
-import hydra
-from hydra.core.config_store import ConfigStore
-from omegaconf import DictConfig, OmegaConf
-from flatten_dict import flatten
+try:
+    from dataclasses import dataclass
+    import hydra
+    from hydra.core.config_store import ConfigStore
+    from omegaconf import DictConfig, OmegaConf
+    from flatten_dict import flatten
 
-import azureml
-from azureml.core import Datastore
-from azureml.core import Experiment
-from azureml.core import Dataset
-from azureml.pipeline.core import PipelineRun
-from azure.ml.component._core._component_definition import (
-    ComponentDefinition,
-    ComponentType,
-)
+    import azureml
+    from azureml.core import Datastore
+    from azureml.core import Experiment
+    from azureml.core import Dataset
+    from azureml.pipeline.core import PipelineRun
+    from azure.ml.component._core._component_definition import (
+        ComponentDefinition,
+        ComponentType,
+    )
+except ImportError as error:
+    raise ImportError(
+        f"{error.msg}. Please install using `pip install shrike[pipeline]`."
+    )
 
 from shrike import __version__
 from shrike.pipeline.aml_connect import azureml_connect, current_workspace
