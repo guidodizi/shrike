@@ -93,3 +93,7 @@ modules:
     name: dummy_name
     yaml: "dummy/module_spec.yaml"
     version: null
+  - key: data_transfer
+    name: data_transfer
+    yaml: "data_transfer/module_spec.yaml"
+    version: null

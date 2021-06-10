@@ -101,6 +101,36 @@ def test_apply_parallel_runsettings(capsys, windows, gpu):
             assert module_instance.runsettings.target == "cpu-cluster"
 
 
+def test_apply_scope_runsettings():
+    module_instance = pipeline_helper.component_load("convert2ss")
+    step_instance = module_instance(TextData="foo", ExtractionClause="foo")
+
+    adla_account_name = "office-adhoc-c14"
+    custom_job_name_suffix = "test"
+    scope_param = "-tokens 50"
+    pipeline_helper._apply_scope_runsettings(
+        "convert2ss",
+        step_instance,
+        adla_account_name=adla_account_name,
+        custom_job_name_suffix=custom_job_name_suffix,
+        scope_param=scope_param,
+    )
+
+    assert step_instance.runsettings.scope.adla_account_name == adla_account_name
+    assert (
+        step_instance.runsettings.scope.custom_job_name_suffix == custom_job_name_suffix
+    )
+    assert step_instance.runsettings.scope.scope_param == scope_param
+
+
+def test_apply_datatransfer_runsettings():
+    module_instance = pipeline_helper.component_load("data_transfer")
+    step_instance = module_instance(source_data="foo")
+    pipeline_helper._apply_datatransfer_runsettings("data_Transfer", step_instance)
+
+    assert step_instance.runsettings.target == "data-factory"
+
+
 @pytest.mark.parametrize("mpi", [True, False])
 def test_apply_windows_runsettings(capsys, mpi):
     """Unit tests for _apply_windows_runsettings()"""
