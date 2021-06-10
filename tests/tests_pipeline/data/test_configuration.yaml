@@ -19,7 +19,7 @@ run:
   wait: false
   experiment_name: test_experiment
   pipeline_run_id: null
-  tags: test_tag
+  tags: '{"test_key": "test_value"}'
 
 compute:
   default_compute_target: cpu-cluster
@@ -30,7 +30,7 @@ compute:
   linux_input_mode: download
   linux_output_mode: upload
   windows_cpu_prod_target: cpu-win
-  windows_cpu_dc_target: cpu-win
+  windows_cpu_dc_target: cpu-dc-win
   windows_input_mode: download
   windows_output_mode: upload
   hdi_prod_target: cpu-cluster
@@ -39,8 +39,8 @@ compute:
   hdi_executor_memory: 2g
   hdi_executor_cores: 2
   hdi_number_executors: 2
-  hdi_conf: "{\n  \"spark.yarn.maxAppAttempts\": 1,\n  \"spark.sql.shuffle.partitions\"\
-    : 1000,\n  \"spark.yarn.appMasterEnv.PYSPARK_PYTHON\": \"/usr/bin/anaconda/envs/py37/bin/python3\"\
+  hdi_conf: "{\n  \"spark.yarn.maxAppAttempts\": 2,\n  \"spark.sql.shuffle.partitions\"\
+    : 2000,\n  \"spark.yarn.appMasterEnv.PYSPARK_PYTHON\": \"/usr/bin/anaconda/envs/py37/bin/python3\"\
     ,\n  \"spark.yarn.appMasterEnv.PYSPARK_DRIVER_PYTHON\": \"/usr/bin/anaconda/envs/py37/bin/python3\"\
     \n}\n"
   parallel_node_count: 10
@@ -76,6 +76,10 @@ modules:
   - key: stats_passthrough_windows
     name: stats_passthrough_windows
     yaml: "stats_passthrough_windows/module_spec.yaml"
+    version: null
+  - key: stats_passthrough_windows_mpi
+    name: stats_passthrough_windows_mpi
+    yaml: "stats_passthrough_windows_mpi/module_spec.yaml"
     version: null
   - key: convert2ss
     name: convert2ss

@@ -1,0 +1,6 @@
+name: default_env
+dependencies:
+  - python=3.7
+  - pip:
+    - azureml-defaults==1.13.0
+    - --index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/

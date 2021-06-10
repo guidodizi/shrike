@@ -1,0 +1,33 @@
+$schema: http://azureml/sdk-1-5/DistributedComponent.json
+name: stats_passthrough_windows_mpi
+version: 1.3.0
+display_name: stats_passthrough_windows_mpi
+type: DistributedComponent
+description: |2
+
+      This is a test AML Module for SmartCompose.
+      This copies inputs to outputs and displays some stats.
+
+      Author: Jeff Omhover for Microsoft
+      Contact: Jeff.Omhover@microsoft.com
+is_deterministic: true
+tags: {}
+inputs:
+  input_path:
+    type: AnyDirectory
+    description: path to input data
+    optional: false
+outputs:
+  output_path:
+    type: AnyDirectory
+    description: path to output data
+launcher:
+  type: mpi
+  additional_arguments: >-
+    python3 run.py --input_path {inputs.input_path} --output_path {outputs.output_path}
+environment:
+  docker:
+    image: polymerprod.azurecr.io/polymercd/prod_official/qas:latest
+  conda:
+    conda_dependencies_file: default_env.yaml
+  os: Windows
