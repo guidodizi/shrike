@@ -80,6 +80,9 @@ modules:
   - key: stats_passthrough_windows_mpi
     name: stats_passthrough_windows_mpi
     yaml: "stats_passthrough_windows_mpi/module_spec.yaml"
+  - key: stats_passthrough_mpi
+    name: stats_passthrough_mpi
+    yaml: "stats_passthrough_mpi/module_spec.yaml"
     version: null
   - key: convert2ss
     name: convert2ss

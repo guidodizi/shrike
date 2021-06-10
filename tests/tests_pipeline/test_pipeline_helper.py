@@ -228,3 +228,109 @@ def test_apply_hdi_runsettings(capsys):
     # Testing input and output mode
     assert module_instance.inputs.input_path.mode is None
     assert module_instance.outputs.output_path.output_mode is None
+
+
+@pytest.mark.parametrize(
+    "mpi,gpu", [(True, True), (True, False), (False, True), (False, False)]
+)
+def test_apply_linux_runsettings(capsys, mpi, gpu):
+    """Unit tests for _apply_linux_runsettings()"""
+    # Create a module instance
+    module_name = "stats_passthrough_mpi" if mpi else "stats_passthrough"
+    module_instance_fun = pipeline_helper.component_load(component_key=module_name)
+    module_instance = module_instance_fun(input_path="foo")
+
+    pipeline_helper._apply_linux_runsettings(
+        module_name=module_name,
+        module_instance=module_instance,
+        mpi=mpi,
+        gpu=gpu,
+        node_count=2 if mpi else None,
+        process_count_per_node=3 if mpi else None,
+    )
+
+    out, _ = capsys.readouterr()
+    sys.stdout.write(out)
+
+    # Testing mpi runsetting parameter configuration
+    if mpi:
+        assert module_instance.runsettings.resource_layout.node_count == 2
+        assert module_instance.runsettings.resource_layout.process_count_per_node == 3
+
+    # Testing compute target configuration
+    if gpu:
+        assert module_instance.runsettings.target == "gpu-cluster"
+        assert (
+            f"Using target gpu-cluster for local code GPU module {module_name} from pipeline class AMLPipelineHelper"
+            in out
+        )
+    else:
+        assert module_instance.runsettings.target == "cpu-cluster"
+        assert (
+            f"Using target cpu-cluster for local CPU module {module_name} from pipeline class AMLPipelineHelper"
+            in out
+        )
+
+    # Testing input and output mode
+    assert module_instance.inputs.input_path.mode == "download"
+    assert module_instance.outputs.output_path.output_mode == "upload"
+
+
+@pytest.mark.parametrize(
+    "module_name,expected_stdout",
+    [
+        ("MultiNodeTrainer", "Module MultiNodeTrainer detected as MPI: True"),
+        ("SparkHelloWorld", "Module SparkHelloWorld detected as HDI: True"),
+        ("stats_passthrough", ""),
+        (
+            "stats_passthrough_windows",
+            "Module stats_passthrough_windows detected as WINDOWS: True",
+        ),
+        (
+            "stats_passthrough_windows_mpi",
+            "Module stats_passthrough_windows_mpi detected as WINDOWS: True",
+        ),
+        (
+            "stats_passthrough_windows_mpi",
+            "Module stats_passthrough_windows_mpi detected as MPI: True",
+        ),
+        ("stats_passthrough_mpi", "Module stats_passthrough_mpi detected as MPI: True"),
+        ("convert2ss", "Module convert2ss detected as SCOPE: True"),
+        ("prscomponentlinux", "Module prscomponentlinux detected as PARALLEL: True"),
+        ("dummy_key", ""),
+        ("data_transfer", "Module data_transfer detected as DATATRANSFER: True"),
+    ],
+)
+def test_apply_recommended_runsettings(capsys, module_name, expected_stdout):
+    """Unit tests for apply_recommended_runsettings()"""
+    module_instance_fun = pipeline_helper.component_load(component_key=module_name)
+    if module_name == "convert2ss":
+        module_instance = module_instance_fun(
+            TextData="AnyFile", ExtractionClause="foo"
+        )
+    elif module_name == "data_transfer":
+        module_instance = module_instance_fun(source_data="foo", source_type="foo")
+    elif module_name == "dummy_key":
+        module_instance = module_instance_fun()
+    elif module_name == "MultiNodeTrainer":
+        module_instance = module_instance_fun(
+            vocab_file="foo", train_file="foo", validation_file="foo"
+        )
+    elif module_name == "prscomponentlinux":
+        module_instance = module_instance_fun(input_dir="foo")
+    elif module_name == "SparkHelloWorld":
+        module_instance = module_instance_fun(
+            input_path="foo", in_file_type="csv", percent_take=1, out_file_type="csv"
+        )
+    else:
+        module_instance = module_instance_fun(input_path="foo")
+
+    pipeline_helper.apply_recommended_runsettings(
+        module_name=module_name,
+        module_instance=module_instance,
+    )
+
+    out, _ = capsys.readouterr()
+    sys.stdout.write(out)
+
+    assert expected_stdout in out
