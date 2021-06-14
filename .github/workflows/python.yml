@@ -106,7 +106,7 @@ jobs:
     # See: https://github.com/codecov/example-python
     - name: Unit test for shrike.compliant_logging
       run: |
-        python -m pytest tests/tests_compliant_logging --cov --junitxml=test-logging-result.xml
+        python -m pytest tests/tests_compliant_logging --cov --junitxml=test-logging-result.xml --cov-fail-under=94
       if: always()
 
     - name: Publish test results for shrike.compliant_logging
@@ -159,7 +159,7 @@ jobs:
     # See: https://github.com/codecov/example-python
     - name: Unit test for shrike.build
       run: |
-        python -m pytest -s tests/tests_build --cov=shrike/build --junitxml=test-build-result.xml
+        python -m pytest -s tests/tests_build --cov=shrike/build --junitxml=test-build-result.xml --cov-fail-under=93
       if: always()
 
     - name: Publish test results for shrike.build
@@ -205,7 +205,7 @@ jobs:
     # See: https://github.com/codecov/example-python
     - name: Unit test for shrike.pipeline
       run: |
-        pytest -s tests/tests_pipeline --cov=shrike/pipeline --junitxml=test-pipeline-result.xml
+        pytest -s tests/tests_pipeline --cov=shrike/pipeline --junitxml=test-pipeline-result.xml --cov-fail-under=63
       if: always()
 
     - name: Publish test results for shrike.pipeline
