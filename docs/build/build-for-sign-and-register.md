@@ -3,14 +3,14 @@
 By reading through this doc, you will be able to
 
 - have a high-level understanding of how to use `shrike.build`, and 
-- create a **single-YAML** pipeline build in Azure DevOps for validating, signing and registering AML components.
+- create a **single-YAML** pipeline build in Azure DevOps for validating, signing and registering Azure ML components.
 
 ## Requirements
 
 To enjoy this tutorial, you need to 
 
--  have at least one [AML component YAML specification file](https://componentsdk.azurewebsites.net/components/command_component.html#how-to-write-commandcomponent-yaml-spec) in your team's repository,
--  have an [AML service connection](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml) set up in your Azure DevOps for your Azure subscription,
+-  have at least one [Azure ML component YAML specification file](https://componentsdk.azurewebsites.net/components/command_component.html#how-to-write-commandcomponent-yaml-spec) in your team's repository,
+-  have an [Azure ML service connection](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml) set up in your Azure DevOps for your Azure subscription,
 -  have an [ESRP service connection](https://microsoft.sharepoint.com/teams/prss/esrp/info/ESRP%20Onboarding%20Wiki/ESRP%20Onboarding%20Guide%20Wiki.aspx) set up in your Azure DevOps, and
 -  have a basic knowledge of Azure DevOps pipeline [YAML schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema).
 
@@ -37,9 +37,9 @@ component_specification_glob: 'steps/**/module_spec.yaml'
 
 log_format: '[%(name)s][%(levelname)s] - %(message)s'
 
-# List of workspace ARM IDs
+# List of workspace ARM IDs (fill in the <> with the appropriate values for your Azure ML workspace)
 workspaces: 
-- /subscriptions/2dea9532-70d2-472d-8ebd-6f53149ad551/resourcegroups/MOP.HERON.PROD.aa8dad83-8884-48de-8b0e-3f3880e7386a/providers/Microsoft.MachineLearningServices/workspaces/amlworkspace4frmqmkryoyzc
+- /subscriptions/<Subscription-Id>/resourcegroups/<Name-Of-Resource-Group>/providers/Microsoft.MachineLearningServices/workspaces/<Azure-ML-Workspace-Name>
 
 # Boolean argument: What to do when the same version of a component has already been registered.
 # Default: False
@@ -108,7 +108,7 @@ In this section, we briefly describe the workflow of the `prepare` command in th
 5. Create files `catlog.json` and `catalog.json.sig` for each "active" component.
 
 > Note: While building "active" components, all additional dependency files specified in `.additional_includes` will be copied into the component build folder by 
-the `prepare` command. However, for those dependecy files that are not checked into the repository, such as Odinmal Jar (from NuGet packages) and .zip files, we need to write extra "tasks" to 
+the `prepare` command. However, for those dependecy files that are not checked into the repository, such as OdinML Jar (from NuGet packages) and .zip files, we need to write extra "tasks" to 
 copy them into the component build folder.
 
 A sample YAML script of preparation step
@@ -128,7 +128,7 @@ A sample YAML script of preparation step
 ## ESRP CodeSign
 After creating `catlog.json` and `catalog.json.sig` files for each built component in the preparation step, we leverage the ESRP, that is *Engineer Sercurity and Release Platform*, to sign
 the contents of components. In the sample YAML script below, we need to customize `ConnectedServiceName` and `FolderPath`. In `TEEGit` repo, the name of ESRP service connection for Torus tenant 
-(​cdc5aeea-15c5-4db6-b079-fcadd2505dc2​) is `Substrate AI ESRP`. For other repos, if the service connection for ESRP has not been set up yet, please refer to the 
+(Tenant Id: ​cdc5aeea-15c5-4db6-b079-fcadd2505dc2​) is `Substrate AI ESRP`. For other repos, if the service connection for ESRP has not been set up yet, please refer to the 
 [ESRP CodeSign task Wiki](https://microsoft.sharepoint.com/teams/prss/esrp/info/ESRP%20Onboarding%20Wiki/Integrate%20the%20ESRP%20Scan%20Task%20into%20ADO.aspx) for detailed instructions.
 
 ```yaml
@@ -156,16 +156,16 @@ the contents of components. In the sample YAML script below, we need to customiz
 > Note: This step requires one-time authorization from the administrator of your ESRP service connection. Please contact your manager or tech lead for authorization questions.
 
 ## Component registration
-The last step is to register all signed components in our Azure ML workspaces. The `register` class in the `shrike` library implements the registration procedure by executing 
+The last step is to register all signed components in your Azure ML workspaces. The `register` class in the `shrike` library implements the registration procedure by executing the
 Azure CLI command `az ml component --create --file {component}`. The Python call is
 
 ```python
 python -m shrike.build.commands.register --configuration-file path/to/config
 ```
-In this step, the `register` class can detect signed and built components
-There are five configuration parameters related with registration step: `--compliant-branch`, `--source-branch`, `--fail-if-version-exists`, `--use-build-number`, and `--all-component-version`. We should customize them in the `configure-file` according to use cases.
+In this step, the `register` class can detect signed and built components.
+There are five configuration parameters related to the registration step: `--compliant-branch`, `--source-branch`, `--fail-if-version-exists`, `--use-build-number`, and `--all-component-version`. They should be customized in the `configure-file` according to your specific use case.
 
-- The `register` class checks whether the value of `source_branch` matches that of `compliant_branch` before starting registration. If their pattern doesn't match, an error message will be logged and the registraion step will be terminated.
+- The `register` class checks whether the value of `source_branch` matches that of `compliant_branch` before starting registration. If their pattern doesn't match, an error message will be logged and the registration step will be terminated.
 - If `fail_if_version_exists` is True, an error is raised and the registration step is terminated when the version number of some signed component already exists in the workspace; Otherwise, only a warning is raised and the registration step continues.
 - If `all_component_version` is not `None`, the value of `all_component_version` is used as the version number for all signed components.
 - If `use_build_number` is True, the build number is used as the version number for all signed components (Overriding the value of `all_component_version` if `all_component_version` is not `None`).

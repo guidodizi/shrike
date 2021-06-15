@@ -11,23 +11,24 @@
 [![PyPI version](https://badge.fury.io/py/shrike.svg)](https://badge.fury.io/py/shrike)
 [![license: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-Compliant Machine Learning is the practice of training, validating and deploying
-machine learning models without seeing the private data. It is needed in many
+Compliant Machine Learning (sometimes also called *eyes-off* Machine Learning)
+is the practice of training, validating and deploying
+machine learning models without seeing the underlying private data. It is needed by many
 enterprises to satisfy the strict compliance and privacy guarantees that 
 they provide to their customers.
 
 The `shrike` library is a set of Python utilities for compliant machine
 learning, with a special emphasis on running experiments in the 
-[Azure Machine Learning](https://github.com/Azure/azureml-examples) platform. This
-library mainly contains three components, that are
+[Azure Machine Learning](https://github.com/Azure/azureml-examples) platform (_a.k.a._ Azure ML). This
+library contains three elements, which are:
 
 -  `shrike.compliant_logging`: utlities for compliant logging and 
 exception handling;
 -  `shrike.pipeline`: helper code for managing, validating and submitting Azure
-Machine Learning pipelines based on 
-[azure-ml-component](https://aka.ms/azure-ml-component-reference);
+ML pipelines based on 
+[azure-ml-component](https://aka.ms/azure-ml-component-reference) (_a.k.a._ the Component SDK);
 -  `shrike.build`: helper code for packaging, building, validating, signing and
-registering Azure Machine Learning components.
+registering Azure ML components.
 
 ## Documentation
 For the full documentation of `shrike` with detailed examples and API reference, 
@@ -35,23 +36,23 @@ please see the [docs page](http://azure.github.io/shrike).
 
 ## Installation
 
-The `shrike` library is publicly available in PyPi. There are three optional extra dependencies - `pipeline`, `build` and `dev`, 
-among which  `pipeline` is for submitting Azure Machine Learning pipelines, `build` is for signing and registering components, 
+The `shrike` library is publicly available in PyPi. There are three optional extra dependencies: `pipeline`, `build`, and `dev`.
+The `pipeline` dependency is for submitting Azure ML pipelines, `build` is for signing and registering components, 
 and `dev` is for the development environment of `shrike`.
 
-- If only the compliant-logging feature would be used, please pip install without any extras:
+- If you are only planning on using the compliant-logging feature, please `pip install` without any extras:
 ```pwsh
 pip install shrike
 ```
-- If it will be used for signing and registering components, please type with `[build]`:
+- If you are planning on signing and registering components, please `pip install` with `[build]`:
 ```pwsh
 pip install shrike[build]
 ```
-- If it will be used for submitting Azure Machine Learning pipelines, please type with `[pipeline]`:
+- If you are planning on submitting Azure ML pipelines, please `pip install` with `[pipeline]`:
 ```pwsh
 pip install shrike[pipeline]
 ```
-- If you would like to contribute to the source code, please install with all the dependencies:
+- If you would like to contribute to the source code, please `pip install` with all the dependencies:
 ```pwsh
 pip install shrike[pipeline,build,dev]
 ```
@@ -66,12 +67,12 @@ python migraton.py --input_path PATH/TO/YOUR/REPO/OR/FILE
 :warning: This command will update files **in-place**. Please make a copy of your repo/file if you do not want to do so.
 
 ## Need Support?
-When you have any feature requests or technical questions or find
-any bugs, please don't hesitate to file issues.
+If you have any feature requests, technical questions, or find
+any bugs, please do not hesitate to reach out to us.
 
-- If you are Microsoft employees, please refer to the 
+- If you are a Microsoft employee, please refer to the 
 [support page](https://aka.ms/aml/support) for details;
-- If you are outside Microsoft, feel free to send an email
+- If you are outside Microsoft, please send an email
 to [aml-ds@microsoft.com](mailto:aml-ds@microsoft.com). 
 
 

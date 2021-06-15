@@ -40,10 +40,10 @@ The simplest use case (wrap your `main` method in a decorator) is:
 
 ### Prefixing stack trace
 
-Some configuration options around prefixing the stack trace. You can:
+`shrike` offers some configuration options around prefixing the stack trace. You can:
 
--  customize the prefix and the exception message
--  keep the original exception message (don't scrub)
+-  customize the prefix and the exception message;
+-  keep the original exception message (don't scrub);
 -  pass an allow_list of strings. Exception messages will be scrubbed unless the message or the
 exception type regex match one of the allow_list strings.
 
@@ -81,7 +81,7 @@ The `stack_trace_extractor` namespace contains simple tools to grab Python or C\
 stack traces and exceptions from log files. Sometimes the file that has the
 stack trace you need may also contain sensitive data. Use this tool to parse and
 print the stack trace, exception type and optionally exception message (careful
-as  exception messages may also potentially hold private data.)
+as  exception messages may also potentially hold private data).
 
 ```python
 from shrike.compliant_logging.stack_trace_extractor import StacktraceExtractor
