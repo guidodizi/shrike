@@ -782,7 +782,7 @@ def test_add_repo_and_last_pr_to_tags():
     )
     prep = prepare.Prepare()
     prep.config = Configuration()
-    prep.attach_workspace(TESTING_WORKSPACE)
+
     prep.add_repo_and_last_pr_to_tags([component_path])
     with open(component_path) as f:
         spec_file = yaml.load(f)
@@ -793,3 +793,239 @@ def test_add_repo_and_last_pr_to_tags():
     assert "last_commit_message" in spec_tags
     assert "path_to_component" in spec_tags
     assert "[link to commit]" in spec_file.get("description")
+
+
+def test_extract_python_package_dependencies():
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    conda_dependencies = {
+        "name": "democomponent_env",
+        "dependencies": [
+            "python=3.7",
+            {
+                "pip": [
+                    "azureml-core==1.20.0",
+                    "shrike",
+                    "numpy==1.19.4",
+                    "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+                ]
+            },
+        ],
+    }
+    extraction = prep._extract_python_package_dependencies(conda_dependencies)
+    assert len(extraction) == 4
+    assert extraction == [
+        "azureml-core==1.20.0",
+        "shrike",
+        "numpy==1.19.4",
+        "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+    ]
+
+
+def test_create_requirements_files(caplog):
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    steps_dir = str(Path(__file__).parent.parent.resolve() / "steps")
+    component_files = [
+        steps_dir + "/component" + str(i) + "/spec.yaml" for i in range(1, 5)
+    ]
+    with caplog.at_level("INFO"):
+        id = prep._create_requirements_files(component_files)
+    assert "Writing Python package dependencies to path" in caplog.text
+    component_dependencies_repo = "component_dependencies_" + id
+    assert os.path.exists(component_dependencies_repo)
+
+
+def test_create_requirements_file_for_single_component_conda_dependencies(caplog):
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.parent.resolve() / "steps/tmp_dir")
+    os.mkdir(tmp_dir)
+    tmp_yaml = {
+        "name": "dummy_1",
+        "display_name": "C# (.NET Core) component",
+        "version": "0.0.0",
+        "type": "CommandComponent",
+        "command": "chmod +x ./csharp_component && ./csharp_component\n",
+        "environment": {
+            "docker": {
+                "image": "polymerprod.azurecr.io/polymercd/prod_official/azureml_base_cpu:latest"
+            },
+            "conda": {
+                "conda_dependencies": {
+                    "dependencies": [
+                        "python=3.7",
+                        {
+                            "pip": [
+                                "azureml-core==1.27.0",
+                                "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+                            ]
+                        },
+                    ]
+                }
+            },
+        },
+    }
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec:
+        yaml.dump(tmp_yaml, tmp_spec)
+
+    path_to_requirements_files = (
+        prep.config.working_directory + "/tmp_path_to_requirements_files"
+    )
+    os.mkdir(path_to_requirements_files)
+
+    with caplog.at_level("INFO"):
+        prep._create_requirements_file_for_single_component(
+            tmp_dir + "/spec.yaml", path_to_requirements_files
+        )
+
+    assert "Found Python package dependencies for component dummy_1" in caplog.text
+    with open(path_to_requirements_files + "/dummy_1/requirements.txt", "r") as file:
+        lines = file.readlines()
+        assert lines == [
+            "azureml-core==1.27.0\n",
+            "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/\n",
+        ]
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+def test_create_requirements_file_for_single_component_conda_dependencies_file(caplog):
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.parent.resolve() / "steps/tmp_dir")
+    os.mkdir(tmp_dir)
+    tmp_yaml = {
+        "$schema": "http://azureml/sdk-2-0/CommandComponent.json",
+        "name": "dummy_2",
+        "version": "0.0.1",
+        "type": "CommandComponent",
+        "command": "pip freeze",
+        "code": "../../",
+        "environment": {"conda": {"conda_dependencies_file": "conda_env.yaml"}},
+    }
+    conda_env_yaml = {
+        "name": "democomponent_env",
+        "dependencies": [
+            "python=3.7",
+            {
+                "pip": [
+                    "azureml-core==1.20.0",
+                    "shrike",
+                    "numpy==1.19.4",
+                ]
+            },
+        ],
+    }
+
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec:
+        yaml.dump(tmp_yaml, tmp_spec)
+    with open(tmp_dir + "/conda_env.yaml", "w") as tmp_spec:
+        yaml.dump(conda_env_yaml, tmp_spec)
+
+    path_to_requirements_files = (
+        prep.config.working_directory + "/tmp_path_to_requirements_files"
+    )
+    os.mkdir(path_to_requirements_files)
+
+    with caplog.at_level("INFO"):
+        prep._create_requirements_file_for_single_component(
+            tmp_dir + "/spec.yaml", path_to_requirements_files
+        )
+
+    assert "Found Python package dependencies for component dummy_2" in caplog.text
+    with open(path_to_requirements_files + "/dummy_2/requirements.txt", "r") as file:
+        lines = file.readlines()
+        assert lines == ["azureml-core==1.20.0\n", "shrike\n", "numpy==1.19.4\n"]
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+def test_create_requirements_file_for_single_component_pip_requirements_file(caplog):
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.parent.resolve() / "steps/tmp_dir")
+    os.mkdir(tmp_dir)
+    tmp_yaml = {
+        "$schema": "http://azureml/sdk-2-0/CommandComponent.json",
+        "name": "dummy_3",
+        "version": "0.0.1",
+        "type": "CommandComponent",
+        "command": "pip freeze",
+        "code": "../../",
+        "environment": {"conda": {"pip_requirements_file": "requirements.txt"}},
+    }
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec:
+        yaml.dump(tmp_yaml, tmp_spec)
+    with open(tmp_dir + "/requirements.txt", "w") as pip_requirements:
+        pip_requirements.writelines(["azureml-defaults\n", "scikit-learn==0.24.2"])
+
+    path_to_requirements_files = (
+        prep.config.working_directory + "/tmp_path_to_requirements_files"
+    )
+    os.mkdir(path_to_requirements_files)
+
+    with caplog.at_level("INFO"):
+        prep._create_requirements_file_for_single_component(
+            tmp_dir + "/spec.yaml", path_to_requirements_files
+        )
+
+    assert "Found Python package dependencies for component dummy_3" in caplog.text
+    with open(path_to_requirements_files + "/dummy_3/requirements.txt", "r") as file:
+        lines = file.readlines()
+        assert lines == ["azureml-defaults\n", "scikit-learn==0.24.2\n"]
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+def test_create_requirements_file_for_single_component_no_dependencies(caplog):
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.parent.resolve() / "steps/tmp_dir")
+    os.mkdir(tmp_dir)
+    tmp_yaml = {
+        "$schema": "http://azureml/sdk-2-0/CommandComponent.json",
+        "name": "dummy_4",
+        "version": "0.0.1",
+        "type": "CommandComponent",
+        "command": "pip freeze",
+        "code": "../../",
+    }
+
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec:
+        yaml.dump(tmp_yaml, tmp_spec)
+
+    path_to_requirements_files = (
+        prep.config.working_directory + "/tmp_path_to_requirements_files"
+    )
+    os.mkdir(path_to_requirements_files)
+
+    with caplog.at_level("INFO"):
+        prep._create_requirements_file_for_single_component(
+            tmp_dir + "/spec.yaml", path_to_requirements_files
+        )
+
+    assert "Found Python package dependencies for component dummy_4" not in caplog.text
+    assert not os.path.exists(path_to_requirements_files + "/dummy_4")
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)

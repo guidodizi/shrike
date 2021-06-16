@@ -1,18 +1,19 @@
 $schema: http://azureml/sdk-1-5/ScopeComponent.json
-
 name: convert2ss
 version: 0.0.1
 display_name: Convert Text to StructureStream
-
 type: ScopeComponent
+is_deterministic: true
+description: 'Convert adls test data to SS format
 
-is_deterministic: True
+  ----
 
-description: Convert adls test data to SS format
-
+  [link to commit](https://github.com/Azure/shrike.git?version=GCd5ef496e37c33e926f0cbf85c818f090576ab3b0&path=tests%5Ctests_build%5Csteps%5Ccomponent4)'
 inputs:
   TextData:
-    type: [AnyFile, AnyDirectory]
+    type:
+    - AnyFile
+    - AnyDirectory
     description: text file on ADLS storage
   ExtractionClause:
     type: string
@@ -21,14 +22,14 @@ outputs:
   SSPath:
     type: CosmosStructuredStream
     description: the converted structured stream
-
 code: ./
-
 scope:
   script: convert2ss.script
-  # to reference the inputs/outputs in your script
-  # you must define the argument name of your intpus/outputs in args section
-  args: >-
-    Input_TextData {inputs.TextData}
-    ExtractionClause {inputs.ExtractionClause}
+  args: Input_TextData {inputs.TextData} ExtractionClause {inputs.ExtractionClause}
     Output_SSPath {outputs.SSPath}
+tags:
+  repo: https://github.com/Azure/shrike.git
+  last_commit_id: d5ef496e37c33e926f0cbf85c818f090576ab3b0
+  last_commit_message: Merge all recent pull requests for old tooling packages completed
+    during 4/29-5/13 (#15)
+  path_to_component: tests\tests_build\steps\component4

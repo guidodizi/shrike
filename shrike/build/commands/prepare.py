@@ -19,7 +19,7 @@ from shrike.build.utils.utils import (
 from pathlib import Path
 import yaml
 import urllib.parse
-
+import uuid
 
 log = logging.getLogger(__name__)
 
@@ -304,7 +304,9 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                 repo.head.ref
             )  # when running from our build the repo head is detached so this will throw an exception
         except TypeError:
-            current_branch = os.environ.get("BUILD_SOURCEBRANCH") or os.environ.get("GITHUB_REF")
+            current_branch = os.environ.get("BUILD_SOURCEBRANCH") or os.environ.get(
+                "GITHUB_REF"
+            )
         log.info("The current branch is: '" + str(current_branch) + "'.")
         # Identify the compliant branch
         if not (self.config.compliant_branch.startswith("^refs/heads/")) or not (
@@ -587,6 +589,88 @@ CATATTR1=0x00010001:OSAttr:2:6.2
         )
         return False
 
+    def _create_requirements_files(self, component_files) -> str:
+        id = str(uuid.uuid4())
+        path_to_requirements_files = os.path.join(
+            self.config.working_directory, "component_dependencies_" + id
+        )
+        log.info(
+            f"Writing Python package dependencies to path {path_to_requirements_files}"
+        )
+        os.makedirs(path_to_requirements_files)
+        for component in component_files:
+            self._create_requirements_file_for_single_component(
+                component, path_to_requirements_files
+            )
+        return id
+
+    def _create_requirements_file_for_single_component(
+        self, component, path_to_requirements_files
+    ) -> None:
+        component_repo = Path(component).parent
+        with open(component, "r") as spec_file:
+            spec = YAML(typ="safe").load(spec_file)
+        if "environment" in spec:
+            spec_environment = spec.get("environment")
+            if "conda" in spec_environment:
+                spec_conda = spec_environment["conda"]
+                pip_dependencies = []
+                if "conda_dependencies" in spec_conda:
+                    requirements = spec_conda["conda_dependencies"]
+                    pip_dependencies += self._extract_python_package_dependencies(
+                        requirements
+                    )
+                if "conda_dependencies_file" in spec_conda:
+                    conda_dependencies_file = spec_conda["conda_dependencies_file"]
+                    try:
+                        with open(
+                            os.path.join(
+                                component_repo, spec_conda["conda_dependencies_file"]
+                            )
+                        ) as file:
+                            requirements = YAML(typ="safe").load(file)
+                        pip_dependencies += self._extract_python_package_dependencies(
+                            requirements
+                        )
+                    except FileNotFoundError:
+                        self.register_error(
+                            f"The required conda_dependencies_file {conda_dependencies_file} does not exist in {component_repo}."
+                        )
+                if "pip_requirements_file" in spec_conda:
+                    pip_requirements_file = spec_conda["pip_requirements_file"]
+                    try:
+                        with open(
+                            os.path.join(
+                                component_repo, spec_conda["pip_requirements_file"]
+                            )
+                        ) as file:
+                            pip_dependencies += file.readlines()
+                    except FileNotFoundError:
+                        self.register_error(
+                            f"The required pip_requirements_file {pip_requirements_file} does not exist in {component_repo}."
+                        )
+                if pip_dependencies:
+                    component_name = spec.get("name")
+                    log.info(
+                        f"Found Python package dependencies for component {component_name} in {component_repo}. Writing to requirements.txt."
+                    )
+                    cur_path = os.path.join(path_to_requirements_files, component_name)
+                    os.makedirs(cur_path)
+                    with open(os.path.join(cur_path, "requirements.txt"), "w") as file:
+                        for req in pip_dependencies:
+                            file.write(req)
+                            if not req.endswith("\n"):
+                                file.write("\n")
+
+    def _extract_python_package_dependencies(self, conda_dependencies) -> List[str]:
+        pip_dependencies = []
+        if "dependencies" in conda_dependencies:
+            dependencies = conda_dependencies.get("dependencies")
+            for dependencies_item in dependencies:
+                if isinstance(dependencies_item, dict) and "pip" in dependencies_item:
+                    pip_dependencies = dependencies_item["pip"]
+        return pip_dependencies
+
     def run_with_config(self):
         log.info("Running component preparation logic.")
 
@@ -605,6 +689,8 @@ CATATTR1=0x00010001:OSAttr:2:6.2
             built_component_files = component_files
 
         self.create_catalog_files(built_component_files)
+
+        self._create_requirements_files(component_files)
 
     def validate_all_components(self, files: List[str]) -> None:
         """
