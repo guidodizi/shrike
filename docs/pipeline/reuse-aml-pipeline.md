@@ -147,6 +147,25 @@ Identify the component **key**, this is the key used to map to the component in 
 
     > Note: this is example for illustrative purposesonly; the accelerator repo and the demo eyes-off graph do not really have a `VocabGenerator` component.
 
+    From `shrike v1.4.0`, you could also specify "all local except for a few", using the syntax:
+    ```yaml
+    # module_loader
+    module_loader:
+      use_local="!KEY1, !KEY2"
+    ```
+    or from command line override:
+    ```powershell
+    python <your_pipeline_and_config> module_loader.use_local="'!KEY1, !KEY2'"
+    ```
+    where only components `KEY1` and `KEY2` are remote, and all the other components are local.
+
+    In summary, four patterns are allowed 
+    - use_local = "", all components are remote
+    - use_local = "*", all components are local
+    - use_local = "KEY1, KEY2", components `KEY1` and `KEY2` are local
+    - use_local = "!KEY1, !KEY2", all components except for `KEY1` and `KEY2` are local
+
+    :warning:  **"Mix" (e.g., use_local="KEY1, !KEY2") is not allowed.**
 2. When running the experiment, watch-out in the logs for a line that will indicate this component has loaded from local code:
 
     ```

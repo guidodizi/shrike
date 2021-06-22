@@ -102,7 +102,7 @@ run: # params for running pipeline
 
 This section includes 4 arguments: `use_local`, `force_default_module_version`, `force_all_module_version`, and `local_steps_folder`.
 
-- The `use_local` parameter specifies which components of the pipeline you would like to build from your local code (rather than consuming the remote registered component). Use a comma-separated string to specify the list of components from your local code. If you use "*", all components are loaded from local code.
+- The `use_local` parameter specifies which components of the pipeline you would like to build from your local code (rather than consuming the remote registered component). Use a comma-separated string to specify the list of components from your local code. If you use "*", all components are loaded from local code. For more information, please check out [Use component key to run this component locally](./reuse-aml-pipeline.md).
 - The `force_default_module_version` argument enables you to change the default version of the component in your branch (the default version is the latest version, but this argument allows you to pin it to a given release version if you prefer).
 - The `force_all_module_version` argument enables you to force all components to consume a fixed version, even if the version is specified otherwise in the pipeline code.
 - The argument `local_steps_folder` should be clear and self-explanatory: this is the directory where all the component folders are located.

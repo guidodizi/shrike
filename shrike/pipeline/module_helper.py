@@ -37,6 +37,7 @@ class module_loader_config:  # pylint: disable=invalid-name
     """Config for the AMLModuleLoader class"""
 
     use_local: Optional[str] = None
+    use_local_except_for: Optional[bool] = None
     force_default_module_version: Optional[str] = None
     force_all_module_version: Optional[str] = None
     local_steps_folder: str = os.path.abspath(
@@ -61,6 +62,11 @@ class AMLModuleLoader:
         Args:
             config (DictConfig): configuration options
         """
+        self.use_local_except_for = (
+            config.module_loader.use_local_except_for
+            if "use_local_except_for" in config.module_loader
+            else None
+        )
         if "use_local" not in config.module_loader:
             self.use_local = []
         elif config.module_loader.use_local is None:
@@ -71,6 +77,11 @@ class AMLModuleLoader:
             self.use_local = [
                 x.strip() for x in config.module_loader.use_local.split(",")
             ]
+            if not _check_use_local_syntax_valid(self.use_local):
+                raise ValueError(
+                    f'Invalid value for `use_local`. Please follow one of the four patterns: \n1) use_local="", all modules are remote\n2) use_local="*", all modules are local\n3) use_local="MODULE_KEY_1, MODULE_KEY_2", only MODULE_KEY_1, MODULE_KEY_2 are local, everything else is remote\n4) use_local="!MODULE_KEY_1, !MODULE_KEY_2", all except for MODULE_KEY_1, MODULE_KEY_2 are local'
+                )
+            self.use_local_except_for = self.use_local[0].startswith("!")
 
         self.force_default_module_version = (
             config.module_loader.force_default_module_version
@@ -111,7 +122,10 @@ class AMLModuleLoader:
         """Tests is module is in local list"""
         if self.use_local == "*":
             return True
-        return module_name in self.use_local
+        if self.use_local_except_for:
+            return "!" + module_name not in self.use_local
+        else:
+            return module_name in self.use_local
 
     def module_in_cache(self, module_cache_key):
         """Tests if module in internal cache (dict)"""
@@ -132,7 +146,7 @@ class AMLModuleLoader:
 
         for (k, module_entry) in modules_manifest.items():
             # TODO: merge error checking code with processing code so we do all this in one pass
-            if (self.use_local == "*") or (k in self.use_local):
+            if self.is_local(k):
                 if "yaml_spec" not in module_entry:
                     errors.append(
                         f"{k}: You need to specify a yaml_spec for your module to use_local=['{k}']"
@@ -280,7 +294,7 @@ class AMLModuleLoader:
             module_key, modules_manifest
         )
 
-        if (self.use_local == "*") or (module_key in self.use_local):
+        if self.is_local(module_key):
             loaded_module = self.load_local_module(module_entry["yaml"])
         else:
             loaded_module = self.load_prod_module(
@@ -317,3 +331,16 @@ class AMLModuleLoader:
             loaded_modules[module_key] = self.load_module(module_key, modules_manifest)
 
         return loaded_modules
+
+
+def _check_use_local_syntax_valid(use_local_list) -> bool:
+    use_local_except_for = True if use_local_list[0].startswith("!") else False
+    if use_local_except_for:
+        for module_key in use_local_list:
+            if not module_key.startswith("!"):
+                return False
+    else:
+        for module_key in use_local_list:
+            if module_key.startswith("!"):
+                return False
+    return True
