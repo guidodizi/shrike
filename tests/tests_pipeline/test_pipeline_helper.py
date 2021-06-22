@@ -131,6 +131,20 @@ def test_apply_datatransfer_runsettings():
     assert step_instance.runsettings.target == "data-factory"
 
 
+@pytest.mark.parametrize(
+    "compliant,datastore",
+    [(True, "fake_compliant_datastore"), (False, "workspaceblobstore")],
+)
+def test_apply_recommended_runsettings_datatransfer_datastore(compliant, datastore):
+    module_instance = pipeline_helper.component_load("data_transfer")
+    step_instance = module_instance(source_data="foo")
+    pipeline_helper.apply_recommended_runsettings(
+        "data_transfer", step_instance, datatransfer=True, compliant=compliant
+    )
+
+    assert step_instance.outputs.destination_data.datastore.name == datastore
+
+
 @pytest.mark.parametrize("mpi", [True, False])
 def test_apply_windows_runsettings(capsys, mpi):
     """Unit tests for _apply_windows_runsettings()"""

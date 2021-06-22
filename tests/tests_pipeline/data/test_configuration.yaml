@@ -50,8 +50,8 @@ compute:
   parallel_mini_batch_size: 1
   parallel_error_threshold: -1
   datatransfer_target: data-factory
-  compliant_datastore: workspaceblobstore
-  noncompliant_datastore: null
+  compliant_datastore: fake_compliant_datastore
+  noncompliant_datastore: workspaceblobstore
 
 module_loader:
   use_local: '*'

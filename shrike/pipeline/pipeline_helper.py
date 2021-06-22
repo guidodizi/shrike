@@ -657,6 +657,7 @@ class AMLPipelineHelper:
         self,
         module_name,
         module_instance,
+        compliant=True,
         target=None,
         input_mode=None,
         output_mode=None,
@@ -667,6 +668,7 @@ class AMLPipelineHelper:
         Args:
             module_name (str): name of the module from the module manifest (required_modules() method)
             module_instance (Module): the AML module we need to add settings to
+            compliant (bool): destination datastore, `compliant_datastore` if True, else `noncompliant_datastore`
             target (str): force target compute over hydra conf
             input_mode (str): force input_mode over hydra conf
             output_mode (str): force output_mode over hydra conf
@@ -686,7 +688,7 @@ class AMLPipelineHelper:
 
         if input_mode:
             self._set_all_inputs_to(module_instance, input_mode)
-        self._set_all_outputs_to(module_instance, output_mode)
+        self._set_all_outputs_to(module_instance, output_mode, compliant)
 
     def _check_module_runsettings_consistency(self, module_key, module_instance):
         """Verifies if entry at module_key matches the module instance description"""
