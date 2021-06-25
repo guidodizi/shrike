@@ -70,6 +70,7 @@ python migraton.py --input_path PATH/TO/YOUR/REPO/OR/FILE
 If you have any feature requests, technical questions, or find
 any bugs, please do not hesitate to reach out to us.
 
+- For bug reports and feature requests, you are welcome to open an [issue](https://github.com/Azure/shrike/issues). 
 - If you are a Microsoft employee, please refer to the 
 [support page](https://aka.ms/aml/support) for details;
 - If you are outside Microsoft, please send an email
