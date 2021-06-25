@@ -77,7 +77,7 @@ Using this "smart" mode will only register the components that were modified, gi
 
 > Note: Another corollary of point 2 is that if you want to use the "smart" mode, you need to be as accurate as possible with the files listed in the `additional_includes`, otherwise components might be registered even though the changes didn't really affect them. Imagine the extreme case where you have a huge `utils` directory listed in `additional_includes` instead of the specific list of utils files: every change to that directory, even if not relevant to your component of interest, will trigger the registration. This would defeat the purpose of having a smart mode in the first place.
 
-:warning: It is worth reiterating that for the tool to work properly, **the name of the compliant branch in your config file should be of the form "`^refs/heads/<YourCompliantBranchName>$`"**. (Notice how it starts with "`^refs/heads/`" and ends with "`$`".)
+:warning: It is worth reiterating that for the tool to work properly, **the name of the compliant branch in your config file should be of the form "`^refs/heads/<YourCompliantBranchName>$`"**. (Notice how it starts with "`^refs/heads/`" and ends with "`$`".) However, _regular expressions are not supported by the "smart" mode_, since there would be some ambiguity in determining the list of modified files when there are several compliant (i.e. reference) branches.
 
 :warning: To identify the latest merge into the compliant branch, the tool relies on the Azure DevOps convention that the commit message starts with "Merged PR". **If you customize the commit message, please make sure it still starts with "Merged PR", otherwise the "smart" logic will not work properly.**
 
@@ -277,6 +277,6 @@ Then, members of your team can manually trigger builds via the Azure DevOps UI, 
 
 **Tips**
 
-- Another way of achieving similar functionality is to run a "smart mode" build which triggers against **all** `compliant/*` branches.
+- Another way of achieving similar functionality is to run several "smart mode" builds which trigger against **all** `compliant/*` branches. To do so, you will need several build config files, one for each compliant branch.
 - Name your builds something like `*-dev` so that these versions of the components don't get registered as default.
 - See the Search Relevance team's example for something complete: [[yaml] SearchRelevance AML Components Signing and Registering - dev](https://dev.azure.com/eemo/TEE/_build?definitionId=532&_a=summary).
