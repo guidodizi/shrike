@@ -5,12 +5,14 @@ nav:
 - Compliant Logging:
     Logging examples: compliant_logging/README.md
     Logging design: compliant_logging/rfc-logging.md
+    Image override: rfc/pipeline-image-override.md
     API reference:
       constants: compliant_logging/constants.md
       exceptions: compliant_logging/exceptions.md
       logging: compliant_logging/logging.md
 - Build:
     Sign & register components: build/build-for-sign-and-register.md
+    Component validation: rfc/strict-component-validation.md
     API reference:
       prepare: build/prepare.md
       register: build/register.md
