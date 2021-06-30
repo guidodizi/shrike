@@ -690,6 +690,139 @@ class AMLPipelineHelper:
             self._set_all_inputs_to(module_instance, input_mode)
         self._set_all_outputs_to(module_instance, output_mode, compliant)
 
+    def _apply_sweep_runsettings(
+        self,
+        module_name,
+        module_instance,
+        windows=False,
+        gpu=False,
+        target=None,
+        input_mode=None,
+        output_mode=None,
+        algorithm=None,
+        primary_metric=None,
+        goal=None,
+        policy_type=None,
+        evaluation_interval=None,
+        delay_evaluation=None,
+        slack_factor=None,
+        slack_amount=None,
+        truncation_percentage=None,
+        max_total_trials=None,
+        max_concurrent_trials=None,
+        timeout_minutes=None,
+        **custom_runtime_arguments,
+    ):
+        """Applies settings for a sweep component.
+
+        Args:
+            module_name (str): name of the module from the module manifest (required_modules() method)
+            module_instance (Module): the AML module we need to add settings to
+            target (str): force target compute over hydra conf
+            input_mode (str): force input_mode over hydra conf
+            output_mode (str): force output_mode over hydra conf
+
+            # For below sweep specific parameters configurations, see below doc link for more info:
+            # https://componentsdk.azurewebsites.net/components/sweep_component.html#set-runsettings
+            algorithm (str): sweep sampling method
+            primary_metric (str): the primary metric of the hyperparameter tuning to optimize
+            goal (str): whether the primary metric will be maximize or minimize when evaluating the trials
+            policy_type (str): sweep early termination policy type
+            evaluation_interval (int): frequency of applying the policy
+            delay_evaluation (int): delays the first policy evaluation for a specified number of intervals
+            slack_factor (float): the slack allowed with respect to the best performing training run, as a ratio
+            slack_amount (float): the slack allowed with respect to the best performing training run, as an absolute ampunt. You should only specify either slack_factor or slack_amount, but not both.
+            truncation_percentage (int): the percentage of lowest performing runs to terminate at each evaluation interval. An integer value between 1 and 99.
+            max_total_trials (int): maximum number of trial runs. Must be an integer between 1 and 1000.
+            max_concurrent_trials (int): maximum number of runs that can run concurrently. If not specified, all runs launch in parallel. If specified, must be an integer between 1 and 100.
+            timeout_minutes (int): maximum duration, in minutes, of the hyperparameter tuning experiment. Runs after this duration are canceled.
+
+            custom_runtime_arguments (dict): any additional custom args
+        """
+        if target is not None:
+            target = target
+        elif self.module_loader.is_local(module_name):
+            if windows:
+                if gpu:
+                    raise ValueError(
+                        "A GPU compute target with Windows OS is not available yet!"
+                    )
+                else:
+                    target = self.config.compute.windows_cpu_dc_target
+            else:
+                if gpu:
+                    target = self.config.compute.linux_gpu_dc_target
+                else:
+                    target = self.config.compute.linux_cpu_dc_target
+        else:
+            if windows:
+                if gpu:
+                    raise ValueError(
+                        "A GPU compute target with Windows OS is not available yet!"
+                    )
+                else:
+                    target = self.config.compute.windows_cpu_prod_target
+            else:
+                if gpu:
+                    target = self.config.compute.linux_gpu_prod_target
+                else:
+                    target = self.config.compute.linux_cpu_prod_target
+        print(
+            f"Using target {target} to run sweep component {module_name} from pipeline class {self.__class__.__name__}"
+        )
+        if custom_runtime_arguments:
+            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+
+        if input_mode:
+            self._set_all_inputs_to(module_instance, input_mode)
+        if output_mode:
+            self._set_all_outputs_to(module_instance, output_mode)
+
+        if algorithm:
+            module_instance.runsettings.sweep.algorithm = algorithm
+        if primary_metric:
+            module_instance.runsettings.sweep.objective.configure(
+                primary_metric=primary_metric
+            )
+        if goal:
+            module_instance.runsettings.sweep.objective.configure(goal=goal)
+        if policy_type:
+            module_instance.runsettings.sweep.early_termination.configure(
+                policy_type=policy_type
+            )
+        if evaluation_interval:
+            module_instance.runsettings.sweep.early_termination.configure(
+                evaluation_interval=evaluation_interval
+            )
+        if delay_evaluation:
+            module_instance.runsettings.sweep.early_termination.configure(
+                delay_evaluation=delay_evaluation
+            )
+        if slack_factor:
+            module_instance.runsettings.sweep.early_termination.configure(
+                slack_factor=slack_factor
+            )
+        if slack_amount:
+            module_instance.runsettings.sweep.early_termination.configure(
+                slack_amount=slack_amount
+            )
+        if truncation_percentage:
+            module_instance.runsettings.sweep.early_termination.configure(
+                truncation_percentage=truncation_percentage
+            )
+        if max_total_trials:
+            module_instance.runsettings.sweep.limits.configure(
+                max_total_trials=max_total_trials
+            )
+        if max_concurrent_trials:
+            module_instance.runsettings.sweep.limits.configure(
+                max_concurrent_trials=max_concurrent_trials
+            )
+        if timeout_minutes:
+            module_instance.runsettings.sweep.limits.configure(
+                timeout_minutes=timeout_minutes
+            )
+
     def _check_module_runsettings_consistency(self, module_key, module_instance):
         """Verifies if entry at module_key matches the module instance description"""
         module_manifest_entry, _ = self.module_loader.get_module_manifest_entry(
@@ -742,6 +875,7 @@ class AMLPipelineHelper:
         mpi="auto",
         scope="auto",
         datatransfer="auto",
+        sweep="auto",
         **custom_runtime_arguments,
     ):
         """Applies regular settings for a given component.
@@ -753,6 +887,9 @@ class AMLPipelineHelper:
             windows (bool): is the component using Windows compute?
             parallel (bool): is the component using ParallelRunStep?
             mpi (bool): is the component using Mpi?
+            scope (bool): is the component using scope?
+            datatransfer (bool): is the component using datatransfer?
+            sweep (bool): is the component using sweep?
             custom_runtime_arguments (dict): any additional custom args
         """
         # infer component_name
@@ -767,6 +904,7 @@ class AMLPipelineHelper:
             mpi,
             scope,
             datatransfer,
+            sweep,
             **custom_runtime_arguments,
         )
 
@@ -781,6 +919,7 @@ class AMLPipelineHelper:
         mpi="auto",
         scope="auto",
         datatransfer="auto",
+        sweep="auto",
         **custom_runtime_arguments,
     ):
         """Applies regular settings for a given module.
@@ -819,13 +958,19 @@ class AMLPipelineHelper:
             if scope:
                 print(f"Module {module_name} detected as SCOPE: {scope}")
 
+        if sweep == "auto":
+            sweep = str(module_instance.type) == "SweepComponent"
+            if sweep:
+                print(f"Module {module_name} detected as SweepComponent: {sweep}")
+
         if windows == "auto":
             if (
                 str(module_instance.type) == "HDInsightComponent"
                 or str(module_instance.type) == "ScopeComponent"
                 or str(module_instance.type) == "DataTransferComponent"
+                or str(module_instance.type) == "SweepComponent"
             ):
-                # HDI/scope/datatransfer modules might not have that environment object
+                # HDI/scope/datatransfer/sweep modules might not have that environment object
                 windows = False
             else:
                 windows = (
@@ -841,6 +986,16 @@ class AMLPipelineHelper:
 
         if parallel:
             self._apply_parallel_runsettings(
+                module_name,
+                module_instance,
+                windows=windows,
+                gpu=gpu,
+                **custom_runtime_arguments,
+            )
+            return
+
+        if sweep:
+            self._apply_sweep_runsettings(
                 module_name,
                 module_instance,
                 windows=windows,

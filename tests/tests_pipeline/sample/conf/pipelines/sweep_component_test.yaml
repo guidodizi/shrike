@@ -1,0 +1,18 @@
+# Config for integration tests
+defaults:
+  - aml: amlds
+  - compute: amlds
+  - modules: samples_20210208
+
+run: # params for running pipeline
+  experiment_name: "sweep_component_test"
+ 
+module_loader: # module loading params
+  use_local: "*"
+  force_default_module_version: null
+  force_all_module_version: null
+
+# config for runnable script
+# see get_config_class() in experiment runnable python script
+sweepcomponentexample:
+  # This naive sweep component example is self-contained, and doesn't require any extra dependency. All args are optional.

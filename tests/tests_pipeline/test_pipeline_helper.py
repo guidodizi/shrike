@@ -131,6 +131,134 @@ def test_apply_datatransfer_runsettings():
     assert step_instance.runsettings.target == "data-factory"
 
 
+def test_apply_sweep_runsettings():
+    module_instance = pipeline_helper.component_load("sweep_component")
+    step_instance = module_instance()
+
+    algorithm = "random"
+    primary_metric = "result"
+    goal = "maximize"
+    policy_type = "median_stopping"
+    evaluation_interval = 1
+    delay_evaluation = 1
+
+    # Important tip: note that we can only either specify slack_factor, or slack_amount, but not both
+    # See this sweep doc for more details about sweep component: https://componentsdk.azurewebsites.net/components/sweep_component.html
+    slack_factor = 0.1
+    # slack_amount=0.2
+
+    truncation_percentage = 10
+    max_total_trials = 5
+    max_concurrent_trials = 4
+    timeout_minutes = 30
+
+    pipeline_helper._apply_sweep_runsettings(
+        "sweep_component",
+        step_instance,
+        algorithm=algorithm,
+        primary_metric=primary_metric,
+        goal=goal,
+        policy_type=policy_type,
+        evaluation_interval=evaluation_interval,
+        delay_evaluation=delay_evaluation,
+        slack_factor=slack_factor,
+        truncation_percentage=truncation_percentage,
+        max_total_trials=max_total_trials,
+        max_concurrent_trials=max_concurrent_trials,
+        timeout_minutes=timeout_minutes,
+    )
+
+    assert step_instance.runsettings.sweep.algorithm == algorithm
+    assert step_instance.runsettings.sweep.objective.primary_metric == primary_metric
+    assert step_instance.runsettings.sweep.objective.goal == goal
+    assert step_instance.runsettings.sweep.early_termination.policy_type == policy_type
+    assert (
+        step_instance.runsettings.sweep.early_termination.evaluation_interval
+        == evaluation_interval
+    )
+    assert (
+        step_instance.runsettings.sweep.early_termination.delay_evaluation
+        == delay_evaluation
+    )
+    assert (
+        step_instance.runsettings.sweep.early_termination.slack_factor == slack_factor
+    )
+    assert (
+        step_instance.runsettings.sweep.early_termination.truncation_percentage
+        == truncation_percentage
+    )
+    assert step_instance.runsettings.sweep.limits.max_total_trials == max_total_trials
+    assert (
+        step_instance.runsettings.sweep.limits.max_concurrent_trials
+        == max_concurrent_trials
+    )
+    assert step_instance.runsettings.sweep.limits.timeout_minutes == timeout_minutes
+
+
+def test2_apply_sweep_runsettings():
+    module_instance = pipeline_helper.component_load("sweep_component")
+    step_instance = module_instance()
+
+    algorithm = "random"
+    primary_metric = "result"
+    goal = "maximize"
+    policy_type = "median_stopping"
+    evaluation_interval = 1
+    delay_evaluation = 1
+
+    # Note that we can only either specify slack_factor, or slack_amount, but not both
+    # See this sweep doc for more details about sweep component: https://componentsdk.azurewebsites.net/components/sweep_component.html
+    # slack_factor = 0.1
+    slack_amount = 0.2
+
+    truncation_percentage = 10
+    max_total_trials = 5
+    max_concurrent_trials = 4
+    timeout_minutes = 30
+
+    pipeline_helper._apply_sweep_runsettings(
+        "sweep_component",
+        step_instance,
+        algorithm=algorithm,
+        primary_metric=primary_metric,
+        goal=goal,
+        policy_type=policy_type,
+        evaluation_interval=evaluation_interval,
+        delay_evaluation=delay_evaluation,
+        slack_amount=slack_amount,
+        truncation_percentage=truncation_percentage,
+        max_total_trials=max_total_trials,
+        max_concurrent_trials=max_concurrent_trials,
+        timeout_minutes=timeout_minutes,
+    )
+
+    assert step_instance.runsettings.sweep.algorithm == algorithm
+    assert step_instance.runsettings.sweep.objective.primary_metric == primary_metric
+    assert step_instance.runsettings.sweep.objective.goal == goal
+    assert step_instance.runsettings.sweep.early_termination.policy_type == policy_type
+    assert (
+        step_instance.runsettings.sweep.early_termination.evaluation_interval
+        == evaluation_interval
+    )
+    assert (
+        step_instance.runsettings.sweep.early_termination.delay_evaluation
+        == delay_evaluation
+    )
+    assert (
+        step_instance.runsettings.sweep.early_termination.slack_amount == slack_amount
+    )
+    assert (
+        step_instance.runsettings.sweep.early_termination.truncation_percentage
+        == truncation_percentage
+    )
+    assert step_instance.runsettings.sweep.limits.max_total_trials == max_total_trials
+    assert (
+        step_instance.runsettings.sweep.limits.max_concurrent_trials
+        == max_concurrent_trials
+    )
+    assert step_instance.runsettings.sweep.limits.timeout_minutes == timeout_minutes
+
+
 @pytest.mark.parametrize(
     "compliant,datastore",
     [(True, "fake_compliant_datastore"), (False, "workspaceblobstore")],

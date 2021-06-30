@@ -1,0 +1,40 @@
+$schema: http://azureml/sdk-2-0/CommandComponent.json
+name: canary_sweep_naive
+version: 1.0.0
+display_name: Tune
+type: CommandComponent
+description: A naive dummy train component
+is_deterministic: false
+tags: {category: Component Tutorial, contact: amldesigner@microsoft.com and shizs@microsoft.com}
+
+inputs:
+  num_epochs:
+    type: Integer
+    optional: true
+  delay_seconds:
+    type: Integer
+    optional: true
+  x1:
+    type: Float
+    description: Simple example float input argument
+    optional: true
+  x2:
+    type: Float
+    optional: true
+  resume_from:
+    type: String
+    optional: true
+outputs:
+  saved_model:
+    description: output path
+    type: path
+environment:
+  docker:
+    image: mcr.microsoft.com/azureml/openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04:latest # for eyeson
+           #polymerprod.azurecr.io/polymercd/prod_official/azureml_base_cpu_openmpi312_ubuntu1804:latest # for eyes-off
+  conda:
+    conda_dependencies_file: conda.yaml
+  os: Linux
+command: >-
+        python run.py [--num_epochs {inputs.num_epochs}] [--delay_seconds {inputs.delay_seconds}]
+        [--x1 {inputs.x1}] [--x2 {inputs.x2}] [--resume-from {inputs.resume_from}]

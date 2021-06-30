@@ -1,0 +1,49 @@
+$schema: http://azureml/sdk-1-5/SweepComponent.json
+name: sweep_component
+version: 1.0.0
+display_name: Naive Sweep Component
+type: SweepComponent
+description: A naive sweep component
+is_deterministic: false
+tags: {category: Component Tutorial, contact: amldesigner@microsoft.com and shizs@microsoft.com}
+
+outputs:
+  ## metrics output section currently is not working in heron yet, so comment it out for now. 
+  ## AML Eng team is actively working on enabling this metric output support in heron. Once that
+  ## feature work is done, then we could enable such metric output section again.
+  #metrics:
+  #  type: metrics
+  #  description: metrics data
+
+trial: file:trial.yaml
+
+algorithm: random
+search_space:
+  num_epochs:
+    type: choice
+    values: [25, 50, 100]
+  delay_seconds:
+    type: choice
+    values: [10, 50, 200, 300, 500]
+  x1:
+    type: choice
+    values: [0.1, 0.3, 0.6, 0.9, 1.0]
+  x2:
+    type: loguniform
+    min_value: -6
+    max_value: -1
+
+objective:
+  primary_metric:
+    default: result
+    enum: [result]
+  goal: maximize
+
+early_termination:
+    policy_type: bandit
+    slack_factor: 0.1
+    evaluation_interval: 2
+    delay_evaluation: 5
+limits:
+  max_total_trials: 4
+  max_concurrent_trials: 4

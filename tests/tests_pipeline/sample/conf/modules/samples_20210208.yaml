@@ -21,3 +21,7 @@ manifest:
 - name: convert2ss
   yaml: "convert_tsv_to_ss/module_spec.yaml"
   version: null
+
+- name: sweep_component
+  yaml: "sweep_component/module_spec.yaml"
+  version: null

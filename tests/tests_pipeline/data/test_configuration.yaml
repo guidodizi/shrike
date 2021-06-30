@@ -100,3 +100,7 @@ modules:
     name: data_transfer
     yaml: "data_transfer/module_spec.yaml"
     version: null
+  - key: sweep_component
+    name: sweep_component
+    yaml: "sweep_component/module_spec.yaml"
+    version: null
