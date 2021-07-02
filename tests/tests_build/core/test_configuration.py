@@ -156,3 +156,34 @@ def test_load_configuration_from_env_and_override_behaviour(capsys, tmp_path):
 
     # Testing config file overrides default config
     assert config.fail_if_version_exists is True
+
+
+def test_configuration_component_validation(tmp_path):
+    config_path = tmp_path / "aml-build-configuration.yml"
+    config_path.write_text(
+        f"""component_validation:
+  '$.name': '^office.smartcompose.[A-Za-z0-9-_.]+$'
+  '$.environment.docker.image': '^$|^polymerprod.azurecr.io*$'
+  '$.inputs..description': '^[A-Z].*'
+"""
+    )
+    args = [
+        "--configuration-file",
+        str(config_path),
+        "--enable-component-validation",
+    ]
+
+    config = load_configuration_from_args_and_env(
+        args, {"BUILD_SOURCEBRANCH": "refs/heads/main"}
+    )
+
+    assert config.configuration_file == str(config_path)
+    assert config.enable_component_validation
+    assert (
+        config.component_validation["$.name"] == "^office.smartcompose.[A-Za-z0-9-_.]+$"
+    )
+    assert (
+        config.component_validation["$.environment.docker.image"]
+        == "^$|^polymerprod.azurecr.io*$"
+    )
+    assert config.component_validation["$.inputs..description"] == "^[A-Z].*"

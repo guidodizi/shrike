@@ -5,7 +5,6 @@ nav:
 - Compliant Logging:
     Logging examples: compliant_logging/README.md
     Logging design: compliant_logging/rfc-logging.md
-    Image override: rfc/pipeline-image-override.md
     API reference:
       constants: compliant_logging/constants.md
       exceptions: compliant_logging/exceptions.md
@@ -20,6 +19,7 @@ nav:
     Create an AML pipeline: pipeline/create-aml-pipeline.md
     Configure your AML pipeline: pipeline/configure-aml-pipeline.md
     Reuse your AML pipeline: pipeline/reuse-aml-pipeline.md
+    Image override: rfc/pipeline-image-override.md
     API reference:
       pipeline_helper: pipeline/pipeline-helper.md
       module_helper: pipeline/module-helper.md

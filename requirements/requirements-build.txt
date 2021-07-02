@@ -5,6 +5,7 @@ rsa~=4.7
 ruamel.yaml~=0.16
 semver~=2.13
 gitpython~=3.1
+jsonpath-ng~=1.5
 
 # Telemetry logging
 opencensus-ext-azure==1.0.7

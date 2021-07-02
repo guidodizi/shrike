@@ -6,3 +6,4 @@ __pycache__
 .azureml
 dist
 .amlignore
+outputs/*

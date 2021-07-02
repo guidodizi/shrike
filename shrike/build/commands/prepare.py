@@ -4,6 +4,8 @@
 import logging
 import os
 import collections
+import jsonpath_ng
+import re
 from typing import List, Set
 import shutil
 from ruamel.yaml import YAML
@@ -20,8 +22,14 @@ from pathlib import Path
 import yaml
 import urllib.parse
 import uuid
+from urllib.parse import urlparse
 
 log = logging.getLogger(__name__)
+
+ALLOWED_CONTAINER_REGISTRIES = ["polymerprod.azurecr.io"]
+ALLOWED_PACKAGE_FEEDS = [
+    "https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/"
+]
 
 
 class Prepare(Command):
@@ -610,16 +618,37 @@ CATATTR1=0x00010001:OSAttr:2:6.2
         component_repo = Path(component).parent
         with open(component, "r") as spec_file:
             spec = YAML(typ="safe").load(spec_file)
+        pip_dependencies, _ = self._extract_dependencies_and_channels(component)
+        if pip_dependencies:
+            component_name = spec.get("name")
+            log.info(
+                f"Found Python package dependencies for component {component_name} in {component_repo}. Writing to requirements.txt."
+            )
+            cur_path = os.path.join(path_to_requirements_files, component_name)
+            os.makedirs(cur_path)
+            with open(os.path.join(cur_path, "requirements.txt"), "w") as file:
+                for req in pip_dependencies:
+                    file.write(req)
+                    if not req.endswith("\n"):
+                        file.write("\n")
+
+    def _extract_dependencies_and_channels(self, component) -> List[list]:
+        component_repo = Path(component).parent
+        with open(component, "r") as spec_file:
+            spec = YAML(typ="safe").load(spec_file)
+        pip_dependencies = []
+        conda_channels = []
         if "environment" in spec:
             spec_environment = spec.get("environment")
             if "conda" in spec_environment:
                 spec_conda = spec_environment["conda"]
-                pip_dependencies = []
                 if "conda_dependencies" in spec_conda:
                     requirements = spec_conda["conda_dependencies"]
                     pip_dependencies += self._extract_python_package_dependencies(
                         requirements
                     )
+                    if "channels" in requirements:
+                        conda_channels += requirements["channels"]
                 if "conda_dependencies_file" in spec_conda:
                     conda_dependencies_file = spec_conda["conda_dependencies_file"]
                     try:
@@ -632,6 +661,8 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                         pip_dependencies += self._extract_python_package_dependencies(
                             requirements
                         )
+                        if "channels" in requirements:
+                            conda_channels += requirements["channels"]
                     except FileNotFoundError:
                         self.register_error(
                             f"The required conda_dependencies_file {conda_dependencies_file} does not exist in {component_repo}."
@@ -649,18 +680,7 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                         self.register_error(
                             f"The required pip_requirements_file {pip_requirements_file} does not exist in {component_repo}."
                         )
-                if pip_dependencies:
-                    component_name = spec.get("name")
-                    log.info(
-                        f"Found Python package dependencies for component {component_name} in {component_repo}. Writing to requirements.txt."
-                    )
-                    cur_path = os.path.join(path_to_requirements_files, component_name)
-                    os.makedirs(cur_path)
-                    with open(os.path.join(cur_path, "requirements.txt"), "w") as file:
-                        for req in pip_dependencies:
-                            file.write(req)
-                            if not req.endswith("\n"):
-                                file.write("\n")
+        return [pip_dependencies, conda_channels]
 
     def _extract_python_package_dependencies(self, conda_dependencies) -> List[str]:
         pip_dependencies = []
@@ -695,13 +715,32 @@ CATATTR1=0x00010001:OSAttr:2:6.2
     def validate_all_components(self, files: List[str]) -> None:
         """
         For each component specification file, run `az ml component validate`,
+        run compliance and customized validation if enabled,
         and register the status (+ register error if validation failed).
         """
         for component in files:
             validate_component_success = self.execute_azure_cli_command(
                 f"ml component validate --file {component}"
             )
-            if validate_component_success:
+            compliance_validation_success = True
+            customized_validation_success = True
+            if self.config.enable_component_validation:
+                log.info(f"Running compliance validation on {component}")
+                compliance_validation_success = self.compliance_validation(component)
+                if len(self.config.component_validation) > 0:
+                    log.info(f"Running customized validation on {component}")
+                    for jsonpath, regex in self.config.component_validation.items():
+                        customized_validation_success = (
+                            customized_validation_success
+                            if self.customized_validation(jsonpath, regex, component)
+                            else False
+                        )
+
+            if (
+                validate_component_success
+                and compliance_validation_success
+                and customized_validation_success
+            ):
                 # If the az ml validation succeeds, we continue to check whether
                 # the "code" snapshot parameter is specified in the spec file
                 # https://componentsdk.z22.web.core.windows.net/components/component-spec-topics/code-snapshot.html
@@ -719,6 +758,83 @@ CATATTR1=0x00010001:OSAttr:2:6.2
             else:
                 self.register_component_status(component, "validate", "failed")
                 self.register_error(f"Error when validating component {component}.")
+
+    def compliance_validation(self, component: str) -> bool:
+        """
+        This function checks whether a given component spec YAML file
+        meets all the requirements for running in the compliant AML.
+        Specifically, it checks (1) whether the image URL is compliant；
+        （2）whether the pip index-url is compliant; (3) whether
+        "default" is only Conda channel
+        """
+        with open(component, "r") as spec_file:
+            spec = YAML(typ="safe").load(spec_file)
+
+        # Check whether the docker image URL is compliant
+        image_url = jsonpath_ng.parse("$.environment.docker.image").find(spec)
+        if len(image_url) > 0:
+            if (
+                urlparse(image_url[0].value).path.split("/")[0]
+                not in ALLOWED_CONTAINER_REGISTRIES
+            ):
+                log.error(
+                    f"The container base image in {component} is not allowed for compliant run."
+                )
+                return False
+
+        # check whether the package feed is compliant
+        package_dependencies, conda_channels = self._extract_dependencies_and_channels(
+            component=component
+        )
+        if len(package_dependencies) > 0:
+            for dependency in package_dependencies:
+                if re.match("^--index-url", dependency) or re.match(
+                    "^--extra-index-url", dependency
+                ):
+                    if dependency.split(" ")[1] not in ALLOWED_PACKAGE_FEEDS:
+                        log.error(
+                            f"The package feed in {component} is not allowed for compliant run."
+                        )
+                        return False
+            if (
+                f"--index-url {ALLOWED_PACKAGE_FEEDS[0]}" not in package_dependencies
+                and f"--extra-index-url {ALLOWED_PACKAGE_FEEDS[0]}"
+                not in package_dependencies
+            ):
+                log.error(
+                    f"The Polymer package feed is not found in environment of {component}"
+                )
+                return False
+
+        # Check whether "default" is only Conda channel
+        if len(conda_channels) > 1 or (
+            len(conda_channels) == 1 and conda_channels[0] != "."
+        ):
+            log.error("Only the default conda channel is allowed for compliant run.")
+            return False
+
+        return True
+
+    @staticmethod
+    def customized_validation(jsonpath: str, regex: str, component: str) -> bool:
+        """
+        This function leverages regular expressionm atching and
+        JSONPath expression to enforce user-provided "strict"
+        validation on Azure ML components
+        """
+        with open(component, "r") as spec_file:
+            spec = YAML(typ="safe").load(spec_file)
+
+        parsed_patterns = jsonpath_ng.parse(jsonpath).find(spec)
+        validation_success = True
+        if len(parsed_patterns) > 0:
+            for parsed_pattern in parsed_patterns:
+                if not re.match(regex, parsed_pattern.value):
+                    log.error(
+                        f"The parsed pattern {parsed_pattern} in {component} doesn't match the regular expression {regex}"
+                    )
+                    validation_success = False
+        return validation_success
 
 
 if __name__ == "__main__":

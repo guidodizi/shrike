@@ -9,6 +9,7 @@ Consider decorating long end-to-end tests with `@pytest.mark.order(-1)`.
 
 import pytest
 import os
+import copy
 from pathlib import Path
 import subprocess
 import shutil
@@ -16,9 +17,42 @@ import yaml
 from git import Repo
 
 from shrike.build.commands import prepare
-from shrike.build.core.configuration import Configuration
+from shrike.build.core.configuration import (
+    Configuration,
+    load_configuration_from_args_and_env,
+)
 
 TESTING_WORKSPACE = "/subscriptions/48bbc269-ce89-4f6f-9a12-c6f91fcb772d/resourceGroups/github-ci-rg/providers/Microsoft.MachineLearningServices/workspaces/github-ci-ml-wus2"
+
+SPEC_YAML = {
+    "$schema": "http://azureml/sdk-2-0/CommandComponent.json",
+    "name": "dummy",
+    "version": "0.0.1",
+    "type": "CommandComponent",
+    "command": "pip freeze",
+    "environment": {
+        "conda": {"conda_dependencies_file": "conda_env.yaml"},
+        "docker": {
+            "image": "polymerprod.azurecr.io/polymercd/prod_official/azureml_base_gpu_openmpi312cuda101cudnn7_mcr:latest"
+        },
+    },
+}
+
+ENV_YAML = {
+    "name": "dummy_env",
+    "channels": ["."],
+    "dependencies": [
+        "python=3.7",
+        {
+            "pip": [
+                "azureml-core==1.20.0",
+                "shrike",
+                "numpy==1.19.4",
+                "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+            ]
+        },
+    ],
+}
 
 
 def clean() -> None:
@@ -894,6 +928,15 @@ def test_create_requirements_file_for_single_component_conda_dependencies(caplog
             "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/\n",
         ]
 
+    pip_dependencies, conda_channels = prep._extract_dependencies_and_channels(
+        tmp_dir + "/spec.yaml"
+    )
+    assert pip_dependencies == [
+        "azureml-core==1.27.0",
+        "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+    ]
+    assert len(conda_channels) == 0
+
     # Clean up tmp directory
     shutil.rmtree(tmp_dir)
 
@@ -917,6 +960,7 @@ def test_create_requirements_file_for_single_component_conda_dependencies_file(c
     }
     conda_env_yaml = {
         "name": "democomponent_env",
+        "channels": [".", "test-channel"],
         "dependencies": [
             "python=3.7",
             {
@@ -948,6 +992,12 @@ def test_create_requirements_file_for_single_component_conda_dependencies_file(c
     with open(path_to_requirements_files + "/dummy_2/requirements.txt", "r") as file:
         lines = file.readlines()
         assert lines == ["azureml-core==1.20.0\n", "shrike\n", "numpy==1.19.4\n"]
+
+    pip_dependencies, conda_channels = prep._extract_dependencies_and_channels(
+        tmp_dir + "/spec.yaml"
+    )
+    assert pip_dependencies == ["azureml-core==1.20.0", "shrike", "numpy==1.19.4"]
+    assert conda_channels == [".", "test-channel"]
 
     # Clean up tmp directory
     shutil.rmtree(tmp_dir)
@@ -990,6 +1040,12 @@ def test_create_requirements_file_for_single_component_pip_requirements_file(cap
         lines = file.readlines()
         assert lines == ["azureml-defaults\n", "scikit-learn==0.24.2\n"]
 
+    pip_dependencies, conda_channels = prep._extract_dependencies_and_channels(
+        tmp_dir + "/spec.yaml"
+    )
+    assert pip_dependencies == ["azureml-defaults\n", "scikit-learn==0.24.2"]
+    assert len(conda_channels) == 0
+
     # Clean up tmp directory
     shutil.rmtree(tmp_dir)
 
@@ -1026,6 +1082,248 @@ def test_create_requirements_file_for_single_component_no_dependencies(caplog):
 
     assert "Found Python package dependencies for component dummy_4" not in caplog.text
     assert not os.path.exists(path_to_requirements_files + "/dummy_4")
+
+    pip_dependencies, conda_channels = prep._extract_dependencies_and_channels(
+        tmp_dir + "/spec.yaml"
+    )
+    assert len(pip_dependencies) == 0
+    assert len(conda_channels) == 0
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_compliance_validation_passed():
+    clean()
+    prep = prepare.Prepare()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(SPEC_YAML, tmp_spec)
+        yaml.dump(ENV_YAML, tmp_env)
+
+    assert prep.compliance_validation(tmp_dir + "/spec.yaml")
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_compliance_validation_noncompliant_docker_image(caplog):
+    clean()
+    prep = prepare.Prepare()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+
+    # non-compliant docker image URL
+    tmp_spec_yaml = copy.deepcopy(SPEC_YAML)
+    tmp_spec_yaml["environment"]["docker"][
+        "image"
+    ] = "mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04"
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(tmp_spec_yaml, tmp_spec)
+        yaml.dump(ENV_YAML, tmp_env)
+
+    component_path = tmp_dir + "/spec.yaml"
+    with caplog.at_level("INFO"):
+        assert not prep.compliance_validation(component_path)
+
+    assert (
+        f"The container base image in {component_path} is not allowed for compliant run."
+        in caplog.text
+    )
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_compliance_validation_missing_polymerfeed(caplog):
+    clean()
+    prep = prepare.Prepare()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+
+    # Polymer Package Feed is missing
+    tmp_env_yaml = copy.deepcopy(ENV_YAML)
+    tmp_env_yaml["dependencies"][1]["pip"] = ["shrike", "test-package==1.0.0"]
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(SPEC_YAML, tmp_spec)
+        yaml.dump(tmp_env_yaml, tmp_env)
+
+    component_path = tmp_dir + "/spec.yaml"
+    with caplog.at_level("INFO"):
+        assert not prep.compliance_validation(component_path)
+
+    assert (
+        f"The Polymer package feed is not found in environment of {component_path}"
+        in caplog.text
+    )
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_compliance_validation_noncompliant_feed(caplog):
+    clean()
+    prep = prepare.Prepare()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+
+    # Polymer Package Feed is missing
+    tmp_env_yaml = copy.deepcopy(ENV_YAML)
+    tmp_env_yaml["dependencies"][1]["pip"] = [
+        "shrike",
+        "test-package==1.0.0",
+        "--index-url mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04",
+    ]
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(SPEC_YAML, tmp_spec)
+        yaml.dump(tmp_env_yaml, tmp_env)
+
+    component_path = tmp_dir + "/spec.yaml"
+    with caplog.at_level("INFO"):
+        assert not prep.compliance_validation(component_path)
+
+    assert (
+        f"The package feed in {component_path} is not allowed for compliant run."
+        in caplog.text
+    )
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_compliance_validation_noncompliant_channels(caplog):
+    clean()
+    prep = prepare.Prepare()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+
+    # non-compliant docker image URL
+    tmp_env_yaml = copy.deepcopy(ENV_YAML)
+    tmp_env_yaml["channels"] = [".", "defaults", "wrong_channel"]
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(SPEC_YAML, tmp_spec)
+        yaml.dump(tmp_env_yaml, tmp_env)
+
+    component_path = tmp_dir + "/spec.yaml"
+    with caplog.at_level("INFO"):
+        assert not prep.compliance_validation(component_path)
+
+    assert "Only the default conda channel is allowed for compliant run." in caplog.text
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_customized_validation(caplog):
+    clean()
+    prep = prepare.Prepare()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(SPEC_YAML, tmp_spec)
+        yaml.dump(ENV_YAML, tmp_env)
+
+    assert prep.customized_validation(
+        "$.name", "^dum[A-Za-z0-9-_.]+$", tmp_dir + "/spec.yaml"
+    )
+
+    assert prep.customized_validation(
+        "$.environment.docker.image", "^polymerprod.azurecr.io*", tmp_dir + "/spec.yaml"
+    )
+
+    assert prep.customized_validation(
+        "$.inputs..description", "^[A-Z].*", tmp_dir + "/spec.yaml"
+    )
+
+    with caplog.at_level("INFO"):
+        assert not prep.customized_validation(
+            "$.name", "^office.smartcompose.[A-Za-z0-9-_.]+$", tmp_dir + "/spec.yaml"
+        )
+
+    assert (
+        "doesn't match the regular expression ^office.smartcompose.[A-Za-z0-9-_.]+$"
+        in caplog.text
+    )
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
+@pytest.mark.order(-1)
+def test_validate_all_components_enabled_component_validation(caplog, tmp_path):
+    clean()
+    prep = prepare.Prepare()
+
+    # Create temporary configuration file
+    config_path = tmp_path / "aml-build-configuration.yml"
+    config_path.write_text(
+        f"""component_validation:
+  '$.name': '^dum.[A-Za-z0-9-_.]+$'
+  '$.environment.docker.image': '^polymerprod.azurecr.io*'
+"""
+    )
+    args = [
+        "--configuration-file",
+        str(config_path),
+        "--enable-component-validation",
+    ]
+
+    # Create temporary component folder
+    tmp_dir = str(Path(__file__).parent.resolve() / "tmp_dir")
+    os.mkdir(tmp_dir)
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec, open(
+        tmp_dir + "/conda_env.yaml", "w"
+    ) as tmp_env:
+        yaml.dump(SPEC_YAML, tmp_spec)
+        yaml.dump(ENV_YAML, tmp_env)
+    component_path = tmp_dir + "/spec.yaml"
+
+    # Initialize prepare class
+    prep = prepare.Prepare()
+    prep.config = load_configuration_from_args_and_env(
+        args, {"BUILD_SOURCEBRANCH": "refs/heads/main"}
+    )
+    prep.attach_workspace(TESTING_WORKSPACE)
+
+    with caplog.at_level("INFO"):
+        prep.validate_all_components([component_path])
+
+    assert prep._component_statuses[component_path]["validate"] == "succeeded"
+    assert not prep._errors
+    assert "is valid" in caplog.text
 
     # Clean up tmp directory
     shutil.rmtree(tmp_dir)
