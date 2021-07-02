@@ -105,7 +105,7 @@ def component_uses_private_acr_componentsdk(component_spec_path, definition, acr
         return
 
     try:
-        base_image_url = definition.environment.docker["image"]
+        base_image_url = definition.environment.docker.image
     except KeyError:
         base_image_url = None
         pass
@@ -150,9 +150,9 @@ def component_uses_private_python_feed(component_spec_path, feed_url):
             return
 
         try:
-            conda_deps_path = definition.environment.conda["conda_dependencies_file"]
+            conda_deps_yaml = definition.environment.conda.conda_dependencies._to_dict()
         except KeyError:
-            conda_deps_path = None
+            conda_deps_yaml = None
             pass
     else:
         job_type = str(definition["jobType"]).lower()
@@ -176,45 +176,44 @@ def component_uses_private_python_feed(component_spec_path, feed_url):
                 conda_deps_path = None
                 pass
 
-    if conda_deps_path is None:
+        if conda_deps_path is None:
+            # no conda yaml provided, nothing to do here
+            return
+
+        conda_deps_abspath = os.path.join(
+            os.path.dirname(component_spec_path), conda_deps_path
+        )
+        assert os.path.isfile(
+            conda_deps_abspath
+        ), "Component {} specified a conda_dependencies_file {} that cannot be found (abspath: {})".format(
+            component_spec_path, conda_deps_path, conda_deps_abspath
+        )
+
+        try:
+            with open(conda_deps_abspath, "r") as ifile:
+                conda_deps_yaml = yaml.safe_load(ifile)
+        except:
+            assert (
+                False
+            ), "Component {} conda_dependencies_file under path {} should be yaml parsable, but loading it raised an exception: {}".format(
+                component_spec_path, conda_deps_abspath, traceback.format_exc()
+            )
+
+    if conda_deps_yaml is None:
         # no conda yaml provided, nothing to do here
         return
 
-    conda_deps_abspath = os.path.join(
-        os.path.dirname(component_spec_path), conda_deps_path
-    )
-    assert os.path.isfile(
-        conda_deps_abspath
-    ), "Component {} specified a conda_dependencies_file {} that cannot be found (abspath: {})".format(
-        component_spec_path, conda_deps_path, conda_deps_abspath
-    )
+    if "channels" in conda_deps_yaml:
+        assert conda_deps_yaml["channels"] == [
+            "."
+        ], "In conda deps, no channels must be specified, or use . as channel"
 
-    try:
-        with open(conda_deps_abspath, "r") as ifile:
-            conda_deps_yaml = yaml.safe_load(ifile)
-
-        if "channels" in conda_deps_yaml:
-            assert conda_deps_yaml["channels"] == [
-                "."
-            ], "In conda deps {} no channels must be specified, or use . as channel".format(
-                conda_deps_abspath
-            )
-
-        if "dependencies" in conda_deps_yaml:
-            for entry in conda_deps_yaml["dependencies"]:
-                if "pip" in entry:
-                    assert (
-                        f"--index-url {feed_url}" in entry["pip"]
-                    ), "conda deps under {} must reference private python feed under pip dependencies.".format(
-                        conda_deps_abspath
-                    )
-
-    except:
-        assert (
-            False
-        ), "Component {} conda_dependencies_file under path {} should be yaml parsable, but loading it raised an exception: {}".format(
-            component_spec_path, conda_deps_abspath, traceback.format_exc()
-        )
+    if "dependencies" in conda_deps_yaml:
+        for entry in conda_deps_yaml["dependencies"]:
+            if "pip" in entry:
+                assert (
+                    f"--index-url {feed_url}" in entry["pip"]
+                ), "conda deps must reference private python feed under pip dependencies."
 
 
 ### TEST IMPORTING RUN PY ###
