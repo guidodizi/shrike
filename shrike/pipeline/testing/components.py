@@ -210,7 +210,7 @@ def component_uses_private_python_feed(component_spec_path, feed_url):
 
     if "dependencies" in conda_deps_yaml:
         for entry in conda_deps_yaml["dependencies"]:
-            if "pip" in entry:
+            if "pip" in entry and isinstance(entry, dict):
                 assert (
                     f"--index-url {feed_url}" in entry["pip"]
                 ), "conda deps must reference private python feed under pip dependencies."
