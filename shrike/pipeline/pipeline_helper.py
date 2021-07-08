@@ -178,7 +178,7 @@ class AMLPipelineHelper:
             raise ValueError("Experiment names must start with letters or numbers!")
         if not re.match("^[a-zA-Z0-9_-]*$", name):
             raise ValueError(
-                "Valiad experiment names must only contain letters, numbers, underscore and dash!"
+                "Valid experiment names must only contain letters, numbers, underscore and dash!"
             )
         return True
 
