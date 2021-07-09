@@ -37,7 +37,7 @@ jobs:
     - name: Pip install
       run: |
         python -m pip install --upgrade pip
-        pip install .[pipeline,build,dev]
+        pip install .[build,dev]
 
     - name: Format check (black)
       run: |
@@ -101,12 +101,12 @@ jobs:
     - name: Pip install
       run: |
         python -m pip install --upgrade pip
-        pip install .[pipeline,build,dev]
+        pip install .[dev]
 
     # See: https://github.com/codecov/example-python
     - name: Unit test for shrike.compliant_logging
       run: |
-        python -m pytest tests/tests_compliant_logging --cov --junitxml=test-logging-result.xml --cov-fail-under=94
+        python -m pytest tests/tests_compliant_logging --cov --junitxml=test-logging-result.xml --cov-fail-under=91
       if: always()
 
     - name: Publish test results for shrike.compliant_logging
@@ -150,7 +150,7 @@ jobs:
     - name: Pip install
       run: |
         python -m pip install --upgrade pip
-        pip install .[pipeline,build,dev]
+        pip install .[build,dev]
 
     - uses: azure/login@v1
       with:
@@ -196,7 +196,7 @@ jobs:
     - name: Pip install
       run: |
         python -m pip install --upgrade pip
-        pip install .[pipeline,build,dev]
+        pip install .[pipeline,dev]
 
     - uses: azure/login@v1
       with:

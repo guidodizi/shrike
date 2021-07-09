@@ -28,6 +28,9 @@ HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
+with open(HERE / "requirements/requirements-logging.txt") as f:
+    required_logging = versions_in_requirements(f)
+
 with open(HERE / "requirements/requirements-pipeline.txt") as f:
     required_pipeline = versions_in_requirements(f)
 
@@ -58,7 +61,7 @@ setup(
     ],
     packages=find_packages(include=["shrike*"]),
     include_package_data=True,
-    install_requires=[],
+    install_requires=required_logging,
     extras_require={
         "pipeline": required_pipeline,
         "build": required_build,

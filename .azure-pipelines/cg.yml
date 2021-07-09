@@ -22,6 +22,7 @@ steps:
   clean: true
 
 - bash: |
+    cat requirements/requirements-logging.txt >> requirements.txt
     cat requirements/requirements-pipeline.txt >> requirements.txt
     cat requirements/requirements-build.txt >> requirements.txt
     cat requirements/requirements-dev.txt >> requirements.txt  

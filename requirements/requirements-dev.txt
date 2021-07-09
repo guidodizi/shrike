@@ -23,9 +23,15 @@ pytest~=6.2
 pytest-cov~=2.11
 pytest-order==0.10.0
 
-# For the sample pipelines in shrike.pipeline
-pyspark==3.0.1
-
 # Packaging
 twine~=3.3
 wheel~=0.36
+
+# For testing functions in data_conversion.py
+pyspark==3.0.1
+vaex==4.3.0
+# toolz is required for vaex in python 3.6 environment
+toolz==0.11.1
+numpy==1.19.3
+pandas==1.1.5
+scikit-learn==0.24.2
