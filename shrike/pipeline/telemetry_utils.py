@@ -31,11 +31,11 @@ class TelemetryLogger:
             if instrumentation_key is None
             else instrumentation_key
         )
-        self.logger.addHandler(
-            AzureLogHandler(
-                connection_string=f"InstrumentationKey={self.instrumentation_key}"
-            )
+        handler = AzureLogHandler(
+            connection_string=f"InstrumentationKey={self.instrumentation_key}"
         )
+        handler.add_telemetry_processor(self.scrubber_function)
+        self.logger.addHandler(handler)
 
     def log_trace(self, message, properties={}, level=logging.INFO):
         if self.enable_telemetry:
@@ -56,3 +56,7 @@ class TelemetryLogger:
             log.info(
                 "Sending trace log messages to application insight has been disabled."
             )
+
+    # Callback function to scrub some columns
+    def scrubber_function(self, envelope):
+        envelope.tags["ai.cloud.roleInstance"] = "cloud_RoleInstance_Scrubbed"
