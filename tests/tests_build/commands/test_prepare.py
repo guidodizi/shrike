@@ -874,6 +874,35 @@ def test_create_requirements_files(caplog):
     assert os.path.exists(component_dependencies_repo)
 
 
+def test_create_requirements_file_with_duplicate_component_name(caplog):
+    clean()
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+
+    # create temporary component for testing
+    tmp_dir = str(Path(__file__).parent.parent.resolve() / "steps/tmp_dir")
+    os.mkdir(tmp_dir)
+
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec:
+        yaml.dump(SPEC_YAML, tmp_spec)
+    with open(tmp_dir + "/spec_dup.yaml", "w") as tmp_spec:
+        yaml.dump(SPEC_YAML, tmp_spec)
+    with open(tmp_dir + "/conda_env.yaml", "w") as tmp_spec:
+        yaml.dump(ENV_YAML, tmp_spec)
+
+    component_files = [tmp_dir + "/spec.yaml", tmp_dir + "/spec_dup.yaml"]
+    with caplog.at_level("INFO"):
+        id = prep._create_requirements_files(component_files)
+    component_dependencies_repo = "component_dependencies_" + id
+    assert os.path.exists(component_dependencies_repo + "/dummy/requirements.txt")
+    assert os.path.exists(
+        component_dependencies_repo + "/dummy_spec_dup/requirements.txt"
+    )
+
+    # Clean up tmp directory
+    shutil.rmtree(tmp_dir)
+
+
 def test_create_requirements_file_for_single_component_conda_dependencies(caplog):
     clean()
     prep = prepare.Prepare()

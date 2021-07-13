@@ -625,7 +625,12 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                 f"Found Python package dependencies for component {component_name} in {component_repo}. Writing to requirements.txt."
             )
             cur_path = os.path.join(path_to_requirements_files, component_name)
-            os.makedirs(cur_path)
+            try:
+                os.makedirs(cur_path)
+            except FileExistsError:
+                suffix = component_name + "_" + os.path.splitext(os.path.basename(component))[0]
+                cur_path = os.path.join(path_to_requirements_files, suffix)
+                os.makedirs(cur_path)
             with open(os.path.join(cur_path, "requirements.txt"), "w") as file:
                 for req in pip_dependencies:
                     file.write(req)
