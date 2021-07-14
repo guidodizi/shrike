@@ -153,19 +153,21 @@ class Register(Command):
         self.telemetry_logging(command="register")
 
         self.validate_branch()
+        self.ensure_component_cli_installed()
 
         component_path = self.find_signed_component_specification_files()
-        for workspace_id in self.config.workspaces:
-            log.info(f"Start registering signed components in {workspace_id}")
-            self.attach_workspace(workspace_id)
+        if len(component_path) > 0:
+            for workspace_id in self.config.workspaces:
+                log.info(f"Start registering signed components in {workspace_id}")
+                self.attach_workspace(workspace_id)
 
-            log.info("List of components in workspace before current registration.")
-            self.list_registered_component()
+                log.info("List of components in workspace before current registration.")
+                self.list_registered_component()
 
-            self.register_all_signed_components(files=component_path)
+                self.register_all_signed_components(files=component_path)
 
-            log.info("List of components in workspace after current registration.")
-            self.list_registered_component()
+                log.info("List of components in workspace after current registration.")
+                self.list_registered_component()
 
 
 if __name__ == "__main__":
