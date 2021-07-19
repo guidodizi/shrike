@@ -29,7 +29,10 @@ nav:
       testing.importer: pipeline/testing-importer.md
       testing.module_run_tests: pipeline/testing-module-run-tests.md
       testing.pipeline_class_test: pipeline/testing-pipeline-class-test.md
-    
+- Spark:
+    Examples: spark/examples.md
+    API reference:
+      spark_net: spark/spark_net.md
 
 theme:
   name: material

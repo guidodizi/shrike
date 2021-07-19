@@ -22,13 +22,15 @@ learning, with a special emphasis on running experiments in the
 [Azure Machine Learning](https://github.com/Azure/azureml-examples) platform (_a.k.a._ Azure ML). This
 library contains three elements, which are:
 
--  `shrike.compliant_logging`: utlities for compliant logging and 
+-  `shrike.compliant_logging`: utilities for compliant logging and 
 exception handling;
 -  `shrike.pipeline`: helper code for managing, validating and submitting Azure
 ML pipelines based on 
 [azure-ml-component](https://aka.ms/azure-ml-component-reference) (_a.k.a._ the Component SDK);
 -  `shrike.build`: helper code for packaging, building, validating, signing and
 registering Azure ML components.
+- `shrike.spark`: utilities for running jobs, especially those leveraging Spark
+  .NET, in HDInsight.
 
 ## Documentation
 For the full documentation of `shrike` with detailed examples and API reference, 
