@@ -703,7 +703,10 @@ CATATTR1=0x00010001:OSAttr:2:6.2
 
         component_files = self.find_component_specification_files()
         if not self.config.suppress_adding_repo_pr_tags:
-            component_files = self.add_repo_and_last_pr_to_tags(component_files)
+            try:
+                component_files = self.add_repo_and_last_pr_to_tags(component_files)
+            except StopIteration:
+                log.warning("`add_repo_and_last_pr_to_tags` not successful. Please make sure your component files are in Git. Otherwise, please set `suppress_adding_repo_pr_tags` to True.")
 
         if self.config.signing_mode == "aml":
             self.ensure_component_cli_installed()

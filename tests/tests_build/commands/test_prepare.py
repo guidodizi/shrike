@@ -829,6 +829,23 @@ def test_add_repo_and_last_pr_to_tags():
     assert "[link to commit]" in spec_file.get("description")
 
 
+def test_add_repo_and_last_pr_to_tags_when_not_in_git():
+    clean()
+    tmp_dir = str(Path(__file__).parent.parent.resolve() / "steps/tmp_dir")
+    os.mkdir(tmp_dir)
+
+    with open(tmp_dir + "/spec.yaml", "w") as tmp_spec:
+        yaml.dump(SPEC_YAML, tmp_spec)
+    new_component_path = tmp_dir + "/spec.yaml"
+
+    prep = prepare.Prepare()
+    prep.config = Configuration()
+    with pytest.raises(StopIteration):
+        prep.add_repo_and_last_pr_to_tags([new_component_path])
+
+    shutil.rmtree(tmp_dir)
+
+
 def test_extract_python_package_dependencies():
     clean()
     prep = prepare.Prepare()
