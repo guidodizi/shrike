@@ -60,3 +60,6 @@ class TelemetryLogger:
     # Callback function to scrub some columns
     def scrubber_function(self, envelope):
         envelope.tags["ai.cloud.roleInstance"] = "cloud_RoleInstance_Scrubbed"
+        envelope.tags["ai.location.country"] = "client_Country_Scrubbed"
+        envelope.tags["ai.location.province"] = "client_StateOrProvince_Scrubbed"
+        envelope.tags["ai.location.city"] = "client_City_Scrubbed"
