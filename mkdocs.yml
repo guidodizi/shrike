@@ -5,6 +5,7 @@ nav:
 - Compliant Logging:
     Logging examples: compliant_logging/README.md
     Logging design: compliant_logging/rfc-logging.md
+    Logging metrics in AML: compliant_logging/aml-metrics-logging.md
     API reference:
       constants: compliant_logging/constants.md
       exceptions: compliant_logging/exceptions.md
