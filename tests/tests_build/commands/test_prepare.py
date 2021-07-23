@@ -15,6 +15,7 @@ import subprocess
 import shutil
 import yaml
 from git import Repo
+from unittest import mock
 
 from shrike.build.commands import prepare
 from shrike.build.core.configuration import (
@@ -578,7 +579,7 @@ def test_get_modified_files():
     }
 
     # 4. test the 'Manual' case triggered from DevOps
-    # (using a non existing branch name to mimick that DevOps case where the repo has detached head and we cannot just take repo.heads[current_branch])
+    # (using a non existing branch name to mimic that DevOps case where the repo has detached head and we cannot just take repo.heads[current_branch])
     change_list_Manual = prep.get_modified_files(
         new_repo, "non-existing_branch_name", main_branch_name
     )
@@ -587,6 +588,63 @@ def test_get_modified_files():
         str(file_name_3.resolve()),
         str(file_name_5.resolve()),
     }
+
+    # clean up the newly created repos
+    new_repo.close()
+    cloned_repo.close()
+    shutil.rmtree(root_repo_location)
+
+
+@pytest.mark.parametrize(
+    "true_commit_message", ["Merged PR: First one", "Merged PR: Second one"]
+)
+def test_get_compliant_commit_corresponding_to_pull_request(true_commit_message):
+
+    # Create_repo and do 2 commits
+
+    # Creating a new repo
+    compliant_branch = "main"
+    root_repo_location = "./temp_repo/"
+    if Path(root_repo_location).exists():
+        shutil.rmtree(root_repo_location)
+    repo_path = Path(root_repo_location) / "bare-repo"
+    print("New repo path: " + str(repo_path.resolve()))
+    new_repo = Repo.init(repo_path, initial_branch="main")
+
+    # First commit
+    # creating a file
+    file_name_1 = repo_path / "new-file-1.txt"
+    open(file_name_1, "wb").close()
+    # add it to the index
+    new_repo.index.add([str(file_name_1.resolve())])
+    # do the commit
+    new_repo.index.commit("Merged PR: First one")
+
+    # Second commit to main
+    # create a new file
+    file_name_2 = repo_path / "new-file-2.py"
+    open(file_name_2, "wb").close()
+    new_repo.index.add([str(file_name_2.resolve())])
+    new_repo.index.commit("Merged PR: Second one")
+
+    # create a "remote" and push everything to it (a remote is needed for the RB case)
+    remote_repo_path_string = "../remote-repo"  # relative to 'repo_path'
+    print("Remote repo path: " + str(remote_repo_path_string))
+    cloned_repo = new_repo.clone(remote_repo_path_string)
+    new_repo.create_remote("origin", url=remote_repo_path_string)
+    new_repo.remotes.origin.pull(refspec=compliant_branch + ":origin")
+
+    # call the function to test and do some assertions
+    prep = prepare.Prepare()
+
+    with mock.patch(
+        "shrike.build.prepare.Prepare.get_true_commit_message",
+        return_value=true_commit_message,
+    ):
+        commit = prep.get_compliant_commit_corresponding_to_pull_request(
+            cloned_repo, compliant_branch
+        )
+        assert commit.message == true_commit_message
 
     # clean up the newly created repos
     new_repo.close()

@@ -349,7 +349,7 @@ CATATTR1=0x00010001:OSAttr:2:6.2
             log.info(
                 "We are in the 'Build - after Merge' case (the current branch is the compliant branch)."
             )
-            current_commit = repo.remotes.origin.refs[compliant_branch].commit
+            current_commit = self.get_compliant_commit_corresponding_to_pull_request(repo, compliant_branch)
             self.log_commit_info(current_commit, "Current commit to compliant branch")
             previous_commit = (
                 self.get_previous_compliant_commit_corresponding_to_pull_request(
@@ -431,11 +431,10 @@ CATATTR1=0x00010001:OSAttr:2:6.2
         return res
 
     def log_commit_info(self, commit, title) -> None:
-        log.debug(title + ":")
-        log.debug("Summary: " + commit.summary)
-        log.debug("Author: " + str(commit.author))
-        log.debug("Authored Date: " + str(commit.authored_date))
-        log.debug("Message: " + commit.message)
+        log.info(title + ":")
+        log.info("Summary: " + commit.summary)
+        log.info("Author: " + str(commit.author))
+        log.info("Authored Date: " + str(commit.authored_date))
 
     def get_previous_compliant_commit_corresponding_to_pull_request(
         self, latest_commit, consider_current_commit
@@ -454,6 +453,29 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                 break
         return previous_commit
 
+    def get_compliant_commit_corresponding_to_pull_request(self, repo, compliant_branch):
+        """
+        This function will return the most recent commit in the repo that truly corresponds to the triggered build. It is identified thanks to the 'Build.SourceVersionMessage' DevOps environment variable (see https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml) that contains the true commit message. This is used to address the race condition occuring when a commit sneaks in before the "prepare" step was run on the previous commit.
+        """
+        # this is the true commit message corresponding to the PR that triggered the build
+        true_commit_message = self.get_true_commit_message()
+        # this is the most recent commit 
+        current_commit = repo.remotes.origin.refs[compliant_branch].commit
+        # if the most recent commit corresponds to the true commit message, then return it
+        if (true_commit_message.startswith(current_commit.summary)):
+            return current_commit
+        # otherwise, let's iterate through the parents until we find it
+        candidate_commit = current_commit
+        for c in candidate_commit.iter_parents():
+            if (true_commit_message.startswith(c.summary)):
+                return c
+        # if the corresponding commit cannot be found, return the most recent one and log a warning
+        log.warning("Could not find the in the git repo the commit that triggered this PR. Returning the most recent but beware, the 'smart' mode likely will not work properly.")
+        return current_commit
+
+    def get_true_commit_message(self):
+        return str(os.environ.get("BUILD_SOURCEVERSIONMESSAGE") or "NA")
+    
     def infer_active_components_from_modified_files(self, modified_files) -> List[str]:
         """
         This function returns the list of components (as a list of directories paths) potentially affected by changes in the `modified_files`.
