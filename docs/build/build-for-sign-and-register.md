@@ -125,6 +125,62 @@ A sample YAML script of preparation step
     workingDirectory: $(MY_WORK_DIRECTORY)
 ```
 
+### Customized validation on components (optional)
+At the `prepare` step of the signing and registering build,
+the `shrike.build.command.prepare.validate_all_components()` function
+executes an azure cli command 
+`az ml component validate --file ${component_spec_path}` to validate
+whether the given component spec YAML file has any syntax errors or matches
+the strucuture of the pre-defined schema.
+
+Apart from the standard validation via az cli, users can also enforce customized "strict"
+validation on Azure ML components. There are two parameters - `enable_component_validation` 
+(type: `boolean`, default: `False`) and `component_validation`
+(type: `dict`, default: `None`) that could be specified in the 
+configuration file. If `config.enable_component_validation is True`,
+it will first check whether the components are compliant, then run
+the user-provided customized validation.
+
+We expect users to write [JSONPath expressions](https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html)
+to query Azure ML component spec YAML elements. For example,
+the path of component name is `$.name`, while the path of
+image is `$.environment.docker.image`.
+Then, users are expected to translate their specific "strict" validation rules to 
+regular expression patterns. For example, enforcing the component
+name to start with "smartreply." could be translated to
+a string pattern `^smartreply.[A-Za-z0-9-_.]+$`. 
+After that, the JSONPath expressions and corresponding regular expressions
+will be combined into a dict and assigned to `config.component_validation`
+in the configuration file.
+
+Assuming we enforce two "strict" validation requirements on
+the component: (1)
+the component name starts with `smartreply.`, (2)
+all the input parameter descriptions start with a
+capital letter. Below is an example of the configuration file that specifies
+the above two validation requirements.
+
+```yaml
+activation_method: all
+compliant_branch: ^refs/heads/develop$
+component_specification_glob: 'components/**/module_spec.yaml'
+log_format: '[%(name)s][%(levelname)s] - %(message)s'
+signing_mode: aml
+workspaces: 
+- /subscriptions/<Subscription-Id>/resourcegroups/<Name-Of-Resource-Group>/providers/Microsoft.MachineLearningServices/workspaces/<Azure-ML-Workspace-Name>
+allow_duplicate_versions: True
+use_build_number: True
+
+# strict component validation
+enable_component_validation: True
+component_validation:
+  '$.name': '^smartreply.[A-Za-z0-9-_.]+$'
+  '$.inputs..description': '^[A-Z].*'
+```
+
+Please refer to this [proposal doc](https://github.com/Azure/shrike/blob/main/docs/rfc/strict-component-validation.md)
+for more details on the customized validation.
+
 ## ESRP CodeSign
 After creating `catlog.json` and `catalog.json.sig` files for each built component in the preparation step, we leverage the ESRP, that is *Engineer Sercurity and Release Platform*, to sign
 the contents of components. In the sample YAML script below, we need to customize `ConnectedServiceName` and `FolderPath`. In `TEEGit` repo, the name of ESRP service connection for Torus tenant 
