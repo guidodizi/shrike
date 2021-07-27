@@ -20,7 +20,7 @@ nav:
     Create an AML pipeline: pipeline/create-aml-pipeline.md
     Configure your AML pipeline: pipeline/configure-aml-pipeline.md
     Reuse your AML pipeline: pipeline/reuse-aml-pipeline.md
-    Image override: rfc/pipeline-image-override.md
+    Submission-time override: pipeline/submission-time-override.md
     API reference:
       pipeline_helper: pipeline/pipeline-helper.md
       module_helper: pipeline/module-helper.md
