@@ -10,7 +10,7 @@ run:
   regenerate_outputs: false
   continue_on_failure: false
   disable_telemetry: false
-  verbose: false
+  verbose: true
   submit: true
   resume: false
   canary: false
@@ -104,3 +104,15 @@ modules:
     name: sweep_component
     yaml: "sweep_component/module_spec.yaml"
     version: null
+
+tenant_overrides:
+  allow_override: true
+  keep_modified_files: false
+  mapping:
+    72f988bf-86f1-41af-91ab-2d7cd011db47:
+      remove_polymer_pkg_idx: true
+      environment.docker.image:
+        'polymerprod.azurecr.io/training/pytorch:scpilot-rc2': 'mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04'
+      tags:
+        Office: aml-ds
+

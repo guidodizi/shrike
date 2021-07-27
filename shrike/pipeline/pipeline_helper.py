@@ -8,14 +8,20 @@ import os
 import json
 import logging
 import argparse
+from posixpath import splitext
 import re
 import webbrowser
 import uuid
+import shutil
+import yaml
+import jsonpath_ng
+import sys
 
 try:
     from dataclasses import dataclass
     import hydra
     from hydra.core.config_store import ConfigStore
+    from hydra.core.hydra_config import HydraConfig
     from omegaconf import DictConfig, OmegaConf
     from flatten_dict import flatten
 
@@ -1054,6 +1060,265 @@ class AMLPipelineHelper:
                 )
         return pipeline_tags
 
+    def _check_if_spec_yaml_override_is_needed(self):
+        if self.config.module_loader.use_local == "":
+            print(
+                "All components are using remote copy, so override will not be executed. For components you want submission-time override of images/tags/etc., please specify them in `use_local`."
+            )
+            return False, None
+        if not self.config.tenant_overrides.allow_override:
+            print(
+                "Spec yaml file override is not allowed. If you want to use this feature, please set `tenant_overrides.allow_override` to True in your pipeline yaml."
+            )
+            return False, None
+        cur_tenant = self.config.aml.tenant
+        for tenant in self.config.tenant_overrides.mapping.keys():
+            if tenant == cur_tenant:
+                print(
+                    f"Your tenant is inconsistent with spec yaml, We will override relevant fields in your spec yaml files based on entry `{tenant}` in your pipeline yaml file."
+                )
+                return True, self.config.tenant_overrides.mapping[tenant]
+            if self.config.run.config_dir:
+                config_file_path = os.path.join(
+                    self.config.run.config_dir, "aml", tenant + ".yaml"
+                )
+                print(f"config_file_path is {config_file_path}")
+                if os.path.exists(config_file_path):
+                    with open(config_file_path, "r") as file:
+                        config = yaml.safe_load(file)
+                    if config["tenant"] == cur_tenant:
+                        print(
+                            f"Your tenant is inconsistent with spec yaml, We will override relevant fields in your spec yaml files based on entry `{config_file_path}` in your pipeline yaml file."
+                        )
+                        return True, self.config.tenant_overrides.mapping[tenant]
+        return False, None
+
+    def _override_spec_yaml(self, spec_mapping):
+        module_keys = self.module_loader.modules_manifest
+        yaml_to_be_recovered = []
+        env_yaml_override_is_needed = (
+            spec_mapping.remove_polymer_pkg_idx
+            if "remove_polymer_pkg_idx" in spec_mapping
+            else False
+        )
+        for module_key in module_keys:
+            if not self.module_loader.is_local(module_key):
+                print(
+                    f"Component {module_key} is using the remote copy. Skipping overrides."
+                )
+                continue
+            print(f"Overriding for component: {module_key}.")
+            module_entry = self.module_loader.modules_manifest[module_key]
+            spec_path = os.path.join(
+                self.module_loader.local_steps_folder, module_entry["yaml"]
+            )
+            (
+                old_spec_path,
+                old_env_file_path,
+                new_env_file_path,
+            ) = self._override_single_spec_yaml(
+                spec_path, spec_mapping, env_yaml_override_is_needed
+            )
+
+            yaml_to_be_recovered.append(
+                [old_spec_path, spec_path, old_env_file_path, new_env_file_path]
+            )
+        return yaml_to_be_recovered
+
+    def _update_value_given_flattened_key(self, nested_dict, dot_key, new_val):
+        print(f"Updating key {dot_key}")
+        split_key = dot_key.split(".")
+        res = nested_dict
+        path = ""
+        for key in split_key[:-1]:
+            path += key + "."
+            if not isinstance(res, dict) or key not in res:
+                raise KeyError(
+                    f"Key {dot_key} not in {nested_dict}. It failed at {path}."
+                )
+            res = res[key]
+        if isinstance(res, dict) and split_key[-1] in res:
+            res[split_key[-1]] = new_val
+            print(f"The field {dot_key} has been updated to {new_val} successfully.")
+        else:
+            raise KeyError(f"Key {dot_key} not in {nested_dict}.")
+
+    def _override_single_spec_yaml(
+        self, spec_path, spec_mapping, env_yaml_override_is_needed
+    ):
+        spec_filename, spec_ext = os.path.splitext(spec_path)
+        old_spec_path = (
+            spec_filename + ".not_used"
+        )  # remove ".yaml" extension to avoid confusion
+        shutil.copyfile(
+            spec_path, old_spec_path
+        )  # need to recover after pipeline submission
+
+        with open(spec_path) as file:
+            spec = yaml.safe_load(file)
+        for key in spec_mapping:
+            match = jsonpath_ng.parse(key).find(spec)
+            if match:
+                try:
+                    print(f"Find a matching field to override: {key}.")
+                    original_val = match[0].value
+                    print(
+                        f"Original value is {original_val}. Looking for new value now..."
+                    )
+                    spec_mapping_to_use = spec_mapping[key]
+                    if isinstance(original_val, str):
+                        print(f"The field to be updated is str.")
+                        if original_val in spec_mapping_to_use:
+                            new_val = spec_mapping_to_use[original_val]
+                            print(f"The new value is: {new_val}.")
+                            self._update_value_given_flattened_key(spec, key, new_val)
+                        else:
+                            for pattern in spec_mapping_to_use:
+                                if re.match(pattern, original_val):
+                                    new_val = spec_mapping_to_use[pattern]
+                                    print(f"The new pattern is: {new_val}.")
+                                    self._update_value_given_flattened_key(
+                                        spec,
+                                        key,
+                                        re.sub(pattern, new_val, original_val),
+                                    )
+                    elif isinstance(original_val, dict):
+                        print("The field to be updated is dict")
+                        for spec_mapping_key in spec_mapping_to_use:
+                            self._update_value_given_flattened_key(
+                                spec,
+                                ".".join([key, spec_mapping_key]),
+                                spec_mapping_to_use[spec_mapping_key],
+                            )
+                    else:
+                        print(
+                            f"Override for key {key} is not supported yet. Please open a [feature request](https://github.com/Azure/shrike/issues) if necessary."
+                        )
+                except KeyError:
+                    print(f"Key {key} does not in file {spec_path}. Skip overrides.")
+        new_env_file_path = None
+        old_env_file_path = None
+        if env_yaml_override_is_needed:
+            spec_dirname = os.path.dirname(spec_path)
+            polymer_pkg_idx = "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/"
+            print(f"Will remove {polymer_pkg_idx} from environment.conda.")
+            try:
+                conda_dependencies_file = spec["environment"]["conda"][
+                    "conda_dependencies_file"
+                ]
+                print("conda_dependencies_file exists.")
+                (
+                    found_index_url,
+                    new_file,
+                    new_env_file_path,
+                    old_env_file_path,
+                ) = self._remove_polymer_pkg_idx_if_exists_and_save_new(
+                    spec_dirname, conda_dependencies_file, polymer_pkg_idx
+                )
+                if found_index_url:
+                    spec["environment"]["conda"]["conda_dependencies_file"] = new_file
+            except KeyError:
+                # conda_dependencies_file does not exist
+                pass
+            try:
+                conda_dependencies = spec["environment"]["conda"]["conda_dependencies"][
+                    "dependencies"
+                ]
+                print("conda_dependencies_file exists.")
+                for idx, dependency in enumerate(conda_dependencies):
+                    if isinstance(dependency, dict) and "pip" in dependency:
+                        pip_dependencies = dependency["pip"]
+                        if polymer_pkg_idx in pip_dependencies:
+                            pip_dependencies.remove(polymer_pkg_idx)
+                            dependency["pip"] = pip_dependencies
+                            conda_dependencies[idx] = dependency
+                spec["environment"]["conda"]["conda_dependencies"][
+                    "dependencies"
+                ] = conda_dependencies
+            except KeyError:
+                # conda_dependencies does not exist
+                pass
+            try:
+                pip_requirements_file = spec["environment"]["conda"][
+                    "pip_requirements_file"
+                ]
+                print("pip_requirements_file exists.")
+                (
+                    found_index_url,
+                    new_file,
+                    new_env_file_path,
+                    old_env_file_path,
+                ) = self._remove_polymer_pkg_idx_if_exists_and_save_new(
+                    spec_dirname, pip_requirements_file, polymer_pkg_idx
+                )
+                if found_index_url:
+                    spec["environment"]["conda"]["pip_requirements_file"] = new_file
+            except KeyError:
+                # pip_requirements_file does not exist
+                pass
+
+        with open(spec_path, "w") as file:
+            yaml.safe_dump(spec, file)
+        return old_spec_path, old_env_file_path, new_env_file_path
+
+    def _remove_polymer_pkg_idx_if_exists_and_save_new(
+        self, spec_dirname, file, polymer_pkg_idx
+    ):
+        found_index_url = False
+        new_file = ""
+        new_file_path = ""
+        old_file_path = ""
+        with open(os.path.join(spec_dirname, file), "r") as f:
+            lines = f.readlines()
+        for line in lines:
+            if polymer_pkg_idx in line:
+                found_index_url = True
+                lines.remove(line)
+        if found_index_url:
+            file_name, file_ext = os.path.splitext(file)
+            new_file = file_name + "_" + self.config.aml.tenant + file_ext
+            new_file_path = os.path.join(spec_dirname, new_file)
+            with open(new_file_path, "w") as f:
+                f.writelines(lines)
+            old_file_path = os.path.join(
+                spec_dirname, os.path.splitext(file)[0] + ".not_used"
+            )
+            shutil.move(os.path.join(spec_dirname, file), old_file_path)
+        return found_index_url, new_file, new_file_path, old_file_path
+
+    def _recover_spec_yaml(self, spec_file_pairs, keep_modified_files):
+        print(
+            f"Reverting changes to spec yaml files. Keeping modified spec yaml files: {keep_modified_files}."
+        )
+        for (
+            old_spec_path,
+            new_spec_path,
+            old_env_file_path,
+            new_env_file_path,
+        ) in spec_file_pairs:
+            # Question: do we want to keep a copy of the modified files?
+            if keep_modified_files:
+                filename, ext = os.path.splitext(new_spec_path)
+                shutil.move(
+                    new_spec_path, filename + "_" + self.config.aml.tenant + ext
+                )
+                if os.path.exists(filename + ".additional_includes"):
+                    shutil.copyfile(
+                        filename + ".additional_includes",
+                        filename
+                        + "_"
+                        + self.config.aml.tenant
+                        + ".additional_includes",
+                    )
+            else:
+                if new_env_file_path:
+                    os.remove(new_env_file_path)
+            shutil.move(old_spec_path, new_spec_path)
+            if old_env_file_path:
+                shutil.move(
+                    old_env_file_path, os.path.splitext(old_env_file_path)[0] + ".yaml"
+                )
+
     ################
     ### MAIN/RUN ###
     ################
@@ -1069,6 +1334,50 @@ class AMLPipelineHelper:
             aml_force=self.config.aml.force,
         )  # NOTE: this also stores aml workspace in internal global variable
 
+    def build_and_submit_new_pipeline(self):
+        print(f"Building Pipeline [{self.__class__.__name__}]...")
+        pipeline_function = self.build(self.config)
+
+        print("Creating Pipeline Instance...")
+        pipeline = self.pipeline_instance(pipeline_function, self.config)
+
+        print("Validating...")
+        pipeline.validate()
+
+        if self.config.run.export:
+            print(f"Exporting to {self.config.run.export}...")
+            with open(self.config.run.export, "w") as export_file:
+                export_file.write(pipeline._get_graph_json())
+
+        if self.config.run.submit:
+            pipeline_tags = self._parse_pipeline_tags()
+            pipeline_tags.update(self.repository_info)
+            print(f"Submitting Experiment... [tags={pipeline_tags}]")
+
+            # pipeline_run is of the class "azure.ml.component.run", which
+            # is different from "azureml.pipeline.core.PipelineRun"
+            pipeline_run = pipeline.submit(
+                experiment_name=self.config.run.experiment_name,
+                tags=pipeline_tags,
+                default_compute_target=self.config.compute.default_compute_target,
+                regenerate_outputs=self.config.run.regenerate_outputs,
+                continue_on_step_failure=self.config.run.continue_on_failure,
+            )
+
+            # Forece pipeline_run to be of the class "azureml.pipeline.core.PipelineRun"
+            pipeline_run = PipelineRun(
+                experiment=pipeline_run._experiment,
+                run_id=pipeline_run._id,
+            )
+            return pipeline_run
+
+        else:
+            print("Exiting now, if you want to submit please override run.submit=True")
+            self.__class__.BUILT_PIPELINE = (
+                pipeline  # return so we can have some unit tests done
+            )
+            return
+
     def run(self):
         """Run pipeline using arguments"""
         # Log the telemetry information in the Azure Application Insights
@@ -1083,8 +1392,8 @@ class AMLPipelineHelper:
         # Check whether the experiment name is valid
         self.validate_experiment_name(self.config.run.experiment_name)
 
-        repository_info = get_repo_info()
-        print(f"Running from repository: {repository_info}")
+        self.repository_info = get_repo_info()
+        print(f"Running from repository: {self.repository_info}")
 
         print("azureml.core.VERSION = {}".format(azureml.core.VERSION))
         self.connect()
@@ -1092,6 +1401,7 @@ class AMLPipelineHelper:
         if self.config.run.verbose:
             logging.getLogger().setLevel(logging.DEBUG)
 
+        pipeline_run = None
         if self.config.run.resume:
             if not self.config.run.pipeline_run_id:
                 raise Exception(
@@ -1106,50 +1416,35 @@ class AMLPipelineHelper:
             # pipeline_run is of the class "azureml.pipeline.core.PipelineRun"
             pipeline_run = PipelineRun(experiment, self.config.run.pipeline_run_id)
         else:
-            print(f"Building Pipeline [{self.__class__.__name__}]...")
-            pipeline_function = self.build(self.config)
+            keep_modified_files = False
+            if self.config.tenant_overrides.allow_override:
+                print("Check if tenant is consistent with spec yaml")
+                yaml_to_be_recovered = []
+                override, mapping = self._check_if_spec_yaml_override_is_needed()
+                if override:
+                    try:
+                        tenant = self.config.aml.tenant
+                        print(
+                            f"Performing spec yaml override to adapt to tenant: {tenant}."
+                        )
+                        yaml_to_be_recovered = self._override_spec_yaml(mapping)
+                        keep_modified_files = (
+                            self.config.tenant_overrides.keep_modified_files
+                        )
 
-            print("Creating Pipeline Instance...")
-            pipeline = self.pipeline_instance(pipeline_function, self.config)
-
-            print("Validating...")
-            pipeline.validate()
-
-            if self.config.run.export:
-                print(f"Exporting to {self.config.run.export}...")
-                with open(self.config.run.export, "w") as export_file:
-                    export_file.write(pipeline._get_graph_json())
-
-            if self.config.run.submit:
-                pipeline_tags = self._parse_pipeline_tags()
-                pipeline_tags.update(repository_info)
-                print(f"Submitting Experiment... [tags={pipeline_tags}]")
-
-                # pipeline_run is of the class "azure.ml.component.run", which
-                # is different from "azureml.pipeline.core.PipelineRun"
-                pipeline_run = pipeline.submit(
-                    experiment_name=self.config.run.experiment_name,
-                    tags=pipeline_tags,
-                    default_compute_target=self.config.compute.default_compute_target,
-                    regenerate_outputs=self.config.run.regenerate_outputs,
-                    continue_on_step_failure=self.config.run.continue_on_failure,
-                )
-
-                # Forece pipeline_run to be of the class "azureml.pipeline.core.PipelineRun"
-                pipeline_run = PipelineRun(
-                    experiment=pipeline_run._experiment,
-                    run_id=pipeline_run._id,
-                )
+                        pipeline_run = self.build_and_submit_new_pipeline()
+                        self._recover_spec_yaml(
+                            yaml_to_be_recovered, keep_modified_files
+                        )
+                    except:
+                        print("An error occured, override is not successful.")
 
             else:
-                print(
-                    "Exiting now, if you want to submit please override run.submit=True"
-                )
-                self.__class__.BUILT_PIPELINE = (
-                    pipeline  # return so we can have some unit tests done
-                )
-                return
+                pipeline_run = self.build_and_submit_new_pipeline()
 
+        if not pipeline_run:
+            # not submitting code, exit now
+            return
         # launch the pipeline execution
         print(f"Pipeline Run Id: {pipeline_run.id}")
         print(
@@ -1209,6 +1504,13 @@ Follow link below to access your pipeline run directly:
         def hydra_run(cfg: DictConfig):
             # merge cli config with default config
             cfg = OmegaConf.merge(config_dict, cfg)
+
+            arg_parser = argparse.ArgumentParser()
+            arg_parser.add_argument("--config-dir")
+            args, _ = arg_parser.parse_known_args()
+            cfg.run.config_dir = os.path.join(
+                HydraConfig.get().runtime.cwd, args.config_dir
+            )
 
             print("*** CONFIGURATION ***")
             print(OmegaConf.to_yaml(cfg))

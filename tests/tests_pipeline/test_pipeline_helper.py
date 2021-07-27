@@ -8,6 +8,9 @@ import sys
 from omegaconf import OmegaConf
 from pathlib import Path
 from shrike.pipeline.pipeline_helper import AMLPipelineHelper
+import yaml
+import os
+import shutil
 
 # Load the testing configuration YAML file
 config = OmegaConf.load(Path(__file__).parent / "data/test_configuration.yaml")
@@ -15,6 +18,9 @@ config = OmegaConf.load(Path(__file__).parent / "data/test_configuration.yaml")
 # Initiate AMLPipelineHelper class with the testing configuration
 pipeline_helper = AMLPipelineHelper(config=config)
 pipeline_helper.connect()
+
+# Define tenant_id
+tenant_id = "72f988bf-86f1-41af-91ab-2d7cd011db47"
 
 
 def test_validate_experiment_name():
@@ -476,3 +482,223 @@ def test_apply_recommended_runsettings(capsys, module_name, expected_stdout):
     sys.stdout.write(out)
 
     assert expected_stdout in out
+
+
+def test_check_if_spec_yaml_override_is_needed_allow_override_false():
+    pipeline_helper.config.tenant_overrides.allow_override = False
+    override, _ = pipeline_helper._check_if_spec_yaml_override_is_needed()
+    assert override == False
+    pipeline_helper.config.tenant_overrides.allow_override = True
+
+
+def test_check_if_spec_yaml_override_is_needed_given_tenant_id():
+    override, mapping = pipeline_helper._check_if_spec_yaml_override_is_needed()
+    assert override == True
+    assert mapping == {
+        "environment.docker.image": {
+            "polymerprod.azurecr.io/training/pytorch:scpilot-rc2": "mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04"
+        },
+        "tags": {"Office": "aml-ds"},
+        "remove_polymer_pkg_idx": True,
+    }
+
+
+def test_check_if_spec_yaml_override_is_needed_given_config_filename():
+    with open(Path(__file__).parent / "data/test_configuration.yaml", "r") as file:
+        spec = yaml.safe_load(file)
+    mapping = spec["tenant_overrides"]["mapping"][tenant_id]
+    mapping["description"] = "test"
+    spec["tenant_overrides"]["mapping"]["amlds"] = mapping
+    spec["tenant_overrides"]["mapping"].pop(tenant_id)
+    test_pipeline_helper = AMLPipelineHelper(config=OmegaConf.create(spec))
+    test_pipeline_helper.connect()
+    test_pipeline_helper.config.run.config_dir = os.path.join(
+        Path(__file__).parent / "sample/conf"
+    )
+
+    assert "amlds" in test_pipeline_helper.config.tenant_overrides.mapping
+    assert tenant_id not in test_pipeline_helper.config.tenant_overrides.mapping
+    override, mapping = test_pipeline_helper._check_if_spec_yaml_override_is_needed()
+    assert override == True
+    assert mapping == {
+        "environment.docker.image": {
+            "polymerprod.azurecr.io/training/pytorch:scpilot-rc2": "mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04"
+        },
+        "tags": {"Office": "aml-ds"},
+        "description": "test",
+        "remove_polymer_pkg_idx": True,
+    }
+
+
+def test_recover_spec_yaml_with_keeping_modified_files():
+    file_list = [
+        "tmp/spec_path.not_used",
+        "tmp/spec_path.yaml",
+        "tmp/env_path.not_used",
+        "tmp/env_path_" + tenant_id + ".yaml",
+    ]
+    os.makedirs("tmp")
+    for i in file_list:
+        with open(i, "w") as file:
+            pass
+    pipeline_helper._recover_spec_yaml([file_list], True)
+    assert os.path.exists("tmp/spec_path.yaml")
+    assert os.path.exists("tmp/env_path.yaml")
+    assert os.path.exists("tmp/spec_path_" + tenant_id + ".yaml")
+    assert os.path.exists("tmp/env_path_" + tenant_id + ".yaml")
+    assert len(os.listdir("tmp")) == 4
+    shutil.rmtree("tmp")
+
+
+def test_recover_spec_yaml_without_keeping_modified_files():
+    file_list = [
+        "tmp/spec_path.not_used",
+        "tmp/spec_path.yaml",
+        "tmp/env_path.not_used",
+        "tmp/env_path_" + tenant_id + ".yaml",
+    ]
+    os.makedirs("tmp")
+    for i in file_list:
+        with open(i, "w") as file:
+            pass
+    pipeline_helper._recover_spec_yaml([file_list], False)
+    assert os.path.exists("tmp/spec_path.yaml")
+    assert os.path.exists("tmp/env_path.yaml")
+    assert not os.path.exists("tmp/spec_path_" + tenant_id + ".yaml")
+    assert not os.path.exists("tmp/env_path_" + tenant_id + ".yaml")
+    assert len(os.listdir("tmp")) == 2
+    shutil.rmtree("tmp")
+
+
+def test_update_value_given_flattened_key():
+    d = {"a": {"b": {"c": 1}}}
+    pipeline_helper._update_value_given_flattened_key(d, "a.b.c", 2)
+    assert d["a"]["b"]["c"] == 2
+    with pytest.raises(KeyError):
+        pipeline_helper._update_value_given_flattened_key(d, "a.b.c.d", 2)
+    with pytest.raises(KeyError):
+        pipeline_helper._update_value_given_flattened_key(d, "a.c.d", 2)
+
+
+def test_override_spec_yaml():
+    spec_mapping = pipeline_helper.config.tenant_overrides["mapping"][tenant_id]
+    yaml_to_be_recovered = pipeline_helper._override_spec_yaml(spec_mapping)
+    assert len(yaml_to_be_recovered) == len(
+        pipeline_helper.module_loader.modules_manifest
+    )
+    for pair in yaml_to_be_recovered:
+        assert len(pair) == 4
+        for file_path in pair:
+            if file_path:
+                assert os.path.exists(file_path)
+    pipeline_helper._recover_spec_yaml(yaml_to_be_recovered, False)
+
+
+def test_override_single_spec_yaml_without_environment_override():
+    folder_path = os.path.join(
+        Path(__file__).parent, "sample/steps/multinode_trainer_copy"
+    )
+    shutil.copytree(
+        os.path.join(Path(__file__).parent, "sample/steps/multinode_trainer"),
+        folder_path,
+    )
+    spec_path = os.path.join(folder_path, "module_spec.yaml")
+    with open(spec_path, "r") as file:
+        spec = yaml.safe_load(file)
+    assert (
+        spec["environment"]["docker"]["image"]
+        == "polymerprod.azurecr.io/training/pytorch:scpilot-rc2"
+    )
+    assert not spec["tags"]["Office"]
+    spec_mapping = pipeline_helper.config.tenant_overrides["mapping"][tenant_id]
+    (
+        old_spec_path,
+        old_env_file_path,
+        new_env_file_path,
+    ) = pipeline_helper._override_single_spec_yaml(spec_path, spec_mapping, False)
+    assert old_spec_path == os.path.join(folder_path, "module_spec.not_used")
+    assert not old_env_file_path
+    assert not new_env_file_path
+    with open(spec_path, "r") as file:
+        spec = yaml.safe_load(file)
+    assert (
+        spec["environment"]["docker"]["image"]
+        == "mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04"
+    )
+    assert spec["tags"]["Office"] == "aml-ds"
+    shutil.rmtree(folder_path)
+
+
+def test_override_single_spec_yaml_with_environment_override():
+    folder_path = os.path.join(
+        Path(__file__).parent, "sample/steps/multinode_trainer_copy"
+    )
+    shutil.copytree(
+        os.path.join(Path(__file__).parent, "sample/steps/multinode_trainer"),
+        folder_path,
+    )
+    spec_path = os.path.join(folder_path, "module_spec.yaml")
+    spec_mapping = pipeline_helper.config.tenant_overrides["mapping"][tenant_id]
+    (
+        old_spec_path,
+        old_env_file_path,
+        new_env_file_path,
+    ) = pipeline_helper._override_single_spec_yaml(spec_path, spec_mapping, True)
+    with open(old_env_file_path, "r") as file:
+        lines = file.readlines()
+    assert (
+        "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/"
+        in " ".join(lines)
+    )
+    with open(new_env_file_path, "r") as file:
+        lines = file.readlines()
+    assert (
+        "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/"
+        not in " ".join(lines)
+    )
+    shutil.rmtree(folder_path)
+
+
+def test_remove_polymer_pkg_idx_if_exists_and_save_new():
+    os.makedirs("tmp")
+    with open("tmp/test.txt", "w") as file:
+        file.writelines(
+            [
+                "- --index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+                "foo",
+            ]
+        )
+    (
+        found_index_url,
+        new_file,
+        new_file_path,
+        old_file_path,
+    ) = pipeline_helper._remove_polymer_pkg_idx_if_exists_and_save_new(
+        "tmp",
+        "test.txt",
+        "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+    )
+    assert found_index_url
+    assert new_file == "test_" + tenant_id + ".txt"
+    assert new_file_path == os.path.join("tmp", new_file)
+    assert old_file_path == os.path.join("tmp", "test.not_used")
+    shutil.rmtree("tmp")
+
+    os.makedirs("tmp")
+    with open("tmp/test.txt", "w"):
+        pass
+    (
+        found_index_url,
+        new_file,
+        new_file_path,
+        old_file_path,
+    ) = pipeline_helper._remove_polymer_pkg_idx_if_exists_and_save_new(
+        "tmp",
+        "test.txt",
+        "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
+    )
+    assert not found_index_url
+    assert not new_file
+    assert not new_file_path
+    assert not old_file_path
+    shutil.rmtree("tmp")

@@ -2,9 +2,9 @@
 # Licensed under the MIT license.
 
 """ Configuration dataclasses for AMLPipelineHelper """
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from omegaconf import MISSING
-from typing import Optional, Any
+from typing import Optional, Any, Dict
 from shrike.pipeline.module_helper import module_loader_config, module_manifest
 
 # Default config for HDI components
@@ -28,6 +28,7 @@ class pipeline_cli_config:  # pylint: disable=invalid-name
     experiment_name: str = MISSING
     pipeline_run_id: str = MISSING
     tags: Optional[Any] = None
+    config_dir: Optional[str] = None
 
 
 @dataclass
@@ -80,6 +81,13 @@ class pipeline_compute_config:  # pylint: disable=invalid-name
     noncompliant_datastore: Optional[str] = MISSING
 
 
+@dataclass
+class tenant_override_config:
+    allow_override: bool = False
+    keep_modified_files: bool = False
+    mapping: Dict[str, Any] = field(default_factory=lambda: {})
+
+
 def default_config_dict():
     """Constructs the config dictionary for the pipeline helper settings"""
     return {
@@ -88,4 +96,5 @@ def default_config_dict():
         "compute": pipeline_compute_config,
         "module_loader": module_loader_config,
         "modules": module_manifest,
+        "tenant_overrides": tenant_override_config,
     }
