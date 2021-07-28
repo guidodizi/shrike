@@ -71,20 +71,25 @@ Under `tenant_overrides`, you could specify three fields:
 
 ## Summary
 In short, to allow submission-time override, 
+
 1. Add component keys or `"*"` to `module_loader.use_local`
 2. Add `tenant_overrides` section to pipeline yaml file, with
     - `allow_override: true`
     - nested dictionary `mapping` with tenant_id or "aml configuration" filename as keys
-3. Submit your pipeline as usual. In your "snapshot" of the experiment on Azure ML portal, `component_spec.yaml` should be updated, while the original copies are renamed as `<filename>.not_used` (temporarily). The local filenames will be reverted.
+3. Submit your pipeline as usual. In your "snapshot" of the experiment on Azure ML portal, `component_spec.yaml` should be updated, while the original copies are renamed as `<filename>.not_used` (temporarily). The local filenames will be reverted. 
+
 Example:
-Original code structure on local machine:
+<center>
+![image](img/submission-time-override-original-code.png)
 
-![original_code_structure.png](../.attachments/submission-time-override-original-code.png)
+*Fig 1: original code structure on local machine*
 
-Azure ML portal:
+![image](img/submission-time-override-portal.png)
 
-![image.png](../.attachments/submission-time-override-portal.png)
+*Fig 2: Azure ML portal*
 
-Modified code after submission on local machine with `keep_modified_files` set to `False` (if `False`, it will be same as before submission):
 
-![image.png](../.attachments/submission-time-override-modified.png)
+![image](img/submission-time-override-modified.png)
+
+*Fig 3: modified code after submission on local machine with `keep_modified_files` set to `False` (if `False`, it will be same as before submission)*
+</center>
