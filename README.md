@@ -11,16 +11,9 @@
 [![PyPI version](https://badge.fury.io/py/shrike.svg)](https://badge.fury.io/py/shrike)
 [![license: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-Compliant Machine Learning (sometimes also called *eyes-off* Machine Learning)
-is the practice of training, validating and deploying
-machine learning models without seeing the underlying private data. It is needed by many
-enterprises to satisfy the strict compliance and privacy guarantees that 
-they provide to their customers.
-
-The `shrike` library is a set of Python utilities for compliant machine
-learning, with a special emphasis on running experiments in the 
+The `shrike` library is a set of Python utilities for running experiments in the 
 [Azure Machine Learning](https://github.com/Azure/azureml-examples) platform (_a.k.a._ Azure ML). This
-library contains three elements, which are:
+library contains four elements, which are:
 
 -  `shrike.compliant_logging`: utilities for compliant logging and 
 exception handling;
