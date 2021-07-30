@@ -2,6 +2,7 @@
     "exclude": [
         "shrike/pipeline/**",
         "tests/**",
-        "docs/**"
+        "docs/**",
+        "examples/**",
     ]
 }

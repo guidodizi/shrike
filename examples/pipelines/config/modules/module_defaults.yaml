@@ -1,0 +1,14 @@
+# @package _group_
+# Contains all the demo components with default version
+manifest:
+  # COMPONENT THAT OPERATES ON A PARAMETER VALUE
+  - key: "ComponentWithParameter"
+    name: "componentwithparameter"
+    version: null
+    yaml: "add_one_thousand_to_parameter/component_spec.yaml"
+  # COMPONENT THAT COUNTS ROWS IN THE INPUT DATASET WITH COMPLIANT LOGGING
+  - key: "CountRowsAndLog"
+    name: "countrowsandlog"
+    version: null
+    yaml: "count_rows_and_log/component_spec.yaml"
+      
