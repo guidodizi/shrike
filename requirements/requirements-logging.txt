@@ -1,2 +1,2 @@
 # For aml metrics logging
-azureml-core~=1.31.0
+azureml-core~=1.33.0

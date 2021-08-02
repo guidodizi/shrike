@@ -19,7 +19,7 @@ class Configuration:
     activation_method: str = field(default="all")
     compliant_branch: str = field(default="^refs/heads/main$")
     source_branch: str = field(default="")
-    component_cli_version: str = field(default="40555082")
+    component_cli_version: str = field(default="42428082")
     component_specification_glob: str = field(default="**/spec.yaml")
     # TODO: consider a way of supporting both this and `*.yaml` as defaults.
     configuration_file: str = field(default="aml-build-configuration.yml")
