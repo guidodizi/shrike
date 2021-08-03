@@ -89,10 +89,10 @@ not be picked up by the "smart" mode. There are 2 common workarounds to this
 issue. The most straightforward is to activate the "all" activation mode in a PR
 following the failed build, then revert to "smart" for the PR after that. This
 will ensure all components are registered, but will also mess up the 
-[components results recycling logic](./Component-results-recycling.md):
+components results recycling logic:
 some components will wrongly be considered as a new, hence their results won't
 be recycled. The second option is to do a mock PR that just bumps up the
-version numbers or adds a dummy commment to
+version numbers or adds a dummy comment to
 the specification files of the components modified in the problematic PR. This
 option has the advantage of not interfering with components results recycling,
 but is harder to implement if the problematic PR affects many components.
