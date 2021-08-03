@@ -45,6 +45,11 @@ def provide_system_info(
                 logger.info(f"Library {lib} available", category=DataCategory.PUBLIC)
             except ModuleNotFoundError:
                 logger.warning(
-                    f"Library {lib} could not be imported".format(lib),
+                    f"Library {lib} is not found and could not be imported",
+                    category=DataCategory.PUBLIC,
+                )
+            except Exception as ex:
+                logger.warning(
+                    f"Library {lib} could not be imported: {ex}",
                     category=DataCategory.PUBLIC,
                 )

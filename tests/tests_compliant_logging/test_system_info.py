@@ -37,5 +37,7 @@ def test_provide_system_info():
         )
         logs_2 = str(context)
 
-    assert "Library SOME_UNKNOWN_LIBRARY could not be imported" in logs_2
+    assert (
+        "Library SOME_UNKNOWN_LIBRARY is not found and could not be imported" in logs_2
+    )
     assert "Library shrike available" in logs_2

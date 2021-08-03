@@ -239,10 +239,10 @@ def test_logging_aml_metric_list_tuple():
         log.metric_list(
             name="test_log_empty_list", value=[], category=DataCategory.PUBLIC
         )
-        log.metric_list(name="test_log_tupe_private", value=("1", "2", "test"))
+        log.metric_list(name="test_log_tupe_private", value=("1", "2", "test", None))
         logs = str(context)
     assert "List Value for Metric test_log_empty_list is empty. Skipping." in logs
-    assert "ListMetric      | test_log_tupe_private | ['1', '2', 'test']" in logs
+    assert "ListMetric      | test_log_tupe_private | ['1', '2', 'test', None]" in logs
 
 
 def test_logging_aml_metric_row():
@@ -278,6 +278,7 @@ def test_logging_aml_metric_table():
     test_table1 = {"name": ["James", "Robert", "Michael"], "number": [2, 3, 1, 5]}
     test_table2 = {"name": ["James", "Robert", "Michael"], "number": 2}
     test_table3 = {"name": 2, "number": 4}
+    test_table4 = {"name": ["James", "Robert", "Michael"], "number": [2, 3, None]}
 
     log.metric_table(
         name="test_table1", value=test_table1, category=DataCategory.PUBLIC
@@ -287,10 +288,10 @@ def test_logging_aml_metric_table():
         logs = str(context)
     assert "TableMetric     | test_table" in logs
     assert "TableMetric     | Index | name            | number" in logs
-    assert "TableMetric     | 00000 | James           |               2" in logs
-    assert "TableMetric     | 00001 | Robert          |               3" in logs
-    assert "TableMetric     | 00002 | Michael         |               1" in logs
-    assert "TableMetric     | 00003 |                 |               5" in logs
+    assert "TableMetric     | 00000 | James           | 2              " in logs
+    assert "TableMetric     | 00001 | Robert          | 3              " in logs
+    assert "TableMetric     | 00002 | Michael         | 1              " in logs
+    assert "TableMetric     | 00003 |                 | 5              " in logs
 
     # Checking empty value
     with StreamHandlerContext(log, "") as context:
@@ -312,6 +313,15 @@ def test_logging_aml_metric_table():
     log.metric_table(
         name="test_table3", value=test_table3, category=DataCategory.PUBLIC
     )
+
+    with StreamHandlerContext(log, "") as context:
+        log.metric_table(name="test_table4", value=test_table4)
+        logs = str(context)
+    assert "TableMetric     | test_table" in logs
+    assert "TableMetric     | Index | name            | number" in logs
+    assert "TableMetric     | 00000 | James           | 2              " in logs
+    assert "TableMetric     | 00001 | Robert          | 3              " in logs
+    assert "TableMetric     | 00002 | Michael         |                " in logs
 
 
 def test_logging_aml_metric_residual():

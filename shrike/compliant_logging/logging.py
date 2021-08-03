@@ -350,7 +350,8 @@ class CompliantLogger(logging.getLoggerClass()):  # type: ignore
                         row_str = f"TableMetric     | {i:05}"
                         for key in value:
                             col = value[key]
-                            row_str += f" | {(col[i] if i < len(col) else ''):15}"
+                            col = col[i] if i < len(col) and col[i] else ""
+                            row_str += f" | {str(col):15}"
                         self.info(row_str, category=category)
             elif type_set in [int, float]:
                 for key, val in value.items():
