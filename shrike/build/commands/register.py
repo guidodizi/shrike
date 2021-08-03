@@ -169,6 +169,9 @@ class Register(Command):
                 log.info("List of components in workspace after current registration.")
                 self.list_registered_component()
 
+def main():
+    """The main function for registering components"""
+    Register().run()
 
 if __name__ == "__main__":
-    Register().run()
+    main()

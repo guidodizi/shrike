@@ -62,6 +62,12 @@ setup(
     packages=find_packages(include=["shrike*"]),
     include_package_data=True,
     install_requires=required_logging,
+    entry_points={
+        "console_scripts": [
+            "shrike-prepare=shrike.build.commands.prepare:main",
+            "shrike-register=shrike.build.commands.register:main",
+        ],
+    },
     extras_require={
         "pipeline": required_pipeline,
         "build": required_build,

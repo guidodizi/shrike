@@ -866,6 +866,9 @@ CATATTR1=0x00010001:OSAttr:2:6.2
                     validation_success = False
         return validation_success
 
+def main():
+    """The main function for preparing components"""
+    Prepare().run()
 
 if __name__ == "__main__":
-    Prepare().run()
+    main()

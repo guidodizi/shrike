@@ -51,11 +51,11 @@ use_build_number: True
 
 To consume this configuration file, we should pass its path to the command line, that is
 ```ps
-python -m shrike.build.commands.prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE
+shrike-prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE
 ```
 If we want to override the values of `activation_method` and `fail_if_version_exists` at runtime, we should append them to the command line:
 ```ps
-python -m shrike.build.commands.prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE --activation-method smart --fail-if-version-exists
+shrike-prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE --activation-method smart --fail-if-version-exists
 ```
 
 
@@ -121,7 +121,7 @@ A sample YAML script of preparation step
     scriptLocation: inlineScript
     scriptType: pscore
     inlineScript: |
-      python -m shrike.build.commands.prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE
+      shrike-prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE
     workingDirectory: $(MY_WORK_DIRECTORY)
 ```
 
@@ -216,7 +216,7 @@ The last step is to register all signed components in your Azure ML workspaces. 
 Azure CLI command `az ml component --create --file {component}`. The Python call is
 
 ```python
-python -m shrike.build.commands.register --configuration-file path/to/config
+shrike-register --configuration-file path/to/config
 ```
 In this step, the `register` class can detect signed and built components.
 There are five configuration parameters related to the registration step: `--compliant-branch`, `--source-branch`, `--fail-if-version-exists`, `--use-build-number`, and `--all-component-version`. They should be customized in the `configure-file` according to your specific use case.
@@ -235,7 +235,7 @@ A sample YAML task for registration is
     scriptLocation: inlineScript
     scriptType: pscore
     inlineScript: |
-      python -m shrike.build.commands.register --configuration-file PATH/TO/MY_CONFIGURATION_FILE
+      shrike-register --configuration-file PATH/TO/MY_CONFIGURATION_FILE
     workingDirectory: $(MY_WORK_DIRECTORY)
 ```
 
@@ -326,7 +326,7 @@ parameters:
 Inline script portion of your "prepare" and "register" steps (you will need to customize the configuration file name and glob to your repository).
 
 ```bash
-python -m shrike.build.commands.register --configuration-file sign-register-config-dev.yaml --component-specification-glob src/steps/${{ parameters.aml_component }}/component_spec.yaml
+shrike-register --configuration-file sign-register-config-dev.yaml --component-specification-glob src/steps/${{ parameters.aml_component }}/component_spec.yaml
 ```
 
 Then, members of your team can manually trigger builds via the Azure DevOps UI, setting the `aml_component` parameter to the name of the component they want to code-sign and register.
