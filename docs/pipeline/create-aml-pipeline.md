@@ -6,8 +6,6 @@ To enjoy this doc, you need to:
 1. have already setup your python environment with the AML SDK following [these instructions](https://aka.ms/aml/pythonenvsetup) and cloned the accelerator repository as described in the "Set up" section [here](https://dev.azure.com/msdata/Vienna/_wiki/wikis/aml-1p-onboarding/20452/Run-your-first-AML-experiments?anchor=set-up);
 2. have access to an AML workspace
 
-> **Note:** If your AML workspace is a newly created workspace, you would have to first run one  sample pipeline from the designer page of the workspace to warm up (more details available [here](../Getting-Started/Setup-your-personal-AML-workspace.md)). Otherwise your submitted job would get stuck with the "Not Started" status. This is a known caveat and AML has a [work item](https://dev.azure.com/msdata/Vienna/_workitems/edit/1039037) to track this.
-
 ## Motivation
 The Azure ML pipeline helper class `AMLPipelineHelper` in the `shrike` package was developed with the goal of helping data scientists to more easily create reusable pipelines. These instructions explain how to use the Azure ML pipeline helper class.
 
