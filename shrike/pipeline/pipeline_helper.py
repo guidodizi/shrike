@@ -30,6 +30,7 @@ try:
     from azureml.core import Experiment
     from azureml.core import Dataset
     from azureml.pipeline.core import PipelineRun
+    from azure.ml.component.component import Input, Output
     from azure.ml.component._core._component_definition import (
         ComponentDefinition,
         ComponentType,
@@ -218,8 +219,7 @@ class AMLPipelineHelper:
         input_names = [
             a
             for a in dir(module_instance.inputs)
-            if not a.startswith("_")
-            and not callable(getattr(module_instance.inputs, a))
+            if isinstance(getattr(module_instance.inputs, a), Input)
         ]
         for input_key in input_names:
             input_instance = getattr(module_instance.inputs, input_key)
@@ -231,8 +231,7 @@ class AMLPipelineHelper:
         output_names = [
             a
             for a in dir(module_instance.outputs)
-            if not a.startswith("_")
-            and not callable(getattr(module_instance.outputs, a))
+            if isinstance(getattr(module_instance.outputs, a), Output)
         ]
         datastore_name = (
             self.config.compute.compliant_datastore
