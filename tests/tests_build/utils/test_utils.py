@@ -55,5 +55,6 @@ def test_telemetry_logger(caplog):
 
     telemetry_logger = utils.TelemetryLogger(enable_telemetry=True)
     telemetry_logger.log_trace(
-        message="A unit test message. Please ignore it.", level=logging.INFO
+        message="A unit test message of shrike.build. Please ignore it.",
+        level=logging.INFO,
     )
