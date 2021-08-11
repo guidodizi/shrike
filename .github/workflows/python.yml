@@ -55,9 +55,11 @@ jobs:
       with:
         node-version: 12
 
+    # The latest version of pyright (1.1.161) is failing the build, reporting
+    # "no parameter named category" some logging files.
     - name: Pyright
       run: |
-        npm install -g pyright
+        npm install -g pyright@1.1.159
         pyright
 
     - name: Build wheel
