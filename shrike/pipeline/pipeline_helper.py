@@ -1355,6 +1355,7 @@ class AMLPipelineHelper:
 
         if self.config.run.submit:
             pipeline_tags = self._parse_pipeline_tags()
+            pipeline_tags.update({"shrike": __version__})
             pipeline_tags.update(self.repository_info)
             log.info(f"Submitting Experiment... [tags={pipeline_tags}]")
 
