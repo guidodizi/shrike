@@ -52,6 +52,11 @@ pip install shrike[pipeline]
 pip install shrike[pipeline,build,dev]
 ```
 
+Alternatively, for local development, you may use the Conda environment defined
+in [environment.yml](./environment.yml). It pins the appropriate versions of
+pip, Python, and installs all shrike together with all extras as an editable
+package.
+
 ## Migration from `aml-build-tooling`, `aml-ds-pipeline-contrib`, and `confidential-ml-utils`
 If you have been using the `aml-build-tooling`, `aml-ds-pipeline-contrib`, or `confidential-ml-utils` libraries, 
 please use the migration script ([migration.py](https://github.com/Azure/shrike/blob/main/migration.py)) to convert your repo or files and

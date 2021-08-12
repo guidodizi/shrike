@@ -4,11 +4,14 @@
 """
 Canary helper code
 """
-import os
 
-from azureml.core.workspace import Workspace
+
 from azureml.core import Dataset
 from azureml.data.datapath import DataPath
+import logging
+
+
+log = logging.getLogger(__name__)
 
 
 def get_repo_info():
@@ -53,12 +56,12 @@ def test_pipeline_step_metrics(pipeline_run, expected_metrics):
     """
     errors = []
 
-    print("Looping through PipelineRun steps to test metrics...")
+    log.info("Looping through PipelineRun steps to test metrics...")
     for step in pipeline_run.get_steps():
-        print(f"Checking status of step {step.name}...")
+        log.info(f"Checking status of step {step.name}...")
 
         observed_metrics = step.get_metrics()
-        print(f"Step Metrics: {observed_metrics}")
+        log.info(f"Step Metrics: {observed_metrics}")
 
         status = step.get_status()
         if status != "Finished":
@@ -67,7 +70,7 @@ def test_pipeline_step_metrics(pipeline_run, expected_metrics):
         if step.name in expected_metrics:
             for expected_metric_test in expected_metrics[step.name]:
                 if "row" in expected_metric_test:
-                    print(f"Checking metrics, looking for {expected_metric_test}")
+                    log.info(f"Checking metrics, looking for {expected_metric_test}")
                     row_key = expected_metric_test["row"]["name"]
                     metric_key = expected_metric_test["row"]["key"]
                     expected_value = expected_metric_test["row"]["value"]
@@ -84,7 +87,7 @@ def test_pipeline_step_metrics(pipeline_run, expected_metrics):
                             f"Step {step.name} metric row '{row_key}' - metric '{metric_key}' - does not have expected value {expected_value} in observed metrics {observed_metrics[row_key]}"
                         )
                 if "metric" in expected_metric_test:
-                    print(f"Checking metrics, looking for {expected_metric_test}")
+                    log.info(f"Checking metrics, looking for {expected_metric_test}")
                     metric_key = expected_metric_test["metric"]["key"]
                     expected_value = expected_metric_test["metric"]["value"]
                     if metric_key not in observed_metrics:
@@ -140,7 +143,7 @@ def test_pipeline_step_output(pipeline_run, step_name, output_name, **kwargs):
 
     if kwargs.get("length"):
         expected_length = kwargs.get("length")
-        print(
+        log.info(
             f"Checking count={expected_length} of files for step {step_name} output {output_name}..."
         )
         data_set = Dataset.File.from_files(data_path)

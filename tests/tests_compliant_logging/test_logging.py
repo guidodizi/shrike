@@ -6,7 +6,6 @@ from shrike.compliant_logging.constants import DataCategory
 from shrike.compliant_logging.logging import CompliantLogger, get_aml_context
 from shrike.compliant_logging.exceptions import PublicRuntimeError
 from pathlib import Path
-import io
 import logging
 import pytest
 import re
@@ -23,6 +22,8 @@ from pyspark.sql.types import (
     StringType,
 )
 
+from shrike._core import stream_handler
+
 
 def test_basic_config():
     logging.warning("before basic config")
@@ -34,31 +35,6 @@ def test_basic_config():
     log.warning("warning from foo logger")
 
 
-class StreamHandlerContext:
-    """
-    Add, then remove a stream handler with the provided format string. The
-    `__str__` method on this class returns the value of the internal stream.
-    """
-
-    def __init__(self, log, fmt: str):
-        self.logger = log
-        self.stream = io.StringIO()
-        self.handler = logging.StreamHandler(self.stream)
-        self.handler.setLevel(log.getEffectiveLevel())
-        self.handler.setFormatter(logging.Formatter(fmt))
-
-    def __enter__(self):
-        self.logger.addHandler(self.handler)
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.logger.removeHandler(self.handler)
-        self.handler.flush()
-
-    def __str__(self):
-        return self.stream.getvalue()
-
-
 @pytest.mark.parametrize("level", ["debug", "info", "warning", "error", "critical"])
 def test_data_category_and_log_info_works_as_expected(level):
     compliant_logging.enable_compliant_logging()
@@ -68,8 +44,8 @@ def test_data_category_and_log_info_works_as_expected(level):
 
     assert isinstance(log, compliant_logging.logging.CompliantLogger)
 
-    with StreamHandlerContext(
-        log, "%(prefix)s%(levelname)s:%(name)s:%(message)s"
+    with stream_handler(
+        log, format="%(prefix)s%(levelname)s:%(name)s:%(message)s"
     ) as context:
         func = getattr(log, level)
         func("PRIVATE")
@@ -86,7 +62,7 @@ def test_non_category_aware_logging_works_as_expected():
     log = logging.getLogger()
     extra = {"test_name": "", "test_id": ""}
     assert isinstance(log, compliant_logging.logging.CompliantLogger)
-    with StreamHandlerContext(
+    with stream_handler(
         log, "%(test_name)s:%(test_id)s %(prefix)s%(levelname)s:%(name)s:%(message)s"
     ) as context:
         log.log(1, "message", extra={"test_name": "Test", "test_id": 1})
@@ -123,9 +99,7 @@ def test_exception_works_as_expected(exec_type, message):
     log = logging.getLogger()
     assert isinstance(log, compliant_logging.logging.CompliantLogger)
 
-    with StreamHandlerContext(
-        log, "%(prefix)s%(levelname)s:%(name)s:%(message)s"
-    ) as context:
+    with stream_handler(log, "%(prefix)s%(levelname)s:%(name)s:%(message)s") as context:
         try:
             raise exec_type(message)
         except exec_type:
@@ -193,7 +167,7 @@ def test_logging_aml_metric_single_value():
     compliant_logging.enable_compliant_logging(use_aml_metrics=True)
     log = logging.getLogger()
     log.metric_value(name="test_log_value", value=0, category=DataCategory.PUBLIC)
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_value(name="test_log_value", value=0, category=DataCategory.PRIVATE)
         logs = str(context)
     assert "NumbericMetric  | test_log_value:None | 0" in logs
@@ -214,7 +188,7 @@ def test_logging_aml_metric_image():
         category=DataCategory.PUBLIC,
     )
 
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_image(
             name="test_log_image",
             path=str(Path(__file__).parent.resolve() / "data/dummy_image.png"),
@@ -235,7 +209,7 @@ def test_logging_aml_metric_list_tuple():
     log.metric_list(
         name="test_log_tuple", value=("1", "2", "test"), category=DataCategory.PUBLIC
     )
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_list(
             name="test_log_empty_list", value=[], category=DataCategory.PUBLIC
         )
@@ -258,7 +232,7 @@ def test_logging_aml_metric_row():
         file_count=200,
     )
 
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_row(
             name="test_row",
             description="stats",
@@ -283,7 +257,7 @@ def test_logging_aml_metric_table():
     log.metric_table(
         name="test_table1", value=test_table1, category=DataCategory.PUBLIC
     )
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_table(name="test_table1", value=test_table1)
         logs = str(context)
     assert "TableMetric     | test_table" in logs
@@ -294,13 +268,13 @@ def test_logging_aml_metric_table():
     assert "TableMetric     | 00003 |                 | 5              " in logs
 
     # Checking empty value
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_table(name="empty_input", value={}, category=DataCategory.PUBLIC)
         logs = str(context)
     assert "Dictionary Value for Metric empty_input is empty. Skipping." in logs
 
     # Checking mixed types
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_table(
             name="mixed_type", value=test_table2, category=DataCategory.PUBLIC
         )
@@ -314,7 +288,7 @@ def test_logging_aml_metric_table():
         name="test_table3", value=test_table3, category=DataCategory.PUBLIC
     )
 
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_table(name="test_table4", value=test_table4)
         logs = str(context)
     assert "TableMetric     | test_table" in logs
@@ -346,7 +320,7 @@ def test_logging_aml_metric_residual():
             value=test_input1,
             category=DataCategory.PUBLIC,
         )
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_residual(
             name="test_log_residual",
             value=test_input1,
@@ -467,7 +441,7 @@ def test_logging_aml_metric_predictions():
             value=test_input1,
             category=DataCategory.PUBLIC,
         )
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_predictions(
             name="test_log_predictions",
             value=test_input1,
@@ -591,7 +565,7 @@ def test_logging_aml_metric_confusion_matrix():
             value=test_input1,
             category=DataCategory.PUBLIC,
         )
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_confusion_matrix(
             name="test_log_confusion_matrix",
             value=test_input1,
@@ -709,7 +683,7 @@ def test_logging_aml_metric_accuracy_table():
             value=test_input1,
             category=DataCategory.PUBLIC,
         )
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         log.metric_accuracy_table(
             name="test_log_accuracy_table",
             value=test_input1,

@@ -14,7 +14,7 @@ import os
 import sys
 
 from azure.ml.component import dsl
-from shrike.pipeline.pipeline_helper import AMLPipelineHelper
+from shrike.pipeline import AMLPipelineHelper
 
 # NOTE: if you need to import from pipelines.*
 ACCELERATOR_ROOT_PATH = os.path.abspath(

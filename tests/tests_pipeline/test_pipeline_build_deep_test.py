@@ -5,15 +5,11 @@
 PyTest suite for deep testing parameters built inside a pipeline.
 """
 import os
+import pytest
 import sys
 from unittest.mock import patch
-import json
-import pytest
 
 from shrike.pipeline.testing.pipeline_class_test import (
-    get_config_class,
-    pipeline_required_modules,
-    pipeline_required_subgraphs,
     deeptest_graph_comparison,
 )
 

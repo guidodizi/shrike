@@ -3,21 +3,31 @@
 
 """Unit tests for pipeline_helper"""
 
+
+from functools import lru_cache
 import pytest
 import sys
 from omegaconf import OmegaConf
 from pathlib import Path
-from shrike.pipeline.pipeline_helper import AMLPipelineHelper
+from shrike.pipeline import AMLPipelineHelper
 import yaml
 import os
 import shutil
 
-# Load the testing configuration YAML file
-config = OmegaConf.load(Path(__file__).parent / "data/test_configuration.yaml")
 
-# Initiate AMLPipelineHelper class with the testing configuration
-pipeline_helper = AMLPipelineHelper(config=config)
-pipeline_helper.connect()
+from shrike._core import stream_handler
+
+
+@lru_cache(maxsize=None)
+def pipeline_helper():
+    """
+    Initiate AMLPipelineHelper class with the testing configuration.
+    """
+    config = OmegaConf.load(Path(__file__).parent / "data/test_configuration.yaml")
+    rv = AMLPipelineHelper(config=config)
+    rv.connect()
+    return rv
+
 
 # Define tenant_id
 tenant_id = "72f988bf-86f1-41af-91ab-2d7cd011db47"
@@ -38,55 +48,59 @@ def test_validate_experiment_name():
 
 def test_get_component_name_from_instance():
     """Unit tests for _get_component_name_from_instance"""
-    component_instance = pipeline_helper.component_load(component_key="dummy_key")
+    component_instance = pipeline_helper().component_load(component_key="dummy_key")
     step_instance = component_instance()
-    component_name = pipeline_helper._get_component_name_from_instance(step_instance)
+    component_name = pipeline_helper()._get_component_name_from_instance(step_instance)
     assert component_name == "dummy_key"
 
 
-def test_parse_pipeline_tags(capsys):
+def test_parse_pipeline_tags():
     """Unit tests for _parse_pipeline_tags"""
-    assert pipeline_helper._parse_pipeline_tags() == {"test_key": "test_value"}
+    assert pipeline_helper()._parse_pipeline_tags() == {"test_key": "test_value"}
 
-    pipeline_helper.config.run.tags = '{"WRONG_JSON": 1'
-    pipeline_helper._parse_pipeline_tags()
-    out, _ = capsys.readouterr()
-    sys.stdout.write(out)
-    assert 'The pipeline tags {"WRONG_JSON": 1 is not a valid json-style string.' in out
+    pipeline_helper().config.run.tags = '{"WRONG_JSON": 1'
 
-    pipeline_helper.config.run.tags = '{"test_key": "test_value"}'
+    with stream_handler("shrike.pipeline.pipeline_helper", level="INFO") as handler:
+        pipeline_helper()._parse_pipeline_tags()
+
+    assert (
+        'The pipeline tags {"WRONG_JSON": 1 is not a valid json-style string.'
+        in str(handler)
+    )
+
+    pipeline_helper().config.run.tags = '{"test_key": "test_value"}'
 
 
 @pytest.mark.parametrize(
     "windows,gpu", [(True, True), (True, False), (False, True), (False, False)]
 )
-def test_apply_parallel_runsettings(capsys, windows, gpu):
+def test_apply_parallel_runsettings(windows, gpu):
     """Unit tests for _apply_parallel_runsettings()"""
     # Create a module instance
-    module_instance_fun = pipeline_helper.component_load(
+    module_instance_fun = pipeline_helper().component_load(
         component_key="prscomponentlinux"
     )
     module_instance = module_instance_fun(input_dir="foo")
 
     if windows and gpu:
         with pytest.raises(ValueError):
-            pipeline_helper._apply_parallel_runsettings(
+            pipeline_helper()._apply_parallel_runsettings(
                 module_name="prscomponentlinux",
                 module_instance=module_instance,
                 windows=windows,
                 gpu=gpu,
             )
     else:
-        pipeline_helper._apply_parallel_runsettings(
-            module_name="prscomponentlinux",
-            module_instance=module_instance,
-            windows=windows,
-            gpu=gpu,
-        )
+        with stream_handler("shrike.pipeline.pipeline_helper", level="INFO") as handler:
+            pipeline_helper()._apply_parallel_runsettings(
+                module_name="prscomponentlinux",
+                module_instance=module_instance,
+                windows=windows,
+                gpu=gpu,
+            )
 
         # Testing the stdout
-        out, _ = capsys.readouterr()
-        sys.stdout.write(out)
+        out = str(handler)
         assert "Using parallelrunstep compute target" in out
         assert f"to run {module_instance.name}" in out
 
@@ -108,13 +122,13 @@ def test_apply_parallel_runsettings(capsys, windows, gpu):
 
 
 def test_apply_scope_runsettings():
-    module_instance = pipeline_helper.component_load("convert2ss")
+    module_instance = pipeline_helper().component_load("convert2ss")
     step_instance = module_instance(TextData="foo", ExtractionClause="foo")
 
     adla_account_name = "office-adhoc-c14"
     custom_job_name_suffix = "test"
     scope_param = "-tokens 50"
-    pipeline_helper._apply_scope_runsettings(
+    pipeline_helper()._apply_scope_runsettings(
         "convert2ss",
         step_instance,
         adla_account_name=adla_account_name,
@@ -130,15 +144,15 @@ def test_apply_scope_runsettings():
 
 
 def test_apply_datatransfer_runsettings():
-    module_instance = pipeline_helper.component_load("data_transfer")
+    module_instance = pipeline_helper().component_load("data_transfer")
     step_instance = module_instance(source_data="foo")
-    pipeline_helper._apply_datatransfer_runsettings("data_Transfer", step_instance)
+    pipeline_helper()._apply_datatransfer_runsettings("data_Transfer", step_instance)
 
     assert step_instance.runsettings.target == "data-factory"
 
 
 def test_apply_sweep_runsettings():
-    module_instance = pipeline_helper.component_load("sweep_component")
+    module_instance = pipeline_helper().component_load("sweep_component")
     step_instance = module_instance()
 
     algorithm = "random"
@@ -158,7 +172,7 @@ def test_apply_sweep_runsettings():
     max_concurrent_trials = 4
     timeout_minutes = 30
 
-    pipeline_helper._apply_sweep_runsettings(
+    pipeline_helper()._apply_sweep_runsettings(
         "sweep_component",
         step_instance,
         algorithm=algorithm,
@@ -202,7 +216,7 @@ def test_apply_sweep_runsettings():
 
 
 def test2_apply_sweep_runsettings():
-    module_instance = pipeline_helper.component_load("sweep_component")
+    module_instance = pipeline_helper().component_load("sweep_component")
     step_instance = module_instance()
 
     algorithm = "random"
@@ -222,7 +236,7 @@ def test2_apply_sweep_runsettings():
     max_concurrent_trials = 4
     timeout_minutes = 30
 
-    pipeline_helper._apply_sweep_runsettings(
+    pipeline_helper()._apply_sweep_runsettings(
         "sweep_component",
         step_instance,
         algorithm=algorithm,
@@ -270,9 +284,9 @@ def test2_apply_sweep_runsettings():
     [(True, "fake_compliant_datastore"), (False, "workspaceblobstore")],
 )
 def test_apply_recommended_runsettings_datatransfer_datastore(compliant, datastore):
-    module_instance = pipeline_helper.component_load("data_transfer")
+    module_instance = pipeline_helper().component_load("data_transfer")
     step_instance = module_instance(source_data="foo")
-    pipeline_helper.apply_recommended_runsettings(
+    pipeline_helper().apply_recommended_runsettings(
         "data_transfer", step_instance, datatransfer=True, compliant=compliant
     )
 
@@ -280,26 +294,26 @@ def test_apply_recommended_runsettings_datatransfer_datastore(compliant, datasto
 
 
 @pytest.mark.parametrize("mpi", [True, False])
-def test_apply_windows_runsettings(capsys, mpi):
+def test_apply_windows_runsettings(mpi):
     """Unit tests for _apply_windows_runsettings()"""
     # Create a module instance
     module_name = (
         "stats_passthrough_windows_mpi" if mpi else "stats_passthrough_windows"
     )
-    module_instance_fun = pipeline_helper.component_load(component_key=module_name)
+    module_instance_fun = pipeline_helper().component_load(component_key=module_name)
     module_instance = module_instance_fun(input_path="foo")
 
-    pipeline_helper._apply_windows_runsettings(
-        module_name=module_name,
-        module_instance=module_instance,
-        mpi=mpi,
-        node_count=2,
-        process_count_per_node=3,
-    )
+    with stream_handler("shrike.pipeline.pipeline_helper", level="INFO") as handler:
+        pipeline_helper()._apply_windows_runsettings(
+            module_name=module_name,
+            module_instance=module_instance,
+            mpi=mpi,
+            node_count=2,
+            process_count_per_node=3,
+        )
 
     # Testing the stdout
-    out, _ = capsys.readouterr()
-    sys.stdout.write(out)
+    out = str(handler)
     assert (
         f"Using windows compute target cpu-dc-win to run {module_name} from pipeline class AMLPipelineHelper"
         in out
@@ -319,22 +333,22 @@ def test_apply_windows_runsettings(capsys, mpi):
     assert module_instance.outputs.output_path.output_mode == "upload"
 
 
-def test_apply_hdi_runsettings(capsys):
+def test_apply_hdi_runsettings():
     """Unit tests for _apply_hdi_runsettings()"""
     # Create a module instance
     module_name = "SparkHelloWorld"
-    module_instance_fun = pipeline_helper.component_load(component_key=module_name)
+    module_instance_fun = pipeline_helper().component_load(component_key=module_name)
     module_instance = module_instance_fun(input_path="foo")
 
-    pipeline_helper._apply_hdi_runsettings(
-        module_name=module_name,
-        module_instance=module_instance,
-        conf='{"spark.yarn.maxAppAttempts": 1, "spark.sql.shuffle.partitions": 3000}',
-    )
+    with stream_handler("shrike.pipeline.pipeline_helper", level="INFO") as handler:
+        pipeline_helper()._apply_hdi_runsettings(
+            module_name=module_name,
+            module_instance=module_instance,
+            conf='{"spark.yarn.maxAppAttempts": 1, "spark.sql.shuffle.partitions": 3000}',
+        )
 
     # Testing the stdout
-    out, _ = capsys.readouterr()
-    sys.stdout.write(out)
+    out = str(handler)
     assert (
         "Using HDI compute target cpu-cluster to run SparkHelloWorld from pipeline class AMLPipelineHelper"
         in out
@@ -381,23 +395,24 @@ def test_apply_hdi_runsettings(capsys):
 @pytest.mark.parametrize(
     "mpi,gpu", [(True, True), (True, False), (False, True), (False, False)]
 )
-def test_apply_linux_runsettings(capsys, mpi, gpu):
+def test_apply_linux_runsettings(mpi, gpu):
     """Unit tests for _apply_linux_runsettings()"""
     # Create a module instance
     module_name = "stats_passthrough_mpi" if mpi else "stats_passthrough"
-    module_instance_fun = pipeline_helper.component_load(component_key=module_name)
+    module_instance_fun = pipeline_helper().component_load(component_key=module_name)
     module_instance = module_instance_fun(input_path="foo")
 
-    pipeline_helper._apply_linux_runsettings(
-        module_name=module_name,
-        module_instance=module_instance,
-        mpi=mpi,
-        gpu=gpu,
-        node_count=2 if mpi else None,
-        process_count_per_node=3 if mpi else None,
-    )
+    with stream_handler("shrike.pipeline.pipeline_helper", level="INFO") as handler:
+        pipeline_helper()._apply_linux_runsettings(
+            module_name=module_name,
+            module_instance=module_instance,
+            mpi=mpi,
+            gpu=gpu,
+            node_count=2 if mpi else None,
+            process_count_per_node=3 if mpi else None,
+        )
 
-    out, _ = capsys.readouterr()
+    out = str(handler)
     sys.stdout.write(out)
 
     # Testing mpi runsetting parameter configuration
@@ -449,9 +464,9 @@ def test_apply_linux_runsettings(capsys, mpi, gpu):
         ("data_transfer", "Module data_transfer detected as DATATRANSFER: True"),
     ],
 )
-def test_apply_recommended_runsettings(capsys, module_name, expected_stdout):
+def test_apply_recommended_runsettings(module_name, expected_stdout):
     """Unit tests for apply_recommended_runsettings()"""
-    module_instance_fun = pipeline_helper.component_load(component_key=module_name)
+    module_instance_fun = pipeline_helper().component_load(component_key=module_name)
     if module_name == "convert2ss":
         module_instance = module_instance_fun(
             TextData="AnyFile", ExtractionClause="foo"
@@ -473,26 +488,26 @@ def test_apply_recommended_runsettings(capsys, module_name, expected_stdout):
     else:
         module_instance = module_instance_fun(input_path="foo")
 
-    pipeline_helper.apply_recommended_runsettings(
-        module_name=module_name,
-        module_instance=module_instance,
-    )
+    with stream_handler("shrike.pipeline.pipeline_helper", level="INFO") as handler:
+        pipeline_helper().apply_recommended_runsettings(
+            module_name=module_name,
+            module_instance=module_instance,
+        )
 
-    out, _ = capsys.readouterr()
-    sys.stdout.write(out)
+    out = str(handler)
 
     assert expected_stdout in out
 
 
 def test_check_if_spec_yaml_override_is_needed_allow_override_false():
-    pipeline_helper.config.tenant_overrides.allow_override = False
-    override, _ = pipeline_helper._check_if_spec_yaml_override_is_needed()
+    pipeline_helper().config.tenant_overrides.allow_override = False
+    override, _ = pipeline_helper()._check_if_spec_yaml_override_is_needed()
     assert override == False
-    pipeline_helper.config.tenant_overrides.allow_override = True
+    pipeline_helper().config.tenant_overrides.allow_override = True
 
 
 def test_check_if_spec_yaml_override_is_needed_given_tenant_id():
-    override, mapping = pipeline_helper._check_if_spec_yaml_override_is_needed()
+    override, mapping = pipeline_helper()._check_if_spec_yaml_override_is_needed()
     assert override == True
     assert mapping == {
         "environment.docker.image": {
@@ -510,6 +525,7 @@ def test_check_if_spec_yaml_override_is_needed_given_config_filename():
     mapping["description"] = "test"
     spec["tenant_overrides"]["mapping"]["amlds"] = mapping
     spec["tenant_overrides"]["mapping"].pop(tenant_id)
+
     test_pipeline_helper = AMLPipelineHelper(config=OmegaConf.create(spec))
     test_pipeline_helper.connect()
     test_pipeline_helper.config.run.config_dir = os.path.join(
@@ -541,7 +557,7 @@ def test_recover_spec_yaml_with_keeping_modified_files():
     for i in file_list:
         with open(i, "w") as file:
             pass
-    pipeline_helper._recover_spec_yaml([file_list], True)
+    pipeline_helper()._recover_spec_yaml([file_list], True)
     assert os.path.exists("tmp/spec_path.yaml")
     assert os.path.exists("tmp/env_path.yaml")
     assert os.path.exists("tmp/spec_path_" + tenant_id + ".yaml")
@@ -561,7 +577,7 @@ def test_recover_spec_yaml_without_keeping_modified_files():
     for i in file_list:
         with open(i, "w") as file:
             pass
-    pipeline_helper._recover_spec_yaml([file_list], False)
+    pipeline_helper()._recover_spec_yaml([file_list], False)
     assert os.path.exists("tmp/spec_path.yaml")
     assert os.path.exists("tmp/env_path.yaml")
     assert not os.path.exists("tmp/spec_path_" + tenant_id + ".yaml")
@@ -572,26 +588,26 @@ def test_recover_spec_yaml_without_keeping_modified_files():
 
 def test_update_value_given_flattened_key():
     d = {"a": {"b": {"c": 1}}}
-    pipeline_helper._update_value_given_flattened_key(d, "a.b.c", 2)
+    pipeline_helper()._update_value_given_flattened_key(d, "a.b.c", 2)
     assert d["a"]["b"]["c"] == 2
     with pytest.raises(KeyError):
-        pipeline_helper._update_value_given_flattened_key(d, "a.b.c.d", 2)
+        pipeline_helper()._update_value_given_flattened_key(d, "a.b.c.d", 2)
     with pytest.raises(KeyError):
-        pipeline_helper._update_value_given_flattened_key(d, "a.c.d", 2)
+        pipeline_helper()._update_value_given_flattened_key(d, "a.c.d", 2)
 
 
 def test_override_spec_yaml():
-    spec_mapping = pipeline_helper.config.tenant_overrides["mapping"][tenant_id]
-    yaml_to_be_recovered = pipeline_helper._override_spec_yaml(spec_mapping)
+    spec_mapping = pipeline_helper().config.tenant_overrides["mapping"][tenant_id]
+    yaml_to_be_recovered = pipeline_helper()._override_spec_yaml(spec_mapping)
     assert len(yaml_to_be_recovered) == len(
-        pipeline_helper.module_loader.modules_manifest
+        pipeline_helper().module_loader.modules_manifest
     )
     for pair in yaml_to_be_recovered:
         assert len(pair) == 4
         for file_path in pair:
             if file_path:
                 assert os.path.exists(file_path)
-    pipeline_helper._recover_spec_yaml(yaml_to_be_recovered, False)
+    pipeline_helper()._recover_spec_yaml(yaml_to_be_recovered, False)
 
 
 def test_override_single_spec_yaml_without_environment_override():
@@ -610,12 +626,12 @@ def test_override_single_spec_yaml_without_environment_override():
         == "polymerprod.azurecr.io/training/pytorch:scpilot-rc2"
     )
     assert not spec["tags"]["Office"]
-    spec_mapping = pipeline_helper.config.tenant_overrides["mapping"][tenant_id]
+    spec_mapping = pipeline_helper().config.tenant_overrides["mapping"][tenant_id]
     (
         old_spec_path,
         old_env_file_path,
         new_env_file_path,
-    ) = pipeline_helper._override_single_spec_yaml(spec_path, spec_mapping, False)
+    ) = pipeline_helper()._override_single_spec_yaml(spec_path, spec_mapping, False)
     assert old_spec_path == os.path.join(folder_path, "module_spec.not_used")
     assert not old_env_file_path
     assert not new_env_file_path
@@ -638,12 +654,12 @@ def test_override_single_spec_yaml_with_environment_override():
         folder_path,
     )
     spec_path = os.path.join(folder_path, "module_spec.yaml")
-    spec_mapping = pipeline_helper.config.tenant_overrides["mapping"][tenant_id]
+    spec_mapping = pipeline_helper().config.tenant_overrides["mapping"][tenant_id]
     (
         old_spec_path,
         old_env_file_path,
         new_env_file_path,
-    ) = pipeline_helper._override_single_spec_yaml(spec_path, spec_mapping, True)
+    ) = pipeline_helper()._override_single_spec_yaml(spec_path, spec_mapping, True)
     with open(old_env_file_path, "r") as file:
         lines = file.readlines()
     assert (
@@ -673,7 +689,7 @@ def test_remove_polymer_pkg_idx_if_exists_and_save_new():
         new_file,
         new_file_path,
         old_file_path,
-    ) = pipeline_helper._remove_polymer_pkg_idx_if_exists_and_save_new(
+    ) = pipeline_helper()._remove_polymer_pkg_idx_if_exists_and_save_new(
         "tmp",
         "test.txt",
         "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",
@@ -692,7 +708,7 @@ def test_remove_polymer_pkg_idx_if_exists_and_save_new():
         new_file,
         new_file_path,
         old_file_path,
-    ) = pipeline_helper._remove_polymer_pkg_idx_if_exists_and_save_new(
+    ) = pipeline_helper()._remove_polymer_pkg_idx_if_exists_and_save_new(
         "tmp",
         "test.txt",
         "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/",

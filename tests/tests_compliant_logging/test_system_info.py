@@ -3,9 +3,9 @@
 
 import platform
 import logging
+from shrike._core import stream_handler
 
 from shrike.compliant_logging import enable_compliant_logging, provide_system_info
-from test_logging import StreamHandlerContext
 
 
 def test_provide_system_info():
@@ -19,7 +19,7 @@ def test_provide_system_info():
 
     provide_system_info(logger=log)
 
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         provide_system_info(logger=log, library_checks=["shrike"])
         logs_1 = str(context)
 
@@ -31,7 +31,7 @@ def test_provide_system_info():
     assert "#" * 21 in logs_1
     assert "Library shrike available" in logs_1
 
-    with StreamHandlerContext(log, "") as context:
+    with stream_handler(log, "") as context:
         provide_system_info(
             logger=log, library_checks=["shrike", "SOME_UNKNOWN_LIBRARY"]
         )

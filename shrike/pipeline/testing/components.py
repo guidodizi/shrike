@@ -6,14 +6,12 @@ PyTest suite for testing if run.py is aligned with module specification:
 
 > Status: this code relates to the _recipe_ and is a _proposition_
 """
+import argparse
+import logging
 import os
 import sys
-from pathlib import Path
-import traceback
-import argparse
-from collections import namedtuple
-import warnings
 import pytest
+import traceback
 
 from ruamel import yaml
 
@@ -26,6 +24,9 @@ from shrike.pipeline.testing.importer import (
     import_and_test_class,
     dynamic_import_module,
 )
+
+
+log = logging.getLogger(__name__)
 
 
 def component_spec_yaml_exists_and_is_parsable(component_spec_path):
@@ -435,7 +436,7 @@ def generate_component_arguments_componentsdk(
     Returns:
         list: output_script_arguments
     """
-    print(f"generate_component_arguments(spec, {arg}, ...)")
+    log.info(f"generate_component_arguments(spec, {arg}, ...)")
     if isinstance(arg, list):  # optional argument or root list
         for entry in arg:
             generate_component_arguments_componentsdk(
@@ -445,8 +446,8 @@ def generate_component_arguments_componentsdk(
         io_key = arg.lstrip("{").rstrip("}")
         if io_key.startswith("inputs."):
             input_key = io_key[7:]
-            print("inputs keys: " + " ".join([key for key in component_spec.inputs]))
-            print(
+            log.info("inputs keys: " + " ".join([key for key in component_spec.inputs]))
+            log.info(
                 "parameter keys: "
                 + " ".join([key for key in component_spec.parameters])
             )
@@ -472,7 +473,9 @@ def generate_component_arguments_componentsdk(
                 )
         elif io_key.startswith("outputs."):
             output_key = io_key[8:]
-            print("outputs keys: " + " ".join([key for key in component_spec.outputs]))
+            log.info(
+                "outputs keys: " + " ".join([key for key in component_spec.outputs])
+            )
             output_script_arguments.append(
                 str(
                     _generate_fake_input_arg_componentsdk(
@@ -672,7 +675,7 @@ def script_main_with_synthetic_arguments(module, mocker):
     script_arguments = []
     generate_argument(module_spec, arguments_spec, script_arguments)
 
-    print(script_arguments)
+    log.info(script_arguments)
     # https://medium.com/python-pandemonium/testing-sys-exit-with-pytest-10c6e5f7726f
     with pytest.raises(SystemExit) as pytest_wrapped_e:
         mod.main(script_arguments + ["-h"])

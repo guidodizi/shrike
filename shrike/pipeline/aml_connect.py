@@ -1,12 +1,20 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-""" Helper code for connecting to AzureML and sharing one workspace accross code. """
-import os
-import argparse
+"""
+Helper code for connecting to AzureML and sharing one workspace accross code.
+"""
 
+
+import argparse
 from azureml.core import Workspace
 from collections import namedtuple
+import logging
+import os
+
+
+log = logging.getLogger(__name__)
+
 
 CURRENT_AML_WORKSPACE = None
 
@@ -153,14 +161,11 @@ def azureml_connect_cli(args):
             auth=auth,
         )
 
-    print(
-        "Connected to Workspace",
-        "-- subscription:" + aml_ws.subscription_id,
-        "-- name: " + aml_ws.name,
-        "-- Azure region: " + aml_ws.location,
-        "-- Resource group: " + aml_ws.resource_group,
-        sep="\n",
-    )
+    log.info("Connected to workspace:")
+    log.info(f"\tsubscription: {aml_ws.subscription_id}")
+    log.info(f"\tname: {aml_ws.name}")
+    log.info(f"\tAzure region: {aml_ws.location}")
+    log.info(f"\tresource group: {aml_ws.resource_group}")
 
     return current_workspace(aml_ws)
 
@@ -175,7 +180,7 @@ def main():
     args, unknown_args = parser.parse_known_args()
 
     if unknown_args:
-        print("WARNING: you have provided unknown arguments {}".format(unknown_args))
+        log.warning(f"You have provided unknown arguments {unknown_args}")
 
     return azureml_connect_cli(args)
 

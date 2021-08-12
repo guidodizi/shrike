@@ -4,21 +4,19 @@
 """
 Pipeline helper class to create pipelines loading modules from a flexible manifest.
 """
+import argparse
 import os
 import json
 import logging
-import argparse
-from posixpath import splitext
 import re
 import webbrowser
 import uuid
 import shutil
 import yaml
 import jsonpath_ng
-import sys
+from typing import Callable
 
 try:
-    from dataclasses import dataclass
     import hydra
     from hydra.core.config_store import ConfigStore
     from hydra.core.hydra_config import HydraConfig
@@ -30,7 +28,7 @@ try:
     from azureml.core import Experiment
     from azureml.core import Dataset
     from azureml.pipeline.core import PipelineRun
-    from azure.ml.component.component import Input, Output
+    from azure.ml.component.component import Component, Input, Output
     from azure.ml.component._core._component_definition import (
         ComponentDefinition,
         ComponentType,
@@ -43,9 +41,12 @@ except ImportError as error:
 from shrike import __version__
 from shrike.pipeline.aml_connect import azureml_connect, current_workspace
 from shrike.pipeline.canary_helper import get_repo_info
-from shrike.pipeline.module_helper import AMLModuleLoader, module_loader_config
+from shrike.pipeline.module_helper import AMLModuleLoader
 from shrike.pipeline.pipeline_config import default_config_dict, HDI_DEFAULT_CONF
 from shrike.pipeline.telemetry_utils import TelemetryLogger
+
+
+log = logging.getLogger(__name__)
 
 
 class AMLPipelineHelper:
@@ -63,7 +64,9 @@ class AMLPipelineHelper:
         self.config = config
 
         if module_loader is None:
-            print(f"Creating instance of AMLModuleLoader for {self.__class__.__name__}")
+            log.info(
+                f"Creating instance of AMLModuleLoader for {self.__class__.__name__}"
+            )
             self.module_loader = AMLModuleLoader(self.config)
         else:
             self.module_loader = module_loader
@@ -133,7 +136,7 @@ class AMLPipelineHelper:
         """Gets the current workspace"""
         return current_workspace()
 
-    def component_load(self, component_key):
+    def component_load(self, component_key) -> Callable[..., "Component"]:
         """Loads one component from the manifest"""
         return self.module_loader.load_module(component_key, self.required_modules())
 
@@ -141,11 +144,11 @@ class AMLPipelineHelper:
         """Loads one module from the manifest"""
         return self.module_loader.load_module(module_key, self.required_modules())
 
-    def subgraph_load(self, subgraph_key):
+    def subgraph_load(self, subgraph_key) -> Callable:
         """Loads one subgraph from the manifest"""
         subgraph_class = self.required_subgraphs()[subgraph_key]
 
-        print(f"Building subgraph [{subgraph_key} as {subgraph_class.__name__}]...")
+        log.info(f"Building subgraph [{subgraph_key} as {subgraph_class.__name__}]...")
         # NOTE: below creates subgraph with same pipeline_config
         subgraph_instance = subgraph_class(
             config=self.config, module_loader=self.module_loader
@@ -165,10 +168,10 @@ class AMLPipelineHelper:
         # test if given name is a uuid
         try:
             parsed_uuid = uuid.UUID(name)
-            print(f"Getting a dataset handle [id={name}]...")
+            log.info(f"Getting a dataset handle [id={name}]...")
             return Dataset.get_by_id(self.workspace(), id=name)
         except ValueError:
-            print(f"Getting a dataset handle [name={name} version={version}]...")
+            log.info(f"Getting a dataset handle [name={name} version={version}]...")
             return Dataset.get_by_name(self.workspace(), name=name, version=version)
 
     @staticmethod
@@ -224,7 +227,7 @@ class AMLPipelineHelper:
         for input_key in input_names:
             input_instance = getattr(module_instance.inputs, input_key)
             input_instance.configure(mode=input_mode)
-            print(f"-- configured input {input_key} to use mode {input_mode}")
+            log.info(f"Configured input {input_key} to use mode {input_mode}")
 
     def _set_all_outputs_to(self, module_instance, output_mode, compliant=True):
         """Sets all module outputs to a given output mode"""
@@ -255,8 +258,8 @@ class AMLPipelineHelper:
                     ),  # datastore name for storing outputs
                     output_mode=output_mode,
                 )
-            print(
-                f"-- configured output {output_key} to use mode {output_mode} and datastore {datastore_name}"
+            log.info(
+                f"Configured output {output_key} to use mode {output_mode} and datastore {datastore_name}"
             )
 
     def _apply_windows_runsettings(
@@ -297,11 +300,11 @@ class AMLPipelineHelper:
                 else self.config.compute.windows_cpu_prod_target
             )
 
-        print(
+        log.info(
             f"Using windows compute target {target} to run {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         module_instance.runsettings.configure(target=target, **custom_runtime_arguments)
         if mpi:
@@ -309,7 +312,7 @@ class AMLPipelineHelper:
             process_count_per_node = (
                 process_count_per_node if process_count_per_node is not None else 1
             )
-            print(
+            log.info(
                 f"Using mpi with node_count={node_count} process_count_per_node={process_count_per_node}"
             )
             module_instance.runsettings.resource_layout.configure(
@@ -362,11 +365,11 @@ class AMLPipelineHelper:
             output_mode (str): force output_mode over hydra conf
             custom_runtime_arguments (dict): any additional custom args
         """
-        print(
+        log.info(
             f"Using HDI compute target {self.config.compute.hdi_prod_target} to run {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         merged_conf = json.loads(HDI_DEFAULT_CONF)
         new_conf = (
@@ -482,11 +485,11 @@ class AMLPipelineHelper:
 
         target = target if target is not None else _target
 
-        print(
+        log.info(
             f"Using parallelrunstep compute target {target} to run {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         module_instance.runsettings.configure(target=target)
 
@@ -556,7 +559,7 @@ class AMLPipelineHelper:
                 if target is not None
                 else self.config.compute.linux_gpu_dc_target
             )
-            print(
+            log.info(
                 f"Using target {target} for local code GPU module {module_name} from pipeline class {self.__class__.__name__}"
             )
         elif not self.module_loader.is_local(module_name) and gpu:
@@ -565,7 +568,7 @@ class AMLPipelineHelper:
                 if target is not None
                 else self.config.compute.linux_gpu_prod_target
             )
-            print(
+            log.info(
                 f"Using target {target} for registered GPU module {module_name} from pipeline class {self.__class__.__name__}"
             )
         elif self.module_loader.is_local(module_name) and not gpu:
@@ -574,7 +577,7 @@ class AMLPipelineHelper:
                 if target is not None
                 else self.config.compute.linux_cpu_dc_target
             )
-            print(
+            log.info(
                 f"Using target {target} for local CPU module {module_name} from pipeline class {self.__class__.__name__}"
             )
         elif not self.module_loader.is_local(module_name) and not gpu:
@@ -583,12 +586,12 @@ class AMLPipelineHelper:
                 if target is not None
                 else self.config.compute.linux_cpu_prod_target
             )
-            print(
+            log.info(
                 f"Using target {target} for registered CPU module {module_name} from pipeline class {self.__class__.__name__}"
             )
 
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         module_instance.runsettings.configure(target=target, **custom_runtime_arguments)
 
@@ -597,7 +600,7 @@ class AMLPipelineHelper:
             process_count_per_node = (
                 process_count_per_node if process_count_per_node is not None else 1
             )
-            print(
+            log.info(
                 f"Using mpi with node_count={node_count} process_count_per_node={process_count_per_node}"
             )
             module_instance.runsettings.resource_layout.configure(
@@ -642,11 +645,11 @@ class AMLPipelineHelper:
             adla_account_name (str): The name of the Cosmos-migrated Azure Data Lake Analytics account to submit scope job
             custom_runtime_arguments (dict): any additional custom args
         """
-        print(
+        log.info(
             f"Using scope compute target to run {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         if input_mode:
             self._set_all_inputs_to(module_instance, input_mode)
@@ -679,11 +682,11 @@ class AMLPipelineHelper:
             output_mode (str): force output_mode over hydra conf
             custom_runtime_arguments (dict): any additional custom args
         """
-        print(
+        log.info(
             f"Using datatransfer compute target {self.config.compute.datatransfer_target} to run {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         module_instance.runsettings.configure(
             target=target
@@ -772,11 +775,11 @@ class AMLPipelineHelper:
                     target = self.config.compute.linux_gpu_prod_target
                 else:
                     target = self.config.compute.linux_cpu_prod_target
-        print(
+        log.info(
             f"Using target {target} to run sweep component {module_name} from pipeline class {self.__class__.__name__}"
         )
         if custom_runtime_arguments:
-            print(f"Adding custom runtime arguments {custom_runtime_arguments}")
+            log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
 
         if input_mode:
             self._set_all_inputs_to(module_instance, input_mode)
@@ -946,27 +949,27 @@ class AMLPipelineHelper:
         if hdi == "auto":
             hdi = str(module_instance.type) == "HDInsightComponent"
             if hdi:
-                print(f"Module {module_name} detected as HDI: {hdi}")
+                log.info(f"Module {module_name} detected as HDI: {hdi}")
 
         if parallel == "auto":
             parallel = str(module_instance.type) == "ParallelComponent"
             if parallel:
-                print(f"Module {module_name} detected as PARALLEL: {parallel}")
+                log.info(f"Module {module_name} detected as PARALLEL: {parallel}")
 
         if mpi == "auto":
             mpi = str(module_instance.type) == "DistributedComponent"
             if mpi:
-                print(f"Module {module_name} detected as MPI: {mpi}")
+                log.info(f"Module {module_name} detected as MPI: {mpi}")
 
         if scope == "auto":
             scope = str(module_instance.type) == "ScopeComponent"
             if scope:
-                print(f"Module {module_name} detected as SCOPE: {scope}")
+                log.info(f"Module {module_name} detected as SCOPE: {scope}")
 
         if sweep == "auto":
             sweep = str(module_instance.type) == "SweepComponent"
             if sweep:
-                print(f"Module {module_name} detected as SweepComponent: {sweep}")
+                log.info(f"Module {module_name} detected as SweepComponent: {sweep}")
 
         if windows == "auto":
             if (
@@ -982,12 +985,14 @@ class AMLPipelineHelper:
                     module_instance._definition.environment.os.lower() == "windows"
                 )
                 if windows:
-                    print(f"Module {module_name} detected as WINDOWS: {windows}")
+                    log.info(f"Module {module_name} detected as WINDOWS: {windows}")
 
         if datatransfer == "auto":
             datatransfer = str(module_instance.type) == "DataTransferComponent"
             if datatransfer:
-                print(f"Module {module_name} detected as DATATRANSFER: {datatransfer}")
+                log.info(
+                    f"Module {module_name} detected as DATATRANSFER: {datatransfer}"
+                )
 
         if parallel:
             self._apply_parallel_runsettings(
@@ -1048,32 +1053,32 @@ class AMLPipelineHelper:
                     # json.load the tags string in the config
                     pipeline_tags = json.loads(self.config.run.tags)
                 except ValueError:
-                    print(
+                    log.warning(
                         f"The pipeline tags {self.config.run.tags} is not a valid json-style string."
                     )
             elif isinstance(self.config.run.tags, DictConfig):
                 pipeline_tags.update(self.config.run.tags)
             else:
-                print(
+                log.warning(
                     f"The pipeline tags {self.config.run.tags} is not a valid DictConfig or json-style string."
                 )
         return pipeline_tags
 
     def _check_if_spec_yaml_override_is_needed(self):
         if self.config.module_loader.use_local == "":
-            print(
+            log.info(
                 "All components are using remote copy, so override will not be executed. For components you want submission-time override of images/tags/etc., please specify them in `use_local`."
             )
             return False, None
         if not self.config.tenant_overrides.allow_override:
-            print(
+            log.info(
                 "Spec yaml file override is not allowed. If you want to use this feature, please set `tenant_overrides.allow_override` to True in your pipeline yaml."
             )
             return False, None
         cur_tenant = self.config.aml.tenant
         for tenant in self.config.tenant_overrides.mapping.keys():
             if tenant == cur_tenant:
-                print(
+                log.info(
                     f"Your tenant is inconsistent with spec yaml, We will override relevant fields in your spec yaml files based on entry `{tenant}` in your pipeline yaml file."
                 )
                 return True, self.config.tenant_overrides.mapping[tenant]
@@ -1081,12 +1086,12 @@ class AMLPipelineHelper:
                 config_file_path = os.path.join(
                     self.config.run.config_dir, "aml", tenant + ".yaml"
                 )
-                print(f"config_file_path is {config_file_path}")
+                log.info(f"config_file_path is {config_file_path}")
                 if os.path.exists(config_file_path):
                     with open(config_file_path, "r") as file:
                         config = yaml.safe_load(file)
                     if config["tenant"] == cur_tenant:
-                        print(
+                        log.info(
                             f"Your tenant is inconsistent with spec yaml, We will override relevant fields in your spec yaml files based on entry `{config_file_path}` in your pipeline yaml file."
                         )
                         return True, self.config.tenant_overrides.mapping[tenant]
@@ -1102,11 +1107,11 @@ class AMLPipelineHelper:
         )
         for module_key in module_keys:
             if not self.module_loader.is_local(module_key):
-                print(
+                log.info(
                     f"Component {module_key} is using the remote copy. Skipping overrides."
                 )
                 continue
-            print(f"Overriding for component: {module_key}.")
+            log.info(f"Overriding for component: {module_key}.")
             module_entry = self.module_loader.modules_manifest[module_key]
             spec_path = os.path.join(
                 self.module_loader.local_steps_folder, module_entry["yaml"]
@@ -1125,7 +1130,7 @@ class AMLPipelineHelper:
         return yaml_to_be_recovered
 
     def _update_value_given_flattened_key(self, nested_dict, dot_key, new_val):
-        print(f"Updating key {dot_key}")
+        log.info(f"Updating key {dot_key}")
         split_key = dot_key.split(".")
         res = nested_dict
         path = ""
@@ -1138,7 +1143,7 @@ class AMLPipelineHelper:
             res = res[key]
         if isinstance(res, dict) and split_key[-1] in res:
             res[split_key[-1]] = new_val
-            print(f"The field {dot_key} has been updated to {new_val} successfully.")
+            log.info(f"The field {dot_key} has been updated to {new_val} successfully.")
         else:
             raise KeyError(f"Key {dot_key} not in {nested_dict}.")
 
@@ -1159,30 +1164,30 @@ class AMLPipelineHelper:
             match = jsonpath_ng.parse(key).find(spec)
             if match:
                 try:
-                    print(f"Find a matching field to override: {key}.")
+                    log.info(f"Find a matching field to override: {key}.")
                     original_val = match[0].value
-                    print(
+                    log.info(
                         f"Original value is {original_val}. Looking for new value now..."
                     )
                     spec_mapping_to_use = spec_mapping[key]
                     if isinstance(original_val, str):
-                        print(f"The field to be updated is str.")
+                        log.info(f"The field to be updated is str.")
                         if original_val in spec_mapping_to_use:
                             new_val = spec_mapping_to_use[original_val]
-                            print(f"The new value is: {new_val}.")
+                            log.info(f"The new value is: {new_val}.")
                             self._update_value_given_flattened_key(spec, key, new_val)
                         else:
                             for pattern in spec_mapping_to_use:
                                 if re.match(pattern, original_val):
                                     new_val = spec_mapping_to_use[pattern]
-                                    print(f"The new pattern is: {new_val}.")
+                                    log.info(f"The new pattern is: {new_val}.")
                                     self._update_value_given_flattened_key(
                                         spec,
                                         key,
                                         re.sub(pattern, new_val, original_val),
                                     )
                     elif isinstance(original_val, dict):
-                        print("The field to be updated is dict")
+                        log.info("The field to be updated is dict")
                         for spec_mapping_key in spec_mapping_to_use:
                             self._update_value_given_flattened_key(
                                 spec,
@@ -1190,22 +1195,22 @@ class AMLPipelineHelper:
                                 spec_mapping_to_use[spec_mapping_key],
                             )
                     else:
-                        print(
+                        log.info(
                             f"Override for key {key} is not supported yet. Please open a [feature request](https://github.com/Azure/shrike/issues) if necessary."
                         )
                 except KeyError:
-                    print(f"Key {key} does not in file {spec_path}. Skip overrides.")
+                    log.info(f"Key {key} does not in file {spec_path}. Skip overrides.")
         new_env_file_path = None
         old_env_file_path = None
         if env_yaml_override_is_needed:
             spec_dirname = os.path.dirname(spec_path)
             polymer_pkg_idx = "--index-url https://o365exchange.pkgs.visualstudio.com/_packaging/PolymerPythonPackages/pypi/simple/"
-            print(f"Will remove {polymer_pkg_idx} from environment.conda.")
+            log.info(f"Will remove {polymer_pkg_idx} from environment.conda.")
             try:
                 conda_dependencies_file = spec["environment"]["conda"][
                     "conda_dependencies_file"
                 ]
-                print("conda_dependencies_file exists.")
+                log.info("conda_dependencies_file exists.")
                 (
                     found_index_url,
                     new_file,
@@ -1223,7 +1228,7 @@ class AMLPipelineHelper:
                 conda_dependencies = spec["environment"]["conda"]["conda_dependencies"][
                     "dependencies"
                 ]
-                print("conda_dependencies_file exists.")
+                log.info("conda_dependencies_file exists.")
                 for idx, dependency in enumerate(conda_dependencies):
                     if isinstance(dependency, dict) and "pip" in dependency:
                         pip_dependencies = dependency["pip"]
@@ -1241,7 +1246,7 @@ class AMLPipelineHelper:
                 pip_requirements_file = spec["environment"]["conda"][
                     "pip_requirements_file"
                 ]
-                print("pip_requirements_file exists.")
+                log.info("pip_requirements_file exists.")
                 (
                     found_index_url,
                     new_file,
@@ -1286,7 +1291,7 @@ class AMLPipelineHelper:
         return found_index_url, new_file, new_file_path, old_file_path
 
     def _recover_spec_yaml(self, spec_file_pairs, keep_modified_files):
-        print(
+        log.info(
             f"Reverting changes to spec yaml files. Keeping modified spec yaml files: {keep_modified_files}."
         )
         for (
@@ -1334,24 +1339,24 @@ class AMLPipelineHelper:
         )  # NOTE: this also stores aml workspace in internal global variable
 
     def build_and_submit_new_pipeline(self):
-        print(f"Building Pipeline [{self.__class__.__name__}]...")
+        log.info(f"Building Pipeline [{self.__class__.__name__}]...")
         pipeline_function = self.build(self.config)
 
-        print("Creating Pipeline Instance...")
+        log.info("Creating Pipeline Instance...")
         pipeline = self.pipeline_instance(pipeline_function, self.config)
 
-        print("Validating...")
+        log.info("Validating...")
         pipeline.validate()
 
         if self.config.run.export:
-            print(f"Exporting to {self.config.run.export}...")
+            log.info(f"Exporting to {self.config.run.export}...")
             with open(self.config.run.export, "w") as export_file:
                 export_file.write(pipeline._get_graph_json())
 
         if self.config.run.submit:
             pipeline_tags = self._parse_pipeline_tags()
             pipeline_tags.update(self.repository_info)
-            print(f"Submitting Experiment... [tags={pipeline_tags}]")
+            log.info(f"Submitting Experiment... [tags={pipeline_tags}]")
 
             # pipeline_run is of the class "azure.ml.component.run", which
             # is different from "azureml.pipeline.core.PipelineRun"
@@ -1371,7 +1376,9 @@ class AMLPipelineHelper:
             return pipeline_run
 
         else:
-            print("Exiting now, if you want to submit please override run.submit=True")
+            log.info(
+                "Exiting now, if you want to submit please override run.submit=True"
+            )
             self.__class__.BUILT_PIPELINE = (
                 pipeline  # return so we can have some unit tests done
             )
@@ -1392,9 +1399,9 @@ class AMLPipelineHelper:
         self.validate_experiment_name(self.config.run.experiment_name)
 
         self.repository_info = get_repo_info()
-        print(f"Running from repository: {self.repository_info}")
+        log.info(f"Running from repository: {self.repository_info}")
 
-        print("azureml.core.VERSION = {}".format(azureml.core.VERSION))
+        log.info("azureml.core.VERSION = {}".format(azureml.core.VERSION))
         self.connect()
 
         if self.config.run.verbose:
@@ -1407,23 +1414,23 @@ class AMLPipelineHelper:
                     "To be able to use --resume you need to provide both --experiment-name and --run-id."
                 )
 
-            print(f"Resuming Experiment {self.config.run.experiment_name}...")
+            log.info(f"Resuming Experiment {self.config.run.experiment_name}...")
             experiment = Experiment(
                 current_workspace(), self.config.run.experiment_name
             )
-            print(f"Resuming PipelineRun {self.config.run.pipeline_run_id}...")
+            log.info(f"Resuming PipelineRun {self.config.run.pipeline_run_id}...")
             # pipeline_run is of the class "azureml.pipeline.core.PipelineRun"
             pipeline_run = PipelineRun(experiment, self.config.run.pipeline_run_id)
         else:
             keep_modified_files = False
             if self.config.tenant_overrides.allow_override:
-                print("Check if tenant is consistent with spec yaml")
+                log.info("Check if tenant is consistent with spec yaml")
                 yaml_to_be_recovered = []
                 override, mapping = self._check_if_spec_yaml_override_is_needed()
                 if override:
                     try:
                         tenant = self.config.aml.tenant
-                        print(
+                        log.info(
                             f"Performing spec yaml override to adapt to tenant: {tenant}."
                         )
                         yaml_to_be_recovered = self._override_spec_yaml(mapping)
@@ -1436,7 +1443,7 @@ class AMLPipelineHelper:
                             yaml_to_be_recovered, keep_modified_files
                         )
                     except:
-                        print("An error occured, override is not successful.")
+                        log.info("An error occured, override is not successful.")
 
             else:
                 pipeline_run = self.build_and_submit_new_pipeline()
@@ -1445,8 +1452,8 @@ class AMLPipelineHelper:
             # not submitting code, exit now
             return
         # launch the pipeline execution
-        print(f"Pipeline Run Id: {pipeline_run.id}")
-        print(
+        log.info(f"Pipeline Run Id: {pipeline_run.id}")
+        log.info(
             f"""
 #################################
 #################################
@@ -1464,7 +1471,7 @@ Follow link below to access your pipeline run directly:
         )
 
         if self.config.run.canary:
-            print(
+            log.info(
                 "*** CANARY MODE ***\n----------------------------------------------------------"
             )
             pipeline_run.wait_for_completion(show_output=True)
@@ -1472,14 +1479,14 @@ Follow link below to access your pipeline run directly:
             # azureml.pipeline.core.PipelineRun.get_status(): ["Running", "Finished", "Failed"]
             # azureml.core.run.get_status(): ["Running", "Completed", "Failed"]
             if pipeline_run.get_status() in ["Finished", "Completed"]:
-                print("*** PIPELINE FINISHED, TESTING WITH canary() METHOD ***")
+                log.info("*** PIPELINE FINISHED, TESTING WITH canary() METHOD ***")
                 self.canary(self.config, pipeline_run.experiment, pipeline_run)
-                print("OK")
+                log.info("OK")
             elif pipeline_run.get_status() == "Failed":
-                print("*** PIPELINE FAILED ***")
+                log.info("*** PIPELINE FAILED ***")
                 raise Exception("Pipeline failed.")
             else:
-                print("*** PIPELINE STATUS {} UNKNOWN ***")
+                log.info("*** PIPELINE STATUS {} UNKNOWN ***")
                 raise Exception("Pipeline status is unknown.")
 
         else:
@@ -1489,7 +1496,7 @@ Follow link below to access your pipeline run directly:
             # This will wait for the completion of the pipeline execution
             # and show the full logs in the meantime
             if self.config.run.resume or self.config.run.wait:
-                print(
+                log.info(
                     "Below are the raw debug logs from your pipeline execution:\n----------------------------------------------------------"
                 )
                 pipeline_run.wait_for_completion(show_output=True)
@@ -1511,8 +1518,8 @@ Follow link below to access your pipeline run directly:
                 HydraConfig.get().runtime.cwd, args.config_dir
             )
 
-            print("*** CONFIGURATION ***")
-            print(OmegaConf.to_yaml(cfg))
+            log.info("*** CONFIGURATION ***")
+            log.info(OmegaConf.to_yaml(cfg))
 
             # create class instance
             main_instance = cls(cfg)

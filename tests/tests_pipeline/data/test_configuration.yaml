@@ -115,4 +115,3 @@ tenant_overrides:
         'polymerprod.azurecr.io/training/pytorch:scpilot-rc2': 'mcr.microsoft.com/azureml/base-gpu:openmpi3.1.2-cuda10.1-cudnn7-ubuntu18.04'
       tags:
         Office: aml-ds
-

@@ -4,16 +4,18 @@
 """
 Pipeline helper class to create pipelines loading modules from a flexible manifest.
 """
-import os
+
 
 from azure.ml.component import Component
+from dataclasses import dataclass, field
+import os
+import logging
+from typing import Optional, List
 
 from shrike.pipeline.aml_connect import current_workspace
 
-from dataclasses import dataclass, field
-from omegaconf import MISSING
-from typing import Optional, List
-from enum import Enum
+
+log = logging.getLogger(__name__)
 
 
 @dataclass
@@ -100,7 +102,7 @@ class AMLModuleLoader:
         self.modules_manifest = {}
         self.load_config_manifest(config)
 
-        print(
+        log.info(
             f"AMLModuleLoader initialized (use_local={self.use_local}, force_default_module_version={self.force_default_module_version}, force_all_module_version={self.force_all_module_version}, local_steps_folder={self.local_steps_folder}, manifest={list(self.modules_manifest.keys())})"
         )
 
@@ -133,7 +135,7 @@ class AMLModuleLoader:
 
     def get_from_cache(self, module_cache_key):
         """Gets module class from internal cache (dict)"""
-        print(f"--- Using cached module {module_cache_key}")
+        log.debug(f"Using cached module {module_cache_key}")
         return self.module_cache.get(module_cache_key, None)
 
     def put_in_cache(self, module_cache_key, module_class):
@@ -192,7 +194,7 @@ class AMLModuleLoader:
         if self.module_in_cache(module_cache_key):
             return self.get_from_cache(module_cache_key)
 
-        print("--- Building module from local code at {}".format(module_spec_path))
+        log.info("Building module from local code at {}".format(module_spec_path))
         if not os.path.isfile(module_spec_path):
             module_spec_path = os.path.join(self.local_steps_folder, module_spec_path)
         loaded_module_class = Component.from_yaml(current_workspace(), module_spec_path)
@@ -219,8 +221,8 @@ class AMLModuleLoader:
         if self.module_in_cache(module_cache_key):
             return self.get_from_cache(module_cache_key)
 
-        print(
-            f"--- Loading remote module {module_cache_key} (name={module_name}, version={module_version}, namespace={module_namespace})"
+        log.info(
+            f"Loading remote module {module_cache_key} (name={module_name}, version={module_version}, namespace={module_namespace})"
         )
         loading_raised_exception = None
 
@@ -237,7 +239,7 @@ class AMLModuleLoader:
                 raise e
 
         if module_namespace:
-            print(
+            log.info(
                 f"    Trying to load module {module_name} with namespace {module_namespace}."
             )
             module_name = module_namespace + "://" + module_name
@@ -265,8 +267,8 @@ class AMLModuleLoader:
             module_entry = self.modules_manifest[module_key]
             module_namespace = None
         elif modules_manifest and module_key in modules_manifest:
-            print(
-                f"WARNING: We highly recommend substituting the required_modules() method by the modules.manifest configuration."
+            log.warning(
+                f"We highly recommend substituting the `required_modules` method by the modules.manifest configuration."
             )
             module_entry = modules_manifest[module_key]
             # map to new format
@@ -316,7 +318,7 @@ class AMLModuleLoader:
         Raises:
             Exception: if loading module has an error or manifest is wrong.
         """
-        print(f"Loading module manifest (use_local={self.use_local})")
+        log.info(f"Loading module manifest (use_local={self.use_local})")
         test_results = self.verify_manifest(modules_manifest)
         if test_results:
             raise Exception(
@@ -327,7 +329,7 @@ class AMLModuleLoader:
 
         loaded_modules = {}
         for module_key in modules_manifest:
-            print(f"Loading module {module_key} from manifest")
+            log.info(f"Loading module {module_key} from manifest")
             loaded_modules[module_key] = self.load_module(module_key, modules_manifest)
 
         return loaded_modules

@@ -4,12 +4,15 @@
 """
 PyTest suite for testing all module specification:
 """
-import traceback
-import pytest
 import json
 import os
+import logging
+import traceback
 
-from shrike.pipeline.pipeline_helper import AMLPipelineHelper
+from shrike.pipeline import AMLPipelineHelper
+
+
+log = logging.getLogger(__name__)
 
 
 def get_config_class(pipeline_class):
@@ -139,12 +142,12 @@ def deeptest_graph(pipeline, definition, path="ROOT"):
     """
     if definition is None:
         # no definition provided, let's stop inspection at this path
-        print(f"deeptest_graph @ {path}: nop, definition is None")
+        log.info(f"deeptest_graph @ {path}: nop, definition is None")
         return
 
     # is inspecting a dictionary structure, iterate on keys
     if isinstance(pipeline, dict) and isinstance(definition, dict):
-        print(f"deeptest_graph @ {path}: checking dictionary")
+        log.info(f"deeptest_graph @ {path}: checking dictionary")
         for key in definition:
             assert (
                 key in pipeline
@@ -152,7 +155,7 @@ def deeptest_graph(pipeline, definition, path="ROOT"):
 
             # ignoring all ids
             if key in {"id", "node_id", "module_id", "dataset_id"}:
-                print(f"deeptest_graph @ {path}: ignore id key {key}")
+                log.info(f"deeptest_graph @ {path}: ignore id key {key}")
                 return
 
             if (
@@ -160,7 +163,7 @@ def deeptest_graph(pipeline, definition, path="ROOT"):
                 and definition[key] is not None
             ):
                 # this is a specific kind of key containing a list we're transforming into a dict
-                print(f"deeptest_graph @ {path}: refactoring key {key} as dict")
+                log.info(f"deeptest_graph @ {path}: refactoring key {key} as dict")
                 pipeline_run_settings = dict(
                     [(entry["name"], entry) for entry in pipeline[key]]
                 )
@@ -179,11 +182,11 @@ def deeptest_graph(pipeline, definition, path="ROOT"):
     # is inspecting a list structure, each element MUST passed
     # NOTE: this should be improved in case list can be shuffled ?
     if isinstance(pipeline, list) and isinstance(definition, list):
-        print(f"deeptest_graph @ {path}: checking list")
+        log.info(f"deeptest_graph @ {path}: checking list")
         for key, entry in enumerate(definition):
             deeptest_graph(pipeline[key], entry, path + "[" + str(key) + "]")
         return
 
     # if anything else (int, str, unknown), just test plain equality
-    print(f"deeptest_graph @ {path}: checking equality {pipeline} == {definition}")
+    log.info(f"deeptest_graph @ {path}: checking equality {pipeline} == {definition}")
     assert pipeline == definition, f"values mismatch @ {path}"
