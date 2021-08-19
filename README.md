@@ -29,6 +29,11 @@ registering Azure ML components.
 For the full documentation of `shrike` with detailed examples and API reference, 
 please see the [docs page](http://azure.github.io/shrike).
 
+For a list of problems (along with guidance and solutions) designed specifically
+to help you learn how to use shrike, please refer to the information in
+[this README file](https://github.com/Azure/azure-ml-problem-sets/blob/main/README.md#azure-ml-problems-aimed-at-learning-shrike)
+(located in another GitHub repository).
+
 ## Installation
 
 The `shrike` library is publicly available in PyPi. There are three optional extra dependencies: `pipeline`, `build`, and `dev`.
