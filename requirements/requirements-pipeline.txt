@@ -1,6 +1,6 @@
 azureml-pipeline~=1.33.0
 azureml-sdk~=1.33.0
-azure-ml-component==0.1.0.42428082
+azure-ml-component==0.1.0.44094775
 cryptography~=3.3.2
 azure-cli-core~=2.22
 ruamel.yaml~=0.16
