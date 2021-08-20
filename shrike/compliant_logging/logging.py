@@ -1024,6 +1024,10 @@ def enable_compliant_logging(
     root = CompliantLogger(logging.root.name, use_aml_metrics)
     root.handlers = old_root.handlers
 
+    print("******print root handlers")
+    print(root.handlers)
+    print("****************")
+
     logging.root = root
     logging.Logger.root = root  # type: ignore
     logging.Logger.manager = logging.Manager(root)  # type: ignore
