@@ -1402,7 +1402,7 @@ class AMLPipelineHelper:
         self.repository_info = get_repo_info()
         log.info(f"Running from repository: {self.repository_info}")
 
-        log.info("azureml.core.VERSION = {}".format(azureml.core.VERSION))
+        log.info(f"azureml.core.VERSION = {azureml.core.VERSION}")
         self.connect()
 
         if self.config.run.verbose:
@@ -1423,10 +1423,11 @@ class AMLPipelineHelper:
             # pipeline_run is of the class "azureml.pipeline.core.PipelineRun"
             pipeline_run = PipelineRun(experiment, self.config.run.pipeline_run_id)
         else:
-            keep_modified_files = False
+            keep_modified_files, override = False, False
+            yaml_to_be_recovered = []
+
             if self.config.tenant_overrides.allow_override:
                 log.info("Check if tenant is consistent with spec yaml")
-                yaml_to_be_recovered = []
                 override, mapping = self._check_if_spec_yaml_override_is_needed()
                 if override:
                     try:
@@ -1438,16 +1439,16 @@ class AMLPipelineHelper:
                         keep_modified_files = (
                             self.config.tenant_overrides.keep_modified_files
                         )
+                    except BaseException as e:
+                        log.error(f"An error occured, override is not successful: {e}")
 
-                        pipeline_run = self.build_and_submit_new_pipeline()
-                        self._recover_spec_yaml(
-                            yaml_to_be_recovered, keep_modified_files
-                        )
-                    except:
-                        log.info("An error occured, override is not successful.")
+            pipeline_run = self.build_and_submit_new_pipeline()
 
-            else:
-                pipeline_run = self.build_and_submit_new_pipeline()
+            if override and yaml_to_be_recovered:
+                try:
+                    self._recover_spec_yaml(yaml_to_be_recovered, keep_modified_files)
+                except BaseException as e:
+                    log.error(f"An error occured, recovery is not successful: {e}")
 
         if not pipeline_run:
             # not submitting code, exit now
