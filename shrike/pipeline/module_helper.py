@@ -24,7 +24,6 @@ class module_reference:
         str
     ] = None  # use as internal key to reference module (if None, use name)
     name: Optional[str] = None  # None if module exists only locally?
-    source: Optional[str] = "registered"  # or "local"
     yaml: Optional[str] = None
     version: Optional[str] = None
 
