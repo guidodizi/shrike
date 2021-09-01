@@ -838,6 +838,10 @@ class AMLPipelineHelper:
         )
 
         if "name" in module_manifest_entry:
+            if "source" in module_manifest_entry:
+                log.warning(
+                    "!!IMPORTANT: Key word `source` is deprecated for module artifacts. Please remove it."
+                )
             if module_manifest_entry["name"] == module_instance.name:
                 return
             if "namespace" in module_manifest_entry:
