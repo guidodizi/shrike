@@ -45,7 +45,6 @@ steps:
 - task: Bandit@1
   inputs:
     targetsType: banditPattern
-    targetsBandit: $(Build.SourcesDirectory)
     targetsBanditRecursive: true
     ruleset: none
     policyName: M365
