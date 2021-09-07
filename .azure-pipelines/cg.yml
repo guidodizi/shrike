@@ -39,3 +39,16 @@ steps:
   displayName: generate NOTICE
   inputs:
     outputformat: text
+
+# https://aka.ms/bandit/
+- task: Bandit@1
+  inputs:
+    targetsType: banditPattern
+    targetsBandit: $(Build.SourcesDirectory)
+    targetsBanditRecursive: true
+    ruleset: none
+    policyName: M365
+    minSeverity: Low
+    minConfidence: low
+    baseline:
+  condition: succeededOrFailed()
