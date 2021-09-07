@@ -10,6 +10,7 @@ schedules:
   branches:
     include:
     - main
+    - dkmiller-bandit
   always: true
 
 
