@@ -8,3 +8,5 @@ dist
 .amlignore
 outputs/*
 examples/outputs/*
+tests/tests_pipeline/sample/outputs/*
+tests/outputs/*

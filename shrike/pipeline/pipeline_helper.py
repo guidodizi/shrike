@@ -20,7 +20,7 @@ try:
     import hydra
     from hydra.core.config_store import ConfigStore
     from hydra.core.hydra_config import HydraConfig
-    from omegaconf import DictConfig, OmegaConf
+    from omegaconf import DictConfig, OmegaConf, open_dict
     from flatten_dict import flatten
 
     import azureml
@@ -144,17 +144,29 @@ class AMLPipelineHelper:
         """Loads one module from the manifest"""
         return self.module_loader.load_module(module_key, self.required_modules())
 
-    def subgraph_load(self, subgraph_key) -> Callable:
-        """Loads one subgraph from the manifest"""
+    def subgraph_load(self, subgraph_key, custom_config=OmegaConf.create()) -> Callable:
+        """Loads one subgraph from the manifest
+        Args:
+            subgraph_key (str): subgraph identifier that is used in the required_subgraphs() method
+            custom_config (DictConfig): custom configuration object, this custom object witll be
+            added to the pipeline config
+
+        """
         subgraph_class = self.required_subgraphs()[subgraph_key]
 
+        subgraph_config = self.config.copy()
+        if custom_config:
+            with open_dict(subgraph_config):
+                for key in custom_config:
+                    subgraph_config[key] = custom_config[key]
+
         log.info(f"Building subgraph [{subgraph_key} as {subgraph_class.__name__}]...")
-        # NOTE: below creates subgraph with same pipeline_config
+        # NOTE: below creates subgraph with updated pipeline_config
         subgraph_instance = subgraph_class(
-            config=self.config, module_loader=self.module_loader
+            config=subgraph_config, module_loader=self.module_loader
         )
         # subgraph_instance.setup(self.pipeline_config)
-        return subgraph_instance.build(self.config)
+        return subgraph_instance.build(subgraph_config)
 
     def dataset_load(self, name, version="latest"):
         """Loads a dataset by either id or name.
