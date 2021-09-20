@@ -719,6 +719,8 @@ class AMLPipelineHelper:
         target=None,
         input_mode=None,
         output_mode=None,
+        node_count=None,
+        process_count_per_node=None,
         algorithm=None,
         primary_metric=None,
         goal=None,
@@ -792,6 +794,16 @@ class AMLPipelineHelper:
         )
         if custom_runtime_arguments:
             log.info(f"Adding custom runtime arguments {custom_runtime_arguments}")
+
+        module_instance.runsettings.configure(target=target, **custom_runtime_arguments)
+
+        if node_count:
+            log.info(
+                f"Setting node_count={node_count} and process_count_per_node={process_count_per_node} as run settings for sweep component {module_name} from pipeline class {self.__class__.__name__}"
+            )
+            module_instance.runsettings.resource_layout.configure(
+                node_count=node_count, process_count_per_node=process_count_per_node
+            )
 
         if input_mode:
             self._set_all_inputs_to(module_instance, input_mode)
