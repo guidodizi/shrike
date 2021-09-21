@@ -6,6 +6,7 @@ import pytest
 import logging
 
 from shrike.build.utils import utils
+from shrike._core import TelemetryLogger
 
 
 @pytest.mark.parametrize(
@@ -38,13 +39,13 @@ def test_create_SHA_256_hash_of_file_matches_cosmic_build_tool(
 
 def test_telemetry_logger(caplog):
     """Unit tests for utils class of opencensus azure monitor"""
-    telemetry_logger = utils.TelemetryLogger()
+    telemetry_logger = TelemetryLogger()
     assert (
         telemetry_logger.instrumentation_key == "aaefce9e-d109-4fac-bb9f-8277c68e91ac"
     )
     assert telemetry_logger.enable_telemetry
 
-    telemetry_logger = utils.TelemetryLogger(enable_telemetry=False)
+    telemetry_logger = TelemetryLogger(enable_telemetry=False)
     assert not telemetry_logger.enable_telemetry
     with caplog.at_level("INFO"):
         telemetry_logger.log_trace(message="A unit test message. Please ignore it.")
@@ -53,7 +54,7 @@ def test_telemetry_logger(caplog):
         in caplog.text
     )
 
-    telemetry_logger = utils.TelemetryLogger(enable_telemetry=True)
+    telemetry_logger = TelemetryLogger(enable_telemetry=True)
     telemetry_logger.log_trace(
         message="A unit test message of shrike.build. Please ignore it.",
         level=logging.INFO,

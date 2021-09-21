@@ -1,11 +1,9 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from pathlib import Path
-import pytest
 import logging
 
-from shrike.pipeline.telemetry_utils import TelemetryLogger
+from shrike._core import TelemetryLogger
 
 
 def test_telemetry_logger(caplog):

@@ -43,7 +43,7 @@ from shrike.pipeline.aml_connect import azureml_connect, current_workspace
 from shrike.pipeline.canary_helper import get_repo_info
 from shrike.pipeline.module_helper import AMLModuleLoader
 from shrike.pipeline.pipeline_config import default_config_dict, HDI_DEFAULT_CONF
-from shrike.pipeline.telemetry_utils import TelemetryLogger
+from shrike._core import TelemetryLogger
 
 
 log = logging.getLogger(__name__)

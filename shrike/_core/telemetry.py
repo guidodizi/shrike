@@ -1,8 +1,6 @@
-# Copyright (c) Microsoft Corporation.
-# Licensed under the MIT license.
-
 import logging
 from opencensus.ext.azure.log_exporter import AzureLogHandler
+
 
 log = logging.getLogger(__name__)
 
@@ -32,8 +30,8 @@ class TelemetryLogger:
             else instrumentation_key
         )
         handler = AzureLogHandler(
-            connection_string=f"InstrumentationKey={self.instrumentation_key}"
-        )
+                connection_string=f"InstrumentationKey={self.instrumentation_key}"
+            )
         handler.add_telemetry_processor(self.scrubber_function)
         self.logger.addHandler(handler)
 
@@ -56,8 +54,8 @@ class TelemetryLogger:
             log.info(
                 "Sending trace log messages to application insight has been disabled."
             )
-
+    
     # Callback function to scrub some columns
     def scrubber_function(self, envelope):
-        envelope.tags["ai.cloud.roleInstance"] = "cloud_RoleInstance_Scrubbed"
+        envelope.tags['ai.cloud.roleInstance'] = 'cloud_RoleInstance_Scrubbed'
         envelope.tags["ai.location.ip"] = "IP_Scrubbed"

@@ -13,7 +13,8 @@ from dataclasses import asdict
 
 from shrike import __version__
 from shrike.build.core.configuration import Configuration, load_configuration
-from shrike.build.utils.utils import TelemetryLogger
+from shrike._core import TelemetryLogger
+
 
 log = logging.getLogger(__name__)
 
