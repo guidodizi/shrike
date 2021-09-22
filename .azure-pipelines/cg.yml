@@ -32,7 +32,7 @@ jobs:
   - job: ${{ os }}
 
     pool:
-      vmImage: ${{ image }}-latest
+      vmImage: ${{ os }}-latest
 
     steps:
 
