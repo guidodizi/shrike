@@ -3,8 +3,9 @@ trigger:
   branches:
     include:
     - main
-  pr:
-  - main
+
+pr:
+- main
 
 schedules:
 - cron: 0 12 * * 0
@@ -26,7 +27,7 @@ parameters:
 
 jobs:
 
-- ${{ each image in parameters.images }}
+- ${{ each image in parameters.images }}:
 
   - job: ${{ image }}
 
