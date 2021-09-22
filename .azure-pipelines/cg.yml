@@ -18,11 +18,11 @@ parameters:
 
 - name: images
   type: object
-    values:
-    - ubuntu-latest
-    # Dependencies and the corresponding CG alerts may be different
-    # in each operating system.
-    - windows-latest
+  default:
+  - ubuntu-latest
+  # Dependencies and the corresponding CG alerts may be different
+  # in each operating system.
+  - windows-latest
 
 jobs:
 
