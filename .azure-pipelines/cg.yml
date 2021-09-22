@@ -17,22 +17,22 @@ schedules:
 
 parameters:
 
-- name: images
+- name: operating_systems
   type: object
   default:
-  - ubuntu-latest
+  - ubuntu
   # Dependencies and the corresponding CG alerts may be different
   # in each operating system.
-  - windows-latest
+  - windows
 
 jobs:
 
-- ${{ each image in parameters.images }}:
+- ${{ each os in parameters.operating_systems }}:
 
-  - job: ${{ image }}
+  - job: ${{ os }}
 
     pool:
-      vmImage: ${{ image }}
+      vmImage: ${{ image }}-latest
 
     steps:
 
