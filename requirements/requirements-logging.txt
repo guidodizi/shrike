@@ -1,8 +1,5 @@
 # For AML metrics logging
 azureml-core~=1.33.0
 
-# Fix: CVE-2020-14422
-ipaddress>=3.5.10
-
 # Fix: CVE-2021-32559
 pywin32>=301
