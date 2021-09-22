@@ -50,7 +50,7 @@ jobs:
         failOnAlert: true
       displayName: Component Governance ( aka.ms/cgdocs )
 
-  - task: notice@0
-    displayName: generate NOTICE
-    inputs:
-      outputformat: text
+    - task: notice@0
+      displayName: generate NOTICE
+      inputs:
+        outputformat: text
