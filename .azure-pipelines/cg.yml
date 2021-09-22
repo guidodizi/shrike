@@ -3,6 +3,8 @@ trigger:
   branches:
     include:
     - main
+  pr:
+  - main
 
 schedules:
 - cron: 0 12 * * 0
@@ -12,30 +14,42 @@ schedules:
     - main
   always: true
 
+parameters:
 
-pool:
-  vmImage: ubuntu-latest
+- name: images
+  type: object
+    values:
+    - ubuntu-latest
+    # Dependencies and the corresponding CG alerts may be different
+    # in each operating system.
+    - windows-latest
 
-steps:
+jobs:
 
-- checkout: self
-  clean: true
+- ${{ each image in parameters.images }}
 
-- bash: |
-    cat requirements/requirements-logging.txt >> requirements.txt
-    cat requirements/requirements-pipeline.txt >> requirements.txt
-    cat requirements/requirements-build.txt >> requirements.txt
-    cat requirements/requirements-dev.txt >> requirements.txt  
-  displayName: Pool Requirement Files
+  - job: ${{ image }}
 
-- task: ComponentGovernanceComponentDetection@0
-  inputs:
-    verbosity: Verbose
-    alertWarningLevel: Medium
-    failOnAlert: true
-  displayName: Component Governance ( aka.ms/cgdocs )
+    pool:
+      vmImage: ${{ image }}
 
-- task: notice@0
-  displayName: generate NOTICE
-  inputs:
-    outputformat: text
+    steps:
+
+    - checkout: self
+      clean: true
+
+    - pwsh: |
+        Get-ChildItem requirements/*.txt | Get-Content | Out-File requirements.txt
+      displayName: Coalesce requirements files
+
+    - task: ComponentGovernanceComponentDetection@0
+      inputs:
+        verbosity: Verbose
+        alertWarningLevel: Medium
+        failOnAlert: true
+      displayName: Component Governance ( aka.ms/cgdocs )
+
+  - task: notice@0
+    displayName: generate NOTICE
+    inputs:
+      outputformat: text
