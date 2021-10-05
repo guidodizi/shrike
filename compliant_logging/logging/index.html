@@ -1,0 +1,3062 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>logging - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#logging" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              logging
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          logging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        logging
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging" class="md-nav__link">
+    shrike.compliant_logging.logging
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger" class="md-nav__link">
+    CompliantLogger
+  </a>
+  
+    <nav class="md-nav" aria-label="CompliantLogger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric" class="md-nav__link">
+    metric()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_accuracy_table" class="md-nav__link">
+    metric_accuracy_table()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_confusion_matrix" class="md-nav__link">
+    metric_confusion_matrix()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_image" class="md-nav__link">
+    metric_image()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_list" class="md-nav__link">
+    metric_list()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_predictions" class="md-nav__link">
+    metric_predictions()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_residual" class="md-nav__link">
+    metric_residual()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_row" class="md-nav__link">
+    metric_row()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_table" class="md-nav__link">
+    metric_table()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_value" class="md-nav__link">
+    metric_value()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.enable_compliant_logging" class="md-nav__link">
+    enable_compliant_logging()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.enable_confidential_logging" class="md-nav__link">
+    enable_confidential_logging()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.floating_range" class="md-nav__link">
+    floating_range()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.get_aml_context" class="md-nav__link">
+    get_aml_context()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.get_prefix" class="md-nav__link">
+    get_prefix()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.set_aml_context" class="md-nav__link">
+    set_aml_context()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.set_prefix" class="md-nav__link">
+    set_prefix()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging" class="md-nav__link">
+    shrike.compliant_logging.logging
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger" class="md-nav__link">
+    CompliantLogger
+  </a>
+  
+    <nav class="md-nav" aria-label="CompliantLogger">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric" class="md-nav__link">
+    metric()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_accuracy_table" class="md-nav__link">
+    metric_accuracy_table()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_confusion_matrix" class="md-nav__link">
+    metric_confusion_matrix()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_image" class="md-nav__link">
+    metric_image()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_list" class="md-nav__link">
+    metric_list()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_predictions" class="md-nav__link">
+    metric_predictions()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_residual" class="md-nav__link">
+    metric_residual()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_row" class="md-nav__link">
+    metric_row()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_table" class="md-nav__link">
+    metric_table()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.CompliantLogger.metric_value" class="md-nav__link">
+    metric_value()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.enable_compliant_logging" class="md-nav__link">
+    enable_compliant_logging()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.enable_confidential_logging" class="md-nav__link">
+    enable_confidential_logging()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.floating_range" class="md-nav__link">
+    floating_range()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.get_aml_context" class="md-nav__link">
+    get_aml_context()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.get_prefix" class="md-nav__link">
+    get_prefix()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.set_aml_context" class="md-nav__link">
+    set_aml_context()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.logging.set_prefix" class="md-nav__link">
+    set_prefix()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/compliant_logging/logging.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="logging">Logging</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="shrike.compliant_logging.logging"></a>
+    <div class="doc doc-contents first">
+
+      <p>Utilities around logging data which may or may not contain private content.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger">
+        <code>CompliantLogger</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Subclass of the default logging class with an explicit <code>category</code> parameter
+on all logging methods. It will pass an <code>extra</code> param with <code>prefix</code> key
+(value depending on whether <code>category</code> is public or private) to the
+handlers.</p>
+<p>The default value for data <code>category</code> is <code>PRIVATE</code> for all methods.</p>
+<p>Implementation is inspired by:
+https://github.com/python/cpython/blob/3.8/Lib/logging/<strong>init</strong>.py</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric">
+<code class="highlight language-python"><span class="n">metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_rows</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Converts most datatypes into a metric and logs them to AML Metric
+for the RunContext (if available) or directly to log</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>Any</code></td>
+        <td><p>The value to log
+(can be vaex/pandas/spark dataframe, numpy array, list, dict, int/float)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>step</code></td>
+        <td><code>str | int</code></td>
+        <td><p>Step value used for single value items.
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name under which the metric should be logged.
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description for the metric provided
+to the run context. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>max_rows</code></td>
+        <td><code>int</code></td>
+        <td><p>Defines the number of rows to batch table metrics
+(only required for table metrics).
+Defaults to 250.</p></td>
+        <td><code>250</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Category of the data
+(logging to AML requires this to be set to PUBLIC explicitly).
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">,</span>
+    <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_rows</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts most datatypes into a metric and logs them to AML Metric</span>
+<span class="sd">    for the RunContext (if available) or directly to log</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (Any): The value to log</span>
+<span class="sd">            (can be vaex/pandas/spark dataframe, numpy array, list, dict, int/float)</span>
+<span class="sd">        step (str | int, optional): Step value used for single value items.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        name (str, optional): Name under which the metric should be logged.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        description (str, optional): Description for the metric provided</span>
+<span class="sd">            to the run context. Defaults to None.</span>
+<span class="sd">        max_rows (int, optional): Defines the number of rows to batch table metrics</span>
+<span class="sd">            (only required for table metrics).</span>
+<span class="sd">            Defaults to 250.</span>
+<span class="sd">        category (DataCategory, optional): Category of the data</span>
+<span class="sd">            (logging to AML requires this to be set to PUBLIC explicitly).</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check for name</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;metric_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_count</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># check for description</span>
+    <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># retrieve AML Context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># check if value provided</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Value provided for metric </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is None, skipping (step: </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># check different data-types</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+        <span class="c1"># log the data</span>
+        <span class="k">if</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">step</span><span class="p">:</span>
+                <span class="n">run</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">run</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;NumbericMetric  | </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># collect dataframes</span>
+    <span class="k">if</span> <span class="n">is_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">collect_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">is_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">collect_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">is_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">collect_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># log dictionary data</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="c1"># check if values are present</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dictionary Value for Metric </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is empty. Skipping.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># check the value types of the dict</span>
+        <span class="n">type_set</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">()]))</span>
+
+        <span class="c1"># check for mixed types</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">type_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">type_set</span> <span class="o">=</span> <span class="n">type_set</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># check types</span>
+        <span class="k">if</span> <span class="n">type_set</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">:</span>
+                <span class="n">run</span><span class="o">.</span><span class="n">log_table</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># log the matrix manually</span>
+                <span class="n">col_names</span> <span class="o">=</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">col</span><span class="p">)</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+                <span class="p">)</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;TableMetric     | Index | </span><span class="si">{</span><span class="n">col_names</span><span class="si">}</span><span class="s2"> |&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TableMetric     | </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">),</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+
+                <span class="c1"># generate the rows</span>
+                <span class="n">max_rows</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">value</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_rows</span><span class="p">):</span>
+                    <span class="n">row_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;TableMetric     | </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">05</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">col</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                        <span class="n">col</span> <span class="o">=</span> <span class="n">col</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="ow">and</span> <span class="n">col</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                        <span class="n">row_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; | </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="si">:</span><span class="s2">15</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row_str</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">type_set</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">key</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="s2">&quot;The provided dictionary for metric&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> appears to be unstructured!&quot;</span>
+                <span class="p">),</span>
+                <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="c1"># collect list wise datatypes</span>
+    <span class="k">if</span> <span class="n">is_numpy_array</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">numpy_array_to_list</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">is_pandas_series</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">pandas_series_to_list</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># log list data</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># check if values are present</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;List Value for Metric </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is empty. Skipping.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># log data to run context</span>
+        <span class="k">if</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">:</span>
+            <span class="n">run</span><span class="o">.</span><span class="n">log_list</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ListMetric      | </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> of the provided metric </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> has an unkown type&quot;</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_accuracy_table">
+<code class="highlight language-python"><span class="n">metric_accuracy_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_thresholds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">percentile_thresholds</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">class_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent of the <code>Run.log_accuracy_table</code> function.
+Logs the data for an accuracy table to the metrics.</p>
+<p>In the dataframe case, the <code>col_predict</code> value has to contain the prediction
+probabilities for the <strong>target</strong> class!</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>dict | table</code></td>
+        <td><p>Either dicationary in AML defined format
+or table that provides accuracy values.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric. Defaults to None.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>col_predict</code></td>
+        <td><code>str | int</code></td>
+        <td><p>Name or Id of the predicted probabilities
+for the target class. This is only required if DataFrame is passed.
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>col_target</code></td>
+        <td><code>str | int</code></td>
+        <td><p>Name or id of the target value column.
+This is only required if DataFrame is passed. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>probability_thresholds</code></td>
+        <td><code>list | int</code></td>
+        <td><p>Either a list of thresholds
+or a number of evenly spaced threshold points. Defaults to 5.</p></td>
+        <td><code>5</code></td>
+      </tr>
+      <tr>
+        <td><code>percentile_thresholds</code></td>
+        <td><code>list | int</code></td>
+        <td><p>Either a list of thresholds
+or a number of evenly spaced threshold points. Defaults to a list.</p></td>
+        <td><code>[0.0, 0.01, 0.24, 0.98, 1.0]</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Classification of the data category.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_accuracy_table</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">col_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">col_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">probability_thresholds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">percentile_thresholds</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+    <span class="n">class_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent of the `Run.log_accuracy_table` function.</span>
+<span class="sd">    Logs the data for an accuracy table to the metrics.</span>
+
+<span class="sd">    In the dataframe case, the `col_predict` value has to contain the prediction</span>
+<span class="sd">    probabilities for the **target** class!</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (dict | table): Either dicationary in AML defined format</span>
+<span class="sd">            or table that provides accuracy values.</span>
+<span class="sd">        name (str, optional): Name of the metric. Defaults to None.</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to None.</span>
+<span class="sd">        col_predict (str | int, optional): Name or Id of the predicted probabilities</span>
+<span class="sd">            for the target class. This is only required if DataFrame is passed.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        col_target (str | int, optional): Name or id of the target value column.</span>
+<span class="sd">            This is only required if DataFrame is passed. Defaults to None.</span>
+<span class="sd">        probability_thresholds (list | int, optional): Either a list of thresholds</span>
+<span class="sd">            or a number of evenly spaced threshold points. Defaults to 5.</span>
+<span class="sd">        percentile_thresholds (list | int, optional): Either a list of thresholds</span>
+<span class="sd">            or a number of evenly spaced threshold points. Defaults to a list.</span>
+<span class="sd">        category (DataCategory, optional): Classification of the data category.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># retrieve the context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># convert data if not already pre-computed</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;schema_type&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+        <span class="c1"># check the data</span>
+        <span class="k">if</span> <span class="n">is_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># check if datatype matches</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span><span class="s2">&quot;Unkown value-type passed to accuracy_table!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># convert the data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+            <span class="c1"># create the dataframe</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="c1"># column checks</span>
+            <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">[</span><span class="n">col_predict</span><span class="p">,</span> <span class="n">col_target</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;If table is passed to accuracy_table it requires all &quot;</span>
+                    <span class="o">+</span> <span class="s2">&quot;columns to be present!&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># check the class list (sort to make sure it is aligned)</span>
+            <span class="n">class_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+            <span class="n">class_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">class_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">class_labels</span> <span class="o">=</span> <span class="n">class_list</span>
+
+            <span class="c1"># compute ranges</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">probability_thresholds</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">probability_thresholds</span> <span class="o">=</span> <span class="n">floating_range</span><span class="p">(</span><span class="n">probability_thresholds</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">percentile_thresholds</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">percentile_thresholds</span> <span class="o">=</span> <span class="n">floating_range</span><span class="p">(</span><span class="n">percentile_thresholds</span><span class="p">)</span>
+
+            <span class="c1"># compute one-vs-rest labels for the class</span>
+            <span class="n">prob_tables</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">perc_tables</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">class_list</span><span class="p">:</span>
+                <span class="c1"># compute the thresholds</span>
+                <span class="n">prob_tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_compute_truth_matrix</span><span class="p">(</span>
+                        <span class="n">df</span><span class="p">[</span><span class="n">col_predict</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">],</span> <span class="n">cl</span><span class="p">,</span> <span class="n">probability_thresholds</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+                <span class="c1"># compute per class percentiles</span>
+                <span class="n">cl_proba</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_predict</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">]</span> <span class="o">==</span> <span class="n">cl</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">col_predict</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">]</span> <span class="o">!=</span> <span class="n">cl</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">cl_percentile</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cl_proba</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">percentile_thresholds</span><span class="p">))</span>
+                <span class="n">perc_tables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_compute_truth_matrix</span><span class="p">(</span>
+                        <span class="n">df</span><span class="p">[</span><span class="n">col_predict</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">],</span> <span class="n">cl</span><span class="p">,</span> <span class="n">cl_percentile</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="c1"># generate data</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;accuracy_table&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;schema_version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;probability_tables&quot;</span><span class="p">:</span> <span class="n">prob_tables</span><span class="p">,</span>
+                    <span class="s2">&quot;precentile_tables&quot;</span><span class="p">:</span> <span class="n">perc_tables</span><span class="p">,</span>
+                    <span class="s2">&quot;probability_thresholds&quot;</span><span class="p">:</span> <span class="n">probability_thresholds</span><span class="p">,</span>
+                    <span class="s2">&quot;percentile_thresholds&quot;</span><span class="p">:</span> <span class="n">percentile_thresholds</span><span class="p">,</span>
+                    <span class="s2">&quot;class_labels&quot;</span><span class="p">:</span> <span class="n">class_labels</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to import pandas and parse the given data table! &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;Make sure that libraries are available and &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;correct data is passed.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># log the data</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span> <span class="ow">and</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">log_accuracy_table</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Logging Accuracy Tables to text is not yet implemented&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_confusion_matrix">
+<code class="highlight language-python"><span class="n">metric_confusion_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">idx_true</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">idx_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent of the <code>Run.log_confusion_matrix</code> function.
+Logs or generates a confusion matrix to the AML logs.</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>dict | DataFrame</code></td>
+        <td><p>Data to be used for the confusion_matrix</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>idx_true</code></td>
+        <td><code>int | str</code></td>
+        <td><p>Name or id of the target column.
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>idx_pred</code></td>
+        <td><code>int | str</code></td>
+        <td><p>Name or id of the prediction column.
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>labels</code></td>
+        <td><code>list</code></td>
+        <td><p>List of labels used for the rows. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric. Defaults to None.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Classification of the data.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>PublicRuntimeError</code></td>
+        <td><p>[description]</p></td>
+      </tr>
+      <tr>
+        <td><code>PublicRuntimeError</code></td>
+        <td><p>[description]</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_confusion_matrix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">,</span>
+    <span class="n">idx_true</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">idx_pred</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent of the `Run.log_confusion_matrix` function.</span>
+<span class="sd">    Logs or generates a confusion matrix to the AML logs.</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (dict | DataFrame): Data to be used for the confusion_matrix</span>
+<span class="sd">        idx_true (int | str, optional): Name or id of the target column.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        idx_pred (int | str, optional): Name or id of the prediction column.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        labels (list, optional): List of labels used for the rows. Defaults to None.</span>
+<span class="sd">        name (str, optional): Name of the metric. Defaults to None.</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to None.</span>
+<span class="sd">        category (DataCategory, optional): Classification of the data.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PublicRuntimeError: [description]</span>
+<span class="sd">        PublicRuntimeError: [description]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># retrieve the context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># convert data if not already pre-computed</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;schema_type&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span>
+        <span class="ow">or</span> <span class="s2">&quot;schema_version&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span>
+    <span class="p">):</span>
+        <span class="c1"># check the data</span>
+        <span class="k">if</span> <span class="n">is_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># check if datatype matches</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Unkown value-type passed to Run.log_confusion_matrix!&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># convert the data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># try to import libs</span>
+            <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+            <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+            <span class="c1"># update row names</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx_true</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">idx_true</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">idx_true</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx_pred</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">idx_pred</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">idx_pred</span><span class="p">)</span>
+
+            <span class="c1"># retrieve left right</span>
+            <span class="n">val_true</span><span class="p">,</span> <span class="n">val_pred</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="n">val_true</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">idx_true</span><span class="p">]</span>
+            <span class="n">val_pred</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">idx_pred</span><span class="p">]</span>
+
+            <span class="c1"># compute matrix</span>
+            <span class="n">mat</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">val_true</span><span class="p">,</span> <span class="n">val_pred</span><span class="p">)</span>
+
+            <span class="c1"># generate labels as distincts</span>
+            <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">val_true</span><span class="p">)</span>
+
+            <span class="c1"># generate the dict</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;confusion_matrix&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;schema_version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;class_labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span> <span class="s2">&quot;matrix&quot;</span><span class="p">:</span> <span class="n">mat</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to import numpy &amp; scikit and parse the given data table! &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;Make sure that libraries are available and correct &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;data is passed.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># log the data</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span> <span class="ow">and</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">log_confusion_matrix</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Logging Confusion Matrices to text is not yet implemented&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_image">
+<code class="highlight language-python"><span class="n">metric_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Logs an image to the AML Metrics.
+Note that this is only possible for public data when
+AML Run context is available</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>plot</code></td>
+        <td><code>pyplot.Plot</code></td>
+        <td><p>The plot that should be logger</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>path</code></td>
+        <td><code>str</code></td>
+        <td><p>Optional Path to the image. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the image. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Category under which this image is logged
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_image</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Logs an image to the AML Metrics.</span>
+<span class="sd">    Note that this is only possible for public data when</span>
+<span class="sd">    AML Run context is available</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        plot (pyplot.Plot): The plot that should be logger</span>
+<span class="sd">        path (str, optional): Optional Path to the image. Defaults to None.</span>
+<span class="sd">        name (str, optional): Name of the image. Defaults to None.</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to None.</span>
+<span class="sd">        category (DataCategory, optional): Category under which this image is logged</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># retrieve the run context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># check if parameters are correct</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="o">!=</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to log image metric </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> as private, skipping.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># check for name</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;metric_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_count</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="c1"># log the image</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">log_image</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">plot</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_list">
+<code class="highlight language-python"><span class="n">metric_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent to the <code>Run.log_list</code>.
+Logs a list of values for a single metric.</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>list</code></td>
+        <td><p>List values to log</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric. Defaults to None.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>DataCategory to log the data as.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent to the `Run.log_list`.</span>
+<span class="sd">    Logs a list of values for a single metric.</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        value (list): List values to log</span>
+<span class="sd">        name (str, optional): Name of the metric. Defaults to None.</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to None.</span>
+<span class="sd">        category (DataCategory, optional): DataCategory to log the data as.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_predictions">
+<code class="highlight language-python"><span class="n">metric_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bin_edges</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent of <code>Run.log_predictions</code> function.
+This will log regression prediction histogram from dict or dataframe.</p>
+<p>Note: Private Data will not be send to metrics!</p>
+<p>For the dataframe case the prediction error is computed as the absolute
+difference between prediction and target.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>dict | DataFrame</code></td>
+        <td><p>The data to log</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to ''.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>col_predict</code></td>
+        <td><code>str | int</code></td>
+        <td><p>Id or Name of the target column.
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>bin_edges</code></td>
+        <td><code>list</code></td>
+        <td><p>List of edge boundaries for logging.
+Defaults to None.</p></td>
+        <td><code>5</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Privacy Classification of the data.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>PublicRuntimeError</code></td>
+        <td><p>If the data is not in the right format or required
+parameters are not passed.</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_predictions</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">col_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">col_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">bin_edges</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent of `Run.log_predictions` function.</span>
+<span class="sd">    This will log regression prediction histogram from dict or dataframe.</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    For the dataframe case the prediction error is computed as the absolute</span>
+<span class="sd">    difference between prediction and target.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name of the metric</span>
+<span class="sd">        value (dict | DataFrame): The data to log</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to &#39;&#39;.</span>
+<span class="sd">        col_predict (str | int, optional): Id or Name of the target column.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        bin_edges (list, optional): List of edge boundaries for logging.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        category (DataCategory, optional): Privacy Classification of the data.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PublicRuntimeError: If the data is not in the right format or required</span>
+<span class="sd">            parameters are not passed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># retrieve the context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># convert data if not already pre-computed</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;schema_type&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span>
+        <span class="ow">or</span> <span class="s2">&quot;schema_version&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span>
+    <span class="p">):</span>
+        <span class="c1"># check the data</span>
+        <span class="k">if</span> <span class="n">is_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># check if datatype matches</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span><span class="s2">&quot;Unkown value-type passed to predictions!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># convert the data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+            <span class="c1"># create the dataframe</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="c1"># column checks</span>
+            <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">[</span><span class="n">col_predict</span><span class="p">,</span> <span class="n">col_target</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;The col_predict and col_target columns are both required.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># compute edges automatically</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">floating_range</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span>
+
+            <span class="c1"># compute groupings in bins</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;bin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">],</span> <span class="n">bin_edges</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_predict</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">])</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+
+            <span class="c1"># generate data</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;predictions&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;schema_version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;bin_averages&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;bin&quot;</span><span class="p">)[</span><span class="n">col_target</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span>
+                    <span class="s2">&quot;bin_errors&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;bin&quot;</span><span class="p">)[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+                    <span class="s2">&quot;bin_counts&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;bin&quot;</span><span class="p">)[</span><span class="n">col_target</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()),</span>
+                    <span class="s2">&quot;bin_edges&quot;</span><span class="p">:</span> <span class="n">bin_edges</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to import pandas and parse the given data! &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;Make sure that libraries are available and correct &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;data is passed.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># log the data</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span> <span class="ow">and</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">log_predictions</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Logging Predictions to text is not yet implemented&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_residual">
+<code class="highlight language-python"><span class="n">metric_residual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">col_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bin_edges</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent on the <code>Run.log_residuals</code> functions.
+Logs residual values for a list of edges</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>dict | DataFrame</code></td>
+        <td><p>Values to contain the residuals</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the dataframe. Defaults to ''.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>col_target</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the target column (if value is a df).
+Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>bin_edges</code></td>
+        <td><code>list | int</code></td>
+        <td><p>List of edges towards the bins.
+Defaults to 5.</p></td>
+        <td><code>5</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Privacy Classification of the data.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>PublicRuntimeError</code></td>
+        <td><p>Thrown when data is in unkown format or required params
+not provided</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_residual</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">col_predict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">col_target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">bin_edges</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent on the `Run.log_residuals` functions.</span>
+<span class="sd">    Logs residual values for a list of edges</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name of the metric</span>
+<span class="sd">        value (dict | DataFrame): Values to contain the residuals</span>
+<span class="sd">        description (str, optional): Description of the dataframe. Defaults to &#39;&#39;.</span>
+<span class="sd">        col_target (str, optional): Name of the target column (if value is a df).</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        bin_edges (list | int, optional): List of edges towards the bins.</span>
+<span class="sd">            Defaults to 5.</span>
+<span class="sd">        category (DataCategory, optional): Privacy Classification of the data.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        PublicRuntimeError: Thrown when data is in unkown format or required params</span>
+<span class="sd">            not provided</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># retrieve the context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># convert data if not already pre-computed</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="s2">&quot;schema_type&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span>
+        <span class="ow">or</span> <span class="s2">&quot;schema_version&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">value</span>
+    <span class="p">):</span>
+        <span class="c1"># check the data</span>
+        <span class="k">if</span> <span class="n">is_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_vaex_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_spark_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">collect_pandas_dataframe</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># check if datatype matches</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Unkown value-type passed to Run.log_residuals()!&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># convert the data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+            <span class="c1"># create the dataframe</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="c1"># column checks</span>
+            <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="p">[</span><span class="n">col_predict</span><span class="p">,</span> <span class="n">col_target</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;The col_predict and col_target columns are both required.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># check if bins should be generated automatically</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">floating_range</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span>
+
+            <span class="c1"># compute the values</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;residual&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col_predict</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">]</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;bin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col_target</span><span class="p">],</span> <span class="n">bin_edges</span><span class="p">)</span>
+
+            <span class="c1"># generate data</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;residuals&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;schema_version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;bin_edges&quot;</span><span class="p">:</span> <span class="n">bin_edges</span><span class="p">,</span>
+                    <span class="s2">&quot;bin_counts&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;bin&quot;</span><span class="p">)[</span><span class="s2">&quot;residual&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Unable to import pandas and parse the given data! &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;Make sure that libraries are available and correct &quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;data is passed.&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># log the data</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span> <span class="ow">and</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">log_residuals</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Logging Residuals to text is not yet implemented&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_row">
+<code class="highlight language-python"><span class="n">metric_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent of the <code>Run.log_row</code> function.
+Logs a single row of a table to the metrics.</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Classification of the data.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_row</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent of the `Run.log_row` function.</span>
+<span class="sd">    Logs a single row of a table to the metrics.</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name of the metric.</span>
+<span class="sd">        description (str): Description of the metric.</span>
+<span class="sd">        category (DataCategory, optional): Classification of the data.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check run context</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_aml_context</span><span class="p">()</span>
+
+    <span class="c1"># log the data</span>
+    <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span> <span class="ow">and</span> <span class="n">run</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">log_row</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">row_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;RowMetric      | </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> | &quot;</span>
+        <span class="n">row_str</span> <span class="o">+=</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">row_str</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_table">
+<code class="highlight language-python"><span class="n">metric_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent to the <code>Run.log_table</code> function.
+Logs a table in dict format {rows: [values]} to metrics.</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of the metric.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>dict</code></td>
+        <td><p>Dictionary representation of the table.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Category to log the data.
+Default to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_table</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent to the `Run.log_table` function.</span>
+<span class="sd">    Logs a table in dict format {rows: [values]} to metrics.</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name of the metric.</span>
+<span class="sd">        value (dict): Dictionary representation of the table.</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to None.</span>
+<span class="sd">        category (DataCategory, optional): Category to log the data.</span>
+<span class="sd">            Default to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.compliant_logging.logging.CompliantLogger.metric_value">
+<code class="highlight language-python"><span class="n">metric_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=&lt;</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Equivalent to the <code>Run.log</code> function.
+Logs a single value to a metric</p>
+<p>Note: Private Data will not be send to metrics!</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>name of the metric</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>Any</code></td>
+        <td><p>value to log</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>description</code></td>
+        <td><code>str</code></td>
+        <td><p>Description of the metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>step</code></td>
+        <td><code>int</code></td>
+        <td><p>Step of the current metric. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>category</code></td>
+        <td><code>DataCategory</code></td>
+        <td><p>Data category to make sure no data leaks.
+Defaults to DataCategory.PRIVATE.</p></td>
+        <td><code>&lt;DataCategory.PRIVATE: 1&gt;</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">metric_value</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PRIVATE</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent to the `Run.log` function.</span>
+<span class="sd">    Logs a single value to a metric</span>
+
+<span class="sd">    Note: Private Data will not be send to metrics!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): name of the metric</span>
+<span class="sd">        value (Any): value to log</span>
+<span class="sd">        description (str, optional): Description of the metric. Defaults to None.</span>
+<span class="sd">        step (int, optional): Step of the current metric. Defaults to None.</span>
+<span class="sd">        category (DataCategory, optional): Data category to make sure no data leaks.</span>
+<span class="sd">            Defaults to DataCategory.PRIVATE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.enable_compliant_logging">
+<code class="highlight language-python"><span class="n">enable_compliant_logging</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;SystemLog:&#39;</span><span class="p">,</span> <span class="n">use_aml_metrics</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>The default format is <code>logging.BASIC_FORMAT</code> (<code>%(levelname)s:%(name)s:%(message)s</code>).
+All other kwargs are passed to <code>logging.basicConfig</code>. Sets the default
+logger class and root logger to be compliant. This means the format
+string <code>%(prefix)</code> will work.</p>
+<p>Set the format using the <code>format</code> kwarg.</p>
+<p>If running in Python &gt;= 3.8, will attempt to add <code>force=True</code> to the kwargs
+for logging.basicConfig.</p>
+<p>After calling this method, use the kwarg <code>category</code> to pass in a value of
+<code>DataCategory</code> to denote data category. The default is <code>PRIVATE</code>. That is,
+if no changes are made to an existing set of log statements, the log output
+should be the same.</p>
+<p>The standard implementation of the logging API is a good reference:
+https://github.com/python/cpython/blob/3.9/Lib/logging/<strong>init</strong>.py</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">enable_compliant_logging</span><span class="p">(</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SystemLog:&quot;</span><span class="p">,</span> <span class="n">use_aml_metrics</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default format is `logging.BASIC_FORMAT` (`%(levelname)s:%(name)s:%(message)s`).</span>
+<span class="sd">    All other kwargs are passed to `logging.basicConfig`. Sets the default</span>
+<span class="sd">    logger class and root logger to be compliant. This means the format</span>
+<span class="sd">    string `%(prefix)` will work.</span>
+
+<span class="sd">    Set the format using the `format` kwarg.</span>
+
+<span class="sd">    If running in Python &gt;= 3.8, will attempt to add `force=True` to the kwargs</span>
+<span class="sd">    for logging.basicConfig.</span>
+
+<span class="sd">    After calling this method, use the kwarg `category` to pass in a value of</span>
+<span class="sd">    `DataCategory` to denote data category. The default is `PRIVATE`. That is,</span>
+<span class="sd">    if no changes are made to an existing set of log statements, the log output</span>
+<span class="sd">    should be the same.</span>
+
+<span class="sd">    The standard implementation of the logging API is a good reference:</span>
+<span class="sd">    https://github.com/python/cpython/blob/3.9/Lib/logging/__init__.py</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">set_prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;format&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;%(prefix)s</span><span class="si">{</span><span class="n">logging</span><span class="o">.</span><span class="n">BASIC_FORMAT</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># Ensure that all loggers created via `logging.getLogger` are instances of</span>
+    <span class="c1"># the `CompliantLogger` class.</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">setLoggerClass</span><span class="p">(</span><span class="n">CompliantLogger</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">handlers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">get_prefix</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">_logging_basic_config_set_warning</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="si">}{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s2">&quot;force&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;force&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">old_root</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">root</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">CompliantLogger</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">use_aml_metrics</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="n">old_root</span><span class="o">.</span><span class="n">handlers</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>  <span class="c1"># type: ignore</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Manager</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="c1"># https://github.com/kivy/kivy/issues/6733</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.enable_confidential_logging">
+<code class="highlight language-python"><span class="n">enable_confidential_logging</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;SystemLog:&#39;</span><span class="p">,</span> <span class="n">use_aml_metrics</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>This function is a duplicate of the function <code>enable_compliant_logging</code>.
+We encourage users to use <code>enable_compliant_logging</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">enable_confidential_logging</span><span class="p">(</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SystemLog:&quot;</span><span class="p">,</span> <span class="n">use_aml_metrics</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is a duplicate of the function `enable_compliant_logging`.</span>
+<span class="sd">    We encourage users to use `enable_compliant_logging`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2"> The function enable_confidential_logging() is on the way&quot;</span>
+        <span class="s2">&quot; to deprecation. Please use enable_compliant_logging() instead.&quot;</span><span class="p">,</span>
+        <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">enable_compliant_logging</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">use_aml_metrics</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.floating_range">
+<code class="highlight language-python"><span class="n">floating_range</span><span class="p">(</span><span class="n">buckets</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Computes a equal distributed list of bucket thresholds</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>buckets</code></td>
+        <td><code>int</code></td>
+        <td><p>Number of buckets</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List</code></td>
+      <td><p>List of bucket thresholds of length buckets</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">floating_range</span><span class="p">(</span><span class="n">buckets</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes a equal distributed list of bucket thresholds</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        buckets (int): Number of buckets</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List: List of bucket thresholds of length buckets</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="o">/</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mi">100</span> <span class="o">/</span> <span class="p">(</span><span class="n">buckets</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">]]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.get_aml_context">
+<code class="highlight language-python"><span class="n">get_aml_context</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Obtains the AML Context</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_aml_context</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtains the AML Context</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_AML_RUN</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.get_prefix">
+<code class="highlight language-python"><span class="n">get_prefix</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Obtain the current global prefix to use when logging public (non-private)
+data.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_prefix</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtain the current global prefix to use when logging public (non-private)</span>
+<span class="sd">    data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_PREFIX</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.set_aml_context">
+<code class="highlight language-python"><span class="n">set_aml_context</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Retrieves the AML Context, should be bundled in a try-catch.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_aml_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves the AML Context, should be bundled in a try-catch.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">_AML_RUN</span>
+    <span class="kn">from</span> <span class="nn">azureml.core.run</span> <span class="kn">import</span> <span class="n">Run</span>
+
+    <span class="n">_AML_RUN</span> <span class="o">=</span> <span class="n">Run</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.logging.set_prefix">
+<code class="highlight language-python"><span class="n">set_prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Set the global prefix to use when logging public (non-private) data.</p>
+<p>This method is thread-safe.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/logging.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the global prefix to use when logging public (non-private) data.</span>
+
+<span class="sd">    This method is thread-safe.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">_LOCK</span><span class="p">:</span>
+        <span class="k">global</span> <span class="n">_PREFIX</span>
+        <span class="n">_PREFIX</span> <span class="o">=</span> <span class="n">prefix</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../exceptions/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              exceptions
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../build/build-for-sign-and-register/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Sign & register components
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

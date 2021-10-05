@@ -1,0 +1,1710 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>exceptions - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exceptions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              exceptions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" checked>
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          exceptions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        exceptions
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions" class="md-nav__link">
+    shrike.compliant_logging.exceptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicArgumentError" class="md-nav__link">
+    PublicArgumentError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicFileNotFoundError" class="md-nav__link">
+    PublicFileNotFoundError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicIndexError" class="md-nav__link">
+    PublicIndexError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicIOError" class="md-nav__link">
+    PublicIOError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicKeyError" class="md-nav__link">
+    PublicKeyError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicNotImplementedError" class="md-nav__link">
+    PublicNotImplementedError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicRuntimeError" class="md-nav__link">
+    PublicRuntimeError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicTypeError" class="md-nav__link">
+    PublicTypeError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicValueError" class="md-nav__link">
+    PublicValueError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.is_exception_allowed" class="md-nav__link">
+    is_exception_allowed()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.prefix_stack_trace" class="md-nav__link">
+    prefix_stack_trace()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.print_prefixed_stack_trace_and_raise" class="md-nav__link">
+    print_prefixed_stack_trace_and_raise()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.scrub_exception" class="md-nav__link">
+    scrub_exception()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions" class="md-nav__link">
+    shrike.compliant_logging.exceptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicArgumentError" class="md-nav__link">
+    PublicArgumentError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicFileNotFoundError" class="md-nav__link">
+    PublicFileNotFoundError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicIndexError" class="md-nav__link">
+    PublicIndexError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicIOError" class="md-nav__link">
+    PublicIOError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicKeyError" class="md-nav__link">
+    PublicKeyError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicNotImplementedError" class="md-nav__link">
+    PublicNotImplementedError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicRuntimeError" class="md-nav__link">
+    PublicRuntimeError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicTypeError" class="md-nav__link">
+    PublicTypeError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.PublicValueError" class="md-nav__link">
+    PublicValueError
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.is_exception_allowed" class="md-nav__link">
+    is_exception_allowed()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.prefix_stack_trace" class="md-nav__link">
+    prefix_stack_trace()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.print_prefixed_stack_trace_and_raise" class="md-nav__link">
+    print_prefixed_stack_trace_and_raise()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.compliant_logging.exceptions.scrub_exception" class="md-nav__link">
+    scrub_exception()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/compliant_logging/exceptions.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="exceptions">Exceptions</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="shrike.compliant_logging.exceptions"></a>
+    <div class="doc doc-contents first">
+
+      <p>Decorators and utilities for prefixing exception stack traces while obscuring
+the exception message itself.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicArgumentError">
+        <code>PublicArgumentError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Argument error with public message. Exceptions of this type raised under
+<code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will have
+the message prefixed with <code>PREFIX</code> in both the printed stack trace and the
+re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicFileNotFoundError">
+        <code>PublicFileNotFoundError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>File not found error with public message. Exceptions of this type raised
+under <code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will
+have the message prefixed with <code>PREFIX</code> in both the printed stack trace and
+the re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicIndexError">
+        <code>PublicIndexError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Index error with public message. Exceptions of this type raised under
+<code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will have
+the message prefixed with <code>PREFIX</code> in both the printed stack trace and the
+re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicIOError">
+        <code>PublicIOError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>I/O error with public message. Exceptions of this type raised
+</code></pre></div>
+<p>under <code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will
+    have the message prefixed with <code>PREFIX</code> in both the printed stack trace and
+    the re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicKeyError">
+        <code>PublicKeyError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Key error with public message. Exceptions of this type raised under
+<code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will have
+the message prefixed with <code>PREFIX</code> in both the printed stack trace and the
+re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicNotImplementedError">
+        <code>PublicNotImplementedError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Not implemented error with public message. Exceptions of this type raised
+under <code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will
+have the message prefixed with <code>PREFIX</code> in both the printed stack trace and
+the re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicRuntimeError">
+        <code>PublicRuntimeError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Runtime error with public message. Exceptions of this type raised under
+<code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will have
+the message prefixed with <code>PREFIX</code> in both the printed stack trace and the
+re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicTypeError">
+        <code>PublicTypeError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Type error with public message. Exceptions of this type raised under
+<code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will have
+the message prefixed with <code>PREFIX</code> in both the printed stack trace and the
+re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.PublicValueError">
+        <code>PublicValueError</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Value error with public message. Exceptions of this type raised under
+<code>prefix_stack_trace</code> or <code>print_prefixed_stack_trace_and_raise</code> will have
+the message prefixed with <code>PREFIX</code> in both the printed stack trace and the
+re-raised exception.</p>
+
+
+
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.is_exception_allowed">
+<code class="highlight language-python"><span class="n">is_exception_allowed</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">allow_list</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Check if message is allowed, either by <code>allow_list</code>, or <code>default_allow_list</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>exception</code></td>
+        <td><code>Union[BaseException, traceback.TracebackException]</code></td>
+        <td><p>the exception to test</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>allow_list</code></td>
+        <td><code>list</code></td>
+        <td><p>list of regex expressions. If any expression matches
+the exception name or message, it will be considered allowed.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>bool</code></td>
+      <td><p>bool: True if message is allowed, False otherwise.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/exceptions.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_exception_allowed</span><span class="p">(</span>
+    <span class="n">exception</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">,</span> <span class="n">TracebackException</span><span class="p">],</span> <span class="n">allow_list</span><span class="p">:</span> <span class="nb">list</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if message is allowed, either by `allow_list`, or `default_allow_list`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        exception (TracebackException): the exception to test</span>
+<span class="sd">        allow_list (list): list of regex expressions. If any expression matches</span>
+<span class="sd">            the exception name or message, it will be considered allowed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if message is allowed, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">TracebackException</span><span class="p">):</span>
+        <span class="n">exception</span> <span class="o">=</span> <span class="n">TracebackException</span><span class="o">.</span><span class="n">from_exception</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+
+    <span class="c1"># empty list means all messages are allowed</span>
+    <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">allow_list</span> <span class="o">+</span> <span class="n">default_allow_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="s2">&quot;_str&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">exc_type</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.prefix_stack_trace">
+<code class="highlight language-python"><span class="n">prefix_stack_trace</span><span class="p">(</span><span class="n">file</span><span class="o">=&lt;</span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&lt;stderr&gt;&#39;</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;SystemLog:&#39;</span><span class="p">,</span> <span class="n">scrub_message</span><span class="o">=</span><span class="s1">&#39;**Exception message scrubbed**&#39;</span><span class="p">,</span> <span class="n">keep_message</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_list</span><span class="o">=</span><span class="p">[],</span> <span class="n">add_timestamp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Decorator which wraps the decorated function and prints the stack trace of
+exceptions which occur, prefixed with <code>prefix</code> and with exception messages
+scrubbed (replaced with <code>scrub_message</code>). To use this, just add
+<code>@prefix_stack_trace()</code> above your function definition, e.g.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>@prefix_stack_trace()
+<span class="linenos" data-linenos="2 "></span>def foo(x):
+<span class="linenos" data-linenos="3 "></span>    pass
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/exceptions.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">prefix_stack_trace</span><span class="p">(</span>
+    <span class="n">file</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+    <span class="n">disable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">debug</span><span class="p">),</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">PREFIX</span><span class="p">,</span>
+    <span class="n">scrub_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SCRUB_MESSAGE</span><span class="p">,</span>
+    <span class="n">keep_message</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">allow_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">add_timestamp</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator which wraps the decorated function and prints the stack trace of</span>
+<span class="sd">    exceptions which occur, prefixed with `prefix` and with exception messages</span>
+<span class="sd">    scrubbed (replaced with `scrub_message`). To use this, just add</span>
+<span class="sd">    `@prefix_stack_trace()` above your function definition, e.g.</span>
+
+<span class="sd">        @prefix_stack_trace()</span>
+<span class="sd">        def foo(x):</span>
+<span class="sd">            pass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">_PrefixStackTraceWrapper</span><span class="p">(</span>
+        <span class="n">file</span><span class="p">,</span> <span class="n">disable</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">scrub_message</span><span class="p">,</span> <span class="n">keep_message</span><span class="p">,</span> <span class="n">allow_list</span><span class="p">,</span> <span class="n">add_timestamp</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.print_prefixed_stack_trace_and_raise">
+<code class="highlight language-python"><span class="n">print_prefixed_stack_trace_and_raise</span><span class="p">(</span><span class="n">file</span><span class="o">=&lt;</span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&lt;stderr&gt;&#39;</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;SystemLog:&#39;</span><span class="p">,</span> <span class="n">scrub_message</span><span class="o">=</span><span class="s1">&#39;**Exception message scrubbed**&#39;</span><span class="p">,</span> <span class="n">keep_message</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_list</span><span class="o">=</span><span class="p">[],</span> <span class="n">add_timestamp</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">err</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Print the current exception and stack trace to <code>file</code> (usually client
+standard error), prefixing the stack trace with <code>prefix</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>keep_message</code></td>
+        <td><code>bool</code></td>
+        <td><p>if True, don't scrub message. If false, scrub (unless
+allowed).</p></td>
+        <td><code>False</code></td>
+      </tr>
+      <tr>
+        <td><code>allow_list</code></td>
+        <td><code>list</code></td>
+        <td><p>exception allow_list. Ignored if keep_message is True. If
+empty all messages will be srubbed.</p></td>
+        <td><code>[]</code></td>
+      </tr>
+      <tr>
+        <td><code>err</code></td>
+        <td><code>Optional[BaseException]</code></td>
+        <td><p>the error that was thrown. None accepted for backwards compatibility.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/exceptions.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">print_prefixed_stack_trace_and_raise</span><span class="p">(</span>
+    <span class="n">file</span><span class="p">:</span> <span class="n">TextIO</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">PREFIX</span><span class="p">,</span>
+    <span class="n">scrub_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SCRUB_MESSAGE</span><span class="p">,</span>
+    <span class="n">keep_message</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">allow_list</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">add_timestamp</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">err</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print the current exception and stack trace to `file` (usually client</span>
+<span class="sd">    standard error), prefixing the stack trace with `prefix`.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        keep_message (bool): if True, don&#39;t scrub message. If false, scrub (unless</span>
+<span class="sd">            allowed).</span>
+<span class="sd">        allow_list (list): exception allow_list. Ignored if keep_message is True. If</span>
+<span class="sd">            empty all messages will be srubbed.</span>
+<span class="sd">        err: the error that was thrown. None accepted for backwards compatibility.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">scrubbed_err</span> <span class="o">=</span> <span class="n">scrub_exception</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">scrub_message</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">keep_message</span><span class="p">,</span> <span class="n">allow_list</span><span class="p">)</span>
+
+    <span class="n">tb_exception</span> <span class="o">=</span> <span class="n">TracebackException</span><span class="o">.</span><span class="n">from_exception</span><span class="p">(</span><span class="n">scrubbed_err</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">for</span> <span class="n">execution</span> <span class="ow">in</span> <span class="n">tb_exception</span><span class="o">.</span><span class="n">format</span><span class="p">():</span>
+        <span class="k">if</span> <span class="s2">&quot;return function(*func_args, **func_kwargs)&quot;</span> <span class="ow">in</span> <span class="n">execution</span><span class="p">:</span>
+            <span class="c1"># Do not show the stack trace for our decorator.</span>
+            <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">execution</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">add_timestamp</span><span class="p">:</span>
+                <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">current_time</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="n">scrubbed_err</span>  <span class="c1"># type: ignore</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="shrike.compliant_logging.exceptions.scrub_exception">
+<code class="highlight language-python"><span class="n">scrub_exception</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">scrub_message</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">keep_message</span><span class="p">,</span> <span class="n">allow_list</span><span class="p">,</span> <span class="n">_seen</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Recursively scrub all potentially private data from an exception, using the
+logic in <code>_attribute_transformer</code>.</p>
+<p>Inspired by Dan Schwartz's closed-source implementation:
+https://dev.azure.com/eemo/TEE/_git/TEEGit?path=%2FOffline%2FFocusedInbox%2FComTriage%2Fcomtriage%2Futils%2Fscrubber.py&amp;version=GBcompliant%2FComTriage&amp;_a=content</p>
+<p>which is closely based on the CPython implementation of the
+TracebackException class:
+https://github.com/python/cpython/blob/master/Lib/traceback.py#L478</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/compliant_logging/exceptions.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">scrub_exception</span><span class="p">(</span>
+    <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">],</span>
+    <span class="n">scrub_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">keep_message</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">allow_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="n">_seen</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursively scrub all potentially private data from an exception, using the</span>
+<span class="sd">    logic in `_attribute_transformer`.</span>
+
+<span class="sd">    Inspired by Dan Schwartz&#39;s closed-source implementation:</span>
+<span class="sd">    https://dev.azure.com/eemo/TEE/_git/TEEGit?path=%2FOffline%2FFocusedInbox%2FComTriage%2Fcomtriage%2Futils%2Fscrubber.py&amp;version=GBcompliant%2FComTriage&amp;_a=content</span>
+
+<span class="sd">    which is closely based on the CPython implementation of the</span>
+<span class="sd">    TracebackException class:</span>
+<span class="sd">    https://github.com/python/cpython/blob/master/Lib/traceback.py#L478</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Handle loops in __cause__ or __context__ .</span>
+    <span class="k">if</span> <span class="n">_seen</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">_seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">exception</span><span class="p">))</span>
+
+    <span class="c1"># Gracefully handle being called with no type or value.</span>
+    <span class="k">if</span> <span class="n">exception</span><span class="o">.</span><span class="n">__cause__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">__cause__</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_seen</span><span class="p">:</span>
+        <span class="n">exception</span><span class="o">.</span><span class="n">__cause__</span> <span class="o">=</span> <span class="n">scrub_exception</span><span class="p">(</span>
+            <span class="n">exception</span><span class="o">.</span><span class="n">__cause__</span><span class="p">,</span>
+            <span class="n">scrub_message</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="p">,</span>
+            <span class="n">keep_message</span><span class="p">,</span>
+            <span class="n">allow_list</span><span class="p">,</span>
+            <span class="n">_seen</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">exception</span><span class="o">.</span><span class="n">__context__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">__context__</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_seen</span><span class="p">:</span>
+        <span class="n">exception</span><span class="o">.</span><span class="n">__context__</span> <span class="o">=</span> <span class="n">scrub_exception</span><span class="p">(</span>
+            <span class="n">exception</span><span class="o">.</span><span class="n">__context__</span><span class="p">,</span>
+            <span class="n">scrub_message</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="p">,</span>
+            <span class="n">keep_message</span><span class="p">,</span>
+            <span class="n">allow_list</span><span class="p">,</span>
+            <span class="n">_seen</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="n">keep</span> <span class="o">=</span> <span class="n">keep_message</span> <span class="ow">or</span> <span class="n">is_exception_allowed</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">allow_list</span><span class="p">)</span>
+    <span class="n">transformer</span> <span class="o">=</span> <span class="n">_attribute_transformer</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">scrub_message</span><span class="p">,</span> <span class="n">keep</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="c1"># In some cases, e.g. FileNotFoundError, there are attributes</span>
+                <span class="c1"># which show up in dir(e), but for which an AttributeError is</span>
+                <span class="c1"># thrown when attempting to access the value. See, e.g.:</span>
+                <span class="c1"># https://stackoverflow.com/q/47775772 .</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If unable to transform or set the attribute, replace the</span>
+                <span class="c1"># entire exception since the attribute value is readable, but</span>
+                <span class="c1"># we are unable to scrub it.</span>
+                <span class="n">new_value</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">exception</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">new_exception</span> <span class="o">=</span> <span class="n">PublicRuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2"> Obtained </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> when trying to scrub </span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># noqa: E501</span>
+                <span class="p">)</span>
+                <span class="n">new_exception</span><span class="o">.</span><span class="n">__cause__</span> <span class="o">=</span> <span class="n">exception</span><span class="o">.</span><span class="n">__cause__</span>
+                <span class="n">new_exception</span><span class="o">.</span><span class="n">__context__</span> <span class="o">=</span> <span class="n">exception</span><span class="o">.</span><span class="n">__context__</span>
+                <span class="n">exception</span> <span class="o">=</span> <span class="n">new_exception</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">exception</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../constants/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              constants
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../logging/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              logging
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

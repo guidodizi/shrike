@@ -1,0 +1,2497 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>prepare - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#prepare" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              prepare
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          prepare
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        prepare
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare" class="md-nav__link">
+    shrike.build.commands.prepare
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare" class="md-nav__link">
+    Prepare
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.all_files_in_snapshot" class="md-nav__link">
+    all_files_in_snapshot()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.build_all_components" class="md-nav__link">
+    build_all_components()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.compliance_validation" class="md-nav__link">
+    compliance_validation()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.component_is_active" class="md-nav__link">
+    component_is_active()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.create_catalog_files" class="md-nav__link">
+    create_catalog_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.create_catalog_files_for_aether" class="md-nav__link">
+    create_catalog_files_for_aether()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.create_catalog_files_for_aml" class="md-nav__link">
+    create_catalog_files_for_aml()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.customized_validation" class="md-nav__link">
+    customized_validation()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.find_component_specification_files" class="md-nav__link">
+    find_component_specification_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.find_component_specification_files_using_all" class="md-nav__link">
+    find_component_specification_files_using_all()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.find_component_specification_files_using_smart" class="md-nav__link">
+    find_component_specification_files_using_smart()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.folder_path" class="md-nav__link">
+    folder_path()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.get_compliant_commit_corresponding_to_pull_request" class="md-nav__link">
+    get_compliant_commit_corresponding_to_pull_request()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.get_modified_files" class="md-nav__link">
+    get_modified_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.get_previous_compliant_commit_corresponding_to_pull_request" class="md-nav__link">
+    get_previous_compliant_commit_corresponding_to_pull_request()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.identify_repo_and_branches" class="md-nav__link">
+    identify_repo_and_branches()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.infer_active_components_from_modified_files" class="md-nav__link">
+    infer_active_components_from_modified_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.is_in_additional_includes" class="md-nav__link">
+    is_in_additional_includes()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.is_in_subfolder" class="md-nav__link">
+    is_in_subfolder()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.run_with_config" class="md-nav__link">
+    run_with_config()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.validate_all_components" class="md-nav__link">
+    validate_all_components()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare" class="md-nav__link">
+    shrike.build.commands.prepare
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare" class="md-nav__link">
+    Prepare
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.all_files_in_snapshot" class="md-nav__link">
+    all_files_in_snapshot()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.build_all_components" class="md-nav__link">
+    build_all_components()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.compliance_validation" class="md-nav__link">
+    compliance_validation()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.component_is_active" class="md-nav__link">
+    component_is_active()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.create_catalog_files" class="md-nav__link">
+    create_catalog_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.create_catalog_files_for_aether" class="md-nav__link">
+    create_catalog_files_for_aether()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.create_catalog_files_for_aml" class="md-nav__link">
+    create_catalog_files_for_aml()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.customized_validation" class="md-nav__link">
+    customized_validation()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.find_component_specification_files" class="md-nav__link">
+    find_component_specification_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.find_component_specification_files_using_all" class="md-nav__link">
+    find_component_specification_files_using_all()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.find_component_specification_files_using_smart" class="md-nav__link">
+    find_component_specification_files_using_smart()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.folder_path" class="md-nav__link">
+    folder_path()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.get_compliant_commit_corresponding_to_pull_request" class="md-nav__link">
+    get_compliant_commit_corresponding_to_pull_request()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.get_modified_files" class="md-nav__link">
+    get_modified_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.get_previous_compliant_commit_corresponding_to_pull_request" class="md-nav__link">
+    get_previous_compliant_commit_corresponding_to_pull_request()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.identify_repo_and_branches" class="md-nav__link">
+    identify_repo_and_branches()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.infer_active_components_from_modified_files" class="md-nav__link">
+    infer_active_components_from_modified_files()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.is_in_additional_includes" class="md-nav__link">
+    is_in_additional_includes()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.is_in_subfolder" class="md-nav__link">
+    is_in_subfolder()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.run_with_config" class="md-nav__link">
+    run_with_config()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.build.commands.prepare.Prepare.validate_all_components" class="md-nav__link">
+    validate_all_components()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/build/prepare.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="prepare">Prepare</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="shrike.build.commands.prepare"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare">
+        <code>Prepare</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.all_files_in_snapshot">
+<code class="highlight language-python"><span class="n">all_files_in_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manifest</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return a list of all normalized files in the snapshot. The input
+(<code>manifest</code>) is assumed to be some file, whether AML-style component
+spec or Aether-style auto-approval manifest, in the "root" of the
+snapshot.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">all_files_in_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manifest</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of all normalized files in the snapshot. The input</span>
+<span class="sd">    (`manifest`) is assumed to be some file, whether AML-style component</span>
+<span class="sd">    spec or Aether-style auto-approval manifest, in the &quot;root&quot; of the</span>
+<span class="sd">    snapshot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_path</span><span class="p">(</span><span class="n">manifest</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Absolute path for current component is: &quot;</span> <span class="o">+</span> <span class="n">folder_path</span><span class="p">)</span>
+
+    <span class="c1"># Generate a list of all files in this components folder (including subdirectories)</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Make sure we pick up Linux-style &quot;hidden&quot; files like .amlignore and</span>
+    <span class="c1"># hidden &quot;directories&quot;, as well as hidden files in hidden directories.</span>
+    <span class="c1"># https://stackoverflow.com/a/65205404</span>
+    <span class="c1"># https://stackoverflow.com/a/41447012</span>
+    <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">file_paths</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder_path</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+            <span class="n">normalized_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="n">rv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">normalized_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rv</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.build_all_components">
+<code class="highlight language-python"><span class="n">build_all_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>For each component specification file, run <code>az ml component build</code>,
+and register the status (+ register error if build failed). Returns the
+list of "built" component files.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build_all_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For each component specification file, run `az ml component build`,</span>
+<span class="sd">    and register the status (+ register error if build failed). Returns the</span>
+<span class="sd">    list of &quot;built&quot; component files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="n">rv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;.build&quot;</span> <span class="o">/</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">build_component_success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_azure_cli_command</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;ml component build --file </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">build_component_success</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Component </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2"> is built.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error when building component </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rv</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.compliance_validation">
+<code class="highlight language-python"><span class="n">compliance_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function checks whether a given component spec YAML file
+meets all the requirements for running in the compliant AML.
+Specifically, it checks (1) whether the image URL is compliant；
+（2）whether the pip index-url is compliant; (3) whether
+"default" is only Conda channel</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compliance_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function checks whether a given component spec YAML file</span>
+<span class="sd">    meets all the requirements for running in the compliant AML.</span>
+<span class="sd">    Specifically, it checks (1) whether the image URL is compliant；</span>
+<span class="sd">    （2）whether the pip index-url is compliant; (3) whether</span>
+<span class="sd">    &quot;default&quot; is only Conda channel</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">spec_file</span><span class="p">:</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">(</span><span class="n">typ</span><span class="o">=</span><span class="s2">&quot;safe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">spec_file</span><span class="p">)</span>
+
+    <span class="c1"># Check whether the docker image URL is compliant</span>
+    <span class="n">image_url</span> <span class="o">=</span> <span class="n">jsonpath_ng</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;$.environment.docker.image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_url</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">urlparse</span><span class="p">(</span><span class="n">image_url</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="ow">not</span> <span class="ow">in</span> <span class="n">ALLOWED_CONTAINER_REGISTRIES</span>
+        <span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The container base image in </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2"> is not allowed for compliant run.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># check whether the package feed is compliant</span>
+    <span class="n">package_dependencies</span><span class="p">,</span> <span class="n">conda_channels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dependencies_and_channels</span><span class="p">(</span>
+        <span class="n">component</span><span class="o">=</span><span class="n">component</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">package_dependencies</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">dependency</span> <span class="ow">in</span> <span class="n">package_dependencies</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^--index-url&quot;</span><span class="p">,</span> <span class="n">dependency</span><span class="p">)</span> <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+                <span class="s2">&quot;^--extra-index-url&quot;</span><span class="p">,</span> <span class="n">dependency</span>
+            <span class="p">):</span>
+                <span class="k">if</span> <span class="n">dependency</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ALLOWED_PACKAGE_FEEDS</span><span class="p">:</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The package feed in </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2"> is not allowed for compliant run.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;--index-url </span><span class="si">{</span><span class="n">ALLOWED_PACKAGE_FEEDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">package_dependencies</span>
+            <span class="ow">and</span> <span class="sa">f</span><span class="s2">&quot;--extra-index-url </span><span class="si">{</span><span class="n">ALLOWED_PACKAGE_FEEDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="ow">not</span> <span class="ow">in</span> <span class="n">package_dependencies</span>
+        <span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The Polymer package feed is not found in environment of </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Check whether &quot;default&quot; is only Conda channel</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">conda_channels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">conda_channels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">conda_channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span>
+    <span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Only the default conda channel is allowed for compliant run.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.component_is_active">
+<code class="highlight language-python"><span class="n">component_is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">modified_files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns True if any of the 'modified_files' potentially affects the 'component' (i.e. if it is directly in one of the 'component' subfolders, or if it is covered by the additional_includes files). If the component has been deleted, returns False.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">component_is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">modified_files</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns True if any of the &#39;modified_files&#39; potentially affects the &#39;component&#39; (i.e. if it is directly in one of the &#39;component&#39; subfolders, or if it is covered by the additional_includes files). If the component has been deleted, returns False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Assessing whether component &#39;&quot;</span> <span class="o">+</span> <span class="n">component</span> <span class="o">+</span> <span class="s2">&quot;&#39; is active...&quot;</span><span class="p">)</span>
+    <span class="c1"># Let&#39;s first take care of the case where the component has been deleted</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1"># Let&#39;s grab the contents of the additional_includes file if it exists.</span>
+    <span class="c1"># First, we figure out the name of the additional_includes file, based on the component name</span>
+    <span class="n">component_name_without_extension</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.yaml&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Then, we construct the path of the additional_includes file</span>
+    <span class="n">component_additional_includes_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+        <span class="n">component_name_without_extension</span> <span class="o">+</span> <span class="s2">&quot;.additional_includes&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># And we finally load it</span>
+    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">component_additional_includes_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
+            <span class="n">component_additional_includes_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">component_additional_includes</span><span class="p">:</span>
+            <span class="n">component_additional_includes_contents</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">component_additional_includes</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">component_additional_includes_contents</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># make the paths in the additional_includes file absolute</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">component_additional_includes_contents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">line_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">component_additional_includes_contents</span><span class="p">)):</span>
+            <span class="n">component_additional_includes_contents</span><span class="p">[</span><span class="n">line_number</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+                <span class="n">Path</span><span class="p">(</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+                        <span class="n">component_additional_includes_contents</span><span class="p">[</span><span class="n">line_number</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span>
+                            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+            <span class="p">)</span>
+    <span class="c1"># loop over all modified files; if current file is in subfolder of component or covered by additional includes, return True</span>
+    <span class="k">for</span> <span class="n">modified_file</span> <span class="ow">in</span> <span class="n">modified_files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_in_subfolder</span><span class="p">(</span>
+            <span class="n">modified_file</span><span class="p">,</span> <span class="n">component</span>
+        <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_in_additional_includes</span><span class="p">(</span>
+            <span class="n">modified_file</span><span class="p">,</span> <span class="n">component_additional_includes_contents</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.create_catalog_files">
+<code class="highlight language-python"><span class="n">create_catalog_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Create the appropriate kind of catalog file(s), using the configured
+method ("aml" or "aether").</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_catalog_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create the appropriate kind of catalog file(s), using the configured</span>
+<span class="sd">    method (&quot;aml&quot; or &quot;aether&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">signing_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">signing_mode</span>
+
+    <span class="k">if</span> <span class="n">signing_mode</span> <span class="o">==</span> <span class="s2">&quot;aml&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_catalog_files_for_aml</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">signing_mode</span> <span class="o">==</span> <span class="s2">&quot;aether&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_catalog_files_for_aether</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid signing_mode provided: &#39;</span><span class="si">{</span><span class="n">signing_mode</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.create_catalog_files_for_aether">
+<code class="highlight language-python"><span class="n">create_catalog_files_for_aether</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Create Aether-friendly .cat files, by first creating a CDF file, then
+finding and running <code>makecat.exe</code> to create the catalog file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">create_catalog_files_for_aether</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create Aether-friendly .cat files, by first creating a CDF file, then</span>
+<span class="sd">        finding and running `makecat.exe` to create the catalog file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">makecat_default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">makecat_default</span>
+        <span class="n">makecat_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">makecat_directory</span>
+        <span class="n">makecat</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">makecat_directory</span><span class="p">,</span> <span class="n">makecat_default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">makecat</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Default makecat location </span><span class="si">{</span><span class="n">makecat</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">makecat_directory</span><span class="p">)</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;makecat.exe&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s2">&quot;x64&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">makecat</span> <span class="o">=</span> <span class="n">path</span>
+                    <span class="k">break</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Makecat location: </span><span class="si">{</span><span class="n">makecat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+
+            <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">directory</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">cat_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.cat&quot;</span>
+            <span class="n">cdf_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.cdf&quot;</span>
+            <span class="n">path_to_cdf</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">cdf_name</span><span class="p">)</span>
+
+            <span class="n">cdf_contents</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;[CatalogHeader]</span>
+<span class="s2">Name=</span><span class="si">{</span><span class="n">cat_name</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">PublicVersion=0x0000001</span>
+<span class="s2">EncodingType=0x00010001</span>
+<span class="s2">PageHashes=true</span>
+<span class="s2">CATATTR1=0x00010001:OSAttr:2:6.2</span>
+<span class="s2">[CatalogFiles]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+            <span class="n">files_in_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_files_in_snapshot</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="n">hash_lines</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;&lt;HASH&gt;</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">files_in_module</span><span class="p">)</span>
+            <span class="n">all_hashes</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hash_lines</span><span class="p">)</span>
+            <span class="n">cdf_contents</span> <span class="o">+=</span> <span class="n">all_hashes</span>
+
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CDF file contents:</span><span class="se">\n</span><span class="si">{</span><span class="n">cdf_contents</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_cdf</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cdf_contents</span><span class="p">)</span>
+
+            <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">makecat</span><span class="p">),</span> <span class="n">path_to_cdf</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Creating Aether catalog files for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is successful.&quot;</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">cat_name</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Error when creating Aether catalog files for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Removing </span><span class="si">{</span><span class="n">cdf_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path_to_cdf</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finish creating aether catalog files for </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.create_catalog_files_for_aml">
+<code class="highlight language-python"><span class="n">create_catalog_files_for_aml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Create AML-friendly catalog.json and catalog.json.sig files, using
+SHA-256 hash.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_catalog_files_for_aml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create AML-friendly catalog.json and catalog.json.sig files, using</span>
+<span class="sd">    SHA-256 hash.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># For each component spec file in the input list, we&#39;ll do the following...</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing file </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">component_folder_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_path</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="c1"># remove catalog files if already present</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Deleting old catalog files if present&quot;</span><span class="p">)</span>
+        <span class="n">delete_two_catalog_files</span><span class="p">(</span><span class="n">component_folder_path</span><span class="p">)</span>
+
+        <span class="n">files_for_catalog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_files_in_snapshot</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The following list of files will be added to the catalog.&quot;</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">files_for_catalog</span><span class="p">)</span>
+
+        <span class="c1"># Prepare the catlog stub: {&#39;HashAlgorithm&#39;: &#39;SHA256&#39;, &#39;CatalogItems&#39;: {}}</span>
+        <span class="n">catalog</span> <span class="o">=</span> <span class="n">create_catalog_stub</span><span class="p">()</span>
+
+        <span class="c1"># Add an entry to the catalog for each file</span>
+        <span class="k">for</span> <span class="n">file_for_catalog</span> <span class="ow">in</span> <span class="n">files_for_catalog</span><span class="p">:</span>
+            <span class="n">catalog</span> <span class="o">=</span> <span class="n">add_file_to_catalog</span><span class="p">(</span>
+                <span class="n">file_for_catalog</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">component_folder_path</span>
+            <span class="p">)</span>
+
+        <span class="c1"># order the CatalogItems dictionary</span>
+        <span class="n">catalog</span><span class="p">[</span><span class="s2">&quot;CatalogItems&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+            <span class="nb">sorted</span><span class="p">(</span><span class="n">catalog</span><span class="p">[</span><span class="s2">&quot;CatalogItems&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Write the 2 catalog files</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="n">write_two_catalog_files</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">component_folder_path</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished creating catalog files.&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.customized_validation">
+<code class="highlight language-python"><span class="n">customized_validation</span><span class="p">(</span><span class="n">jsonpath</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-staticmethod"><code>staticmethod</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function leverages regular expressionm atching and
+JSONPath expression to enforce user-provided "strict"
+validation on Azure ML components</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span> <span class="nf">customized_validation</span><span class="p">(</span><span class="n">jsonpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">regex</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function leverages regular expressionm atching and</span>
+<span class="sd">    JSONPath expression to enforce user-provided &quot;strict&quot;</span>
+<span class="sd">    validation on Azure ML components</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">spec_file</span><span class="p">:</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">(</span><span class="n">typ</span><span class="o">=</span><span class="s2">&quot;safe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">spec_file</span><span class="p">)</span>
+
+    <span class="n">parsed_patterns</span> <span class="o">=</span> <span class="n">jsonpath_ng</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">jsonpath</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+    <span class="n">validation_success</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parsed_patterns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">parsed_pattern</span> <span class="ow">in</span> <span class="n">parsed_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">parsed_pattern</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The parsed pattern </span><span class="si">{</span><span class="n">parsed_pattern</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2"> doesn&#39;t match the regular expression </span><span class="si">{</span><span class="n">regex</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="n">validation_success</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">validation_success</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.find_component_specification_files">
+<code class="highlight language-python"><span class="n">find_component_specification_files</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Find the list of "active" component specification files using the
+configured method ("all" or "smart").</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_component_specification_files</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the list of &quot;active&quot; component specification files using the</span>
+<span class="sd">    configured method (&quot;all&quot; or &quot;smart&quot;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">activation_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">activation_method</span>
+
+    <span class="k">if</span> <span class="n">activation_method</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_component_specification_files_using_all</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">activation_method</span> <span class="o">==</span> <span class="s2">&quot;smart&quot;</span><span class="p">:</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_component_specification_files_using_smart</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Invalid activation_method provided: &#39;</span><span class="si">{</span><span class="n">activation_method</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rv</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.find_component_specification_files_using_all">
+<code class="highlight language-python"><span class="n">find_component_specification_files_using_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Find all component specification files in the configured working
+directory matching the configured glob. Return the absolute paths
+of these files in the format of a list of string.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_component_specification_files_using_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find all component specification files in the configured working</span>
+<span class="sd">    directory matching the configured glob. Return the absolute paths</span>
+<span class="sd">    of these files in the format of a list of string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">working_directory</span>
+    <span class="n">all_spec_yaml_files_absolute_paths</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">absolute</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">component_specification_glob</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">all_spec_yaml_files_absolute_paths</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.find_component_specification_files_using_smart">
+<code class="highlight language-python"><span class="n">find_component_specification_files_using_smart</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns the list of components (as a list of absolute paths) potentially affected by the latest commit.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">find_component_specification_files_using_smart</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns the list of components (as a list of absolute paths) potentially affected by the latest commit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;Determining which components are potentially affected by the current change.&quot;</span>
+    <span class="p">)</span>
+    <span class="p">[</span><span class="n">repo</span><span class="p">,</span> <span class="n">current_branch</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">identify_repo_and_branches</span><span class="p">()</span>
+    <span class="n">modified_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modified_files</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">current_branch</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">)</span>
+    <span class="n">active_components</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">infer_active_components_from_modified_files</span><span class="p">(</span>
+        <span class="n">modified_files</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">active_components</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.folder_path">
+<code class="highlight language-python"><span class="n">folder_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return the normalized path of the directory containing a file.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">folder_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the normalized path of the directory containing a file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.get_compliant_commit_corresponding_to_pull_request">
+<code class="highlight language-python"><span class="n">get_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function will return the most recent commit in the repo that truly corresponds to the triggered build. It is identified thanks to the 'Build.SourceVersionMessage' DevOps environment variable (see https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml) that contains the true commit message. This is used to address the race condition occuring when a commit sneaks in before the "prepare" step was run on the previous commit.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will return the most recent commit in the repo that truly corresponds to the triggered build. It is identified thanks to the &#39;Build.SourceVersionMessage&#39; DevOps environment variable (see https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&amp;tabs=yaml) that contains the true commit message. This is used to address the race condition occuring when a commit sneaks in before the &quot;prepare&quot; step was run on the previous commit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># this is the true commit message corresponding to the PR that triggered the build</span>
+    <span class="n">true_commit_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_true_commit_message</span><span class="p">()</span>
+    <span class="c1"># this is the most recent commit </span>
+    <span class="n">current_commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">refs</span><span class="p">[</span><span class="n">compliant_branch</span><span class="p">]</span><span class="o">.</span><span class="n">commit</span>
+    <span class="c1"># if the most recent commit corresponds to the true commit message, then return it</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">true_commit_message</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">current_commit</span><span class="o">.</span><span class="n">summary</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">current_commit</span>
+    <span class="c1"># otherwise, let&#39;s iterate through the parents until we find it</span>
+    <span class="n">candidate_commit</span> <span class="o">=</span> <span class="n">current_commit</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">candidate_commit</span><span class="o">.</span><span class="n">iter_parents</span><span class="p">():</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">true_commit_message</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">summary</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">c</span>
+    <span class="c1"># if the corresponding commit cannot be found, return the most recent one and log a warning</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Could not find the in the git repo the commit that triggered this PR. Returning the most recent but beware, the &#39;smart&#39; mode likely will not work properly.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">current_commit</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.get_modified_files">
+<code class="highlight language-python"><span class="n">get_modified_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">current_branch</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns the paths of files that have been modified. 3 scenarios are supported.</p>
+<p>1/ 'Build - before Merge'; when the 'prepare' command is run as part of a build, but before the actual merge (in this case, the name of the current branch starts with 'refs/pull/' - this is the default Azure DevOps behavior).</p>
+<p>2/ 'Build - after Merge'; when the 'prepare' command is run as part of a build, after the actual merge (in this case, the name of the current branch is the same as the name of the compliant branch).</p>
+<p>3/ 'Manual'; when the prepare command is run manually (typically before publishing the PR).</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_modified_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">current_branch</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns the paths of files that have been modified. 3 scenarios are supported.\n</span>
+<span class="sd">    1/ &#39;Build - before Merge&#39;; when the &#39;prepare&#39; command is run as part of a build, but before the actual merge (in this case, the name of the current branch starts with &#39;refs/pull/&#39; - this is the default Azure DevOps behavior).\n</span>
+<span class="sd">    2/ &#39;Build - after Merge&#39;; when the &#39;prepare&#39; command is run as part of a build, after the actual merge (in this case, the name of the current branch is the same as the name of the compliant branch).\n</span>
+<span class="sd">    3/ &#39;Manual&#39;; when the prepare command is run manually (typically before publishing the PR).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># Grab the diff differently depending on the scenario</span>
+    <span class="k">if</span> <span class="n">current_branch</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;refs/heads/&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">compliant_branch</span><span class="p">:</span>
+        <span class="c1"># &#39;Build - after Merge&#39; case: we will take the diff between the</span>
+        <span class="c1"># tree of the latest commit to the compliant branch, and the tree</span>
+        <span class="c1"># of the previous commit to the compliant branch corresponding to a</span>
+        <span class="c1"># PR (we assume the commit summary starts with &#39;Merged PR&#39;)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;We are in the &#39;Build - after Merge&#39; case (the current branch is the compliant branch).&quot;</span>
+        <span class="p">)</span>
+        <span class="n">current_commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_commit_info</span><span class="p">(</span><span class="n">current_commit</span><span class="p">,</span> <span class="s2">&quot;Current commit to compliant branch&quot;</span><span class="p">)</span>
+        <span class="n">previous_commit</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_previous_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span>
+                <span class="n">current_commit</span><span class="p">,</span>
+                <span class="n">consider_current_commit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_commit_info</span><span class="p">(</span>
+            <span class="n">previous_commit</span><span class="p">,</span> <span class="s2">&quot;Previous PR commit to compliant branch&quot;</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">current_branch</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;refs/pull/&quot;</span><span class="p">):</span>
+        <span class="c1"># &#39;Build - before Merge&#39;: we will take the diff between the tree of</span>
+        <span class="c1"># the current commit, and the tree of the previous commit to the</span>
+        <span class="c1"># compliant branch corresponding to a PR (we assume the commit</span>
+        <span class="c1"># summary starts with &#39;Merged PR&#39;)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;We are in the &#39;Build - before Merge&#39; case (the current branch is not the compliant branch and its name starts with &#39;refs/pull/&#39;).&quot;</span>
+        <span class="p">)</span>
+        <span class="n">current_commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_commit_info</span><span class="p">(</span><span class="n">current_commit</span><span class="p">,</span> <span class="s2">&quot;Current commit to current branch&quot;</span><span class="p">)</span>
+        <span class="n">latest_commit_to_compliant_branch</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">refs</span><span class="p">[</span>
+            <span class="n">compliant_branch</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">commit</span>
+        <span class="n">previous_commit</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_previous_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span>
+                <span class="n">latest_commit_to_compliant_branch</span><span class="p">,</span>
+                <span class="n">consider_current_commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_commit_info</span><span class="p">(</span>
+            <span class="n">previous_commit</span><span class="p">,</span> <span class="s2">&quot;Previous PR commit to compliant branch&quot;</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># &#39;Manual&#39; Case: we will take the diff between the current branch</span>
+        <span class="c1"># and the compliant branch (we&#39;re assuming the compliant branch is</span>
+        <span class="c1"># locally up to date here)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;We are in the &#39;Manual&#39; case (the current branch is NOT the compliant branch and its name does not start with &#39;refs/pull/&#39;).&quot;</span>
+        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">current_commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span>
+                <span class="n">current_branch</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">commit</span>  <span class="c1"># this won&#39;t work when running the Manual case from the DevOps portal, but the below will</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="n">current_commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_commit_info</span><span class="p">(</span><span class="n">current_commit</span><span class="p">,</span> <span class="s2">&quot;Current commit to current branch&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">previous_commit</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">heads</span><span class="p">[</span>
+                <span class="n">compliant_branch</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">commit</span>  <span class="c1"># this won&#39;t work when running the Manual case from the DevOps portal, but the below will</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+            <span class="n">latest_commit_to_compliant_branch</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">refs</span><span class="p">[</span>
+                <span class="n">compliant_branch</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">commit</span>
+            <span class="n">previous_commit</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_previous_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span>
+                    <span class="n">latest_commit_to_compliant_branch</span><span class="p">,</span>
+                    <span class="n">consider_current_commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_commit_info</span><span class="p">(</span><span class="n">previous_commit</span><span class="p">,</span> <span class="s2">&quot;Previous commit to compliant branch&quot;</span><span class="p">)</span>
+    <span class="c1"># take the actual diff</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">current_commit</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">previous_commit</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+    <span class="c1"># let&#39;s build a set with the paths of modified files found in the diff object</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Working directory: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">working_directory</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repo.working_dir: &quot;</span> <span class="o">+</span> <span class="n">repo</span><span class="o">.</span><span class="n">working_dir</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repo.working_tree_dir: &quot;</span> <span class="o">+</span> <span class="n">repo</span><span class="o">.</span><span class="n">working_tree_dir</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;repo.git_dir: &quot;</span> <span class="o">+</span> <span class="n">repo</span><span class="o">.</span><span class="n">git_dir</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">diff</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;d.a_path: &quot;</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">a_path</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Path(d.a_path).absolute(): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">a_path</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Path(d.a_path).resolve(): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">a_path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()))</span>
+        <span class="n">r_a</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">git_dir</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">a_path</span><span class="p">))</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">r_a</span><span class="p">)</span>
+        <span class="n">r_b</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">git_dir</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="n">Path</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">b_path</span><span class="p">))</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">r_b</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The list of modified files is:&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.get_previous_compliant_commit_corresponding_to_pull_request">
+<code class="highlight language-python"><span class="n">get_previous_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latest_commit</span><span class="p">,</span> <span class="n">consider_current_commit</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function will return the previous commit in the <code>repo</code>'s <code>compliant_branch_name</code> corresponding to a PR (i.e. that starts with "Merged PR").
+If <code>consider_current_commit</code> is set to True, the <code>latest_commit</code> will be considered. If set to false, only previous commits will be considered.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_previous_compliant_commit_corresponding_to_pull_request</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">latest_commit</span><span class="p">,</span> <span class="n">consider_current_commit</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will return the previous commit in the `repo`&#39;s `compliant_branch_name` corresponding to a PR (i.e. that starts with &quot;Merged PR&quot;).</span>
+<span class="sd">    If `consider_current_commit` is set to True, the `latest_commit` will be considered. If set to false, only previous commits will be considered.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">target_string</span> <span class="o">=</span> <span class="s2">&quot;Merged PR&quot;</span>
+    <span class="k">if</span> <span class="n">consider_current_commit</span> <span class="ow">and</span> <span class="n">latest_commit</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">target_string</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">latest_commit</span>
+    <span class="n">previous_commit</span> <span class="o">=</span> <span class="n">latest_commit</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">previous_commit</span><span class="o">.</span><span class="n">iter_parents</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">target_string</span><span class="p">):</span>
+            <span class="n">previous_commit</span> <span class="o">=</span> <span class="n">c</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">previous_commit</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.identify_repo_and_branches">
+<code class="highlight language-python"><span class="n">identify_repo_and_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns the current repository, along with the name of the current and compliant branches [repo, current_branch, compliant_branch]. Throws if no repo can be found.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">identify_repo_and_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns the current repository, along with the name of the current and compliant branches [repo, current_branch, compliant_branch]. Throws if no repo can be found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># identify the repository</span>
+    <span class="n">curr_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">working_directory</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">curr_path</span><span class="p">,</span> <span class="n">search_parent_directories</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found a valid repository in &quot;</span> <span class="o">+</span> <span class="n">repo</span><span class="o">.</span><span class="n">git_dir</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">InvalidGitRepositoryError</span><span class="p">,</span> <span class="n">NoSuchPathError</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">curr_path</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot; or its parents do not contain a valid repo path or cannot be accessed.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">current_branch</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="n">repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">ref</span>
+        <span class="p">)</span>  <span class="c1"># when running from our build the repo head is detached so this will throw an exception</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">current_branch</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;BUILD_SOURCEBRANCH&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;GITHUB_REF&quot;</span>
+        <span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The current branch is: &#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_branch</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1"># Identify the compliant branch</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">compliant_branch</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;^refs/heads/&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">compliant_branch</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;The name of the compliant branch found in the config file should start with &#39;^refs/heads/&#39; and end with &#39;$&#39;. Currently it is: &#39;&quot;</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">compliant_branch</span>
+            <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">compliant_branch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">compliant_branch</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;^refs/heads/&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[</span>
+            <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span>
+        <span class="p">]</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The compliant branch is: &#39;&quot;</span> <span class="o">+</span> <span class="n">compliant_branch</span> <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">repo</span><span class="p">,</span> <span class="n">current_branch</span><span class="p">,</span> <span class="n">compliant_branch</span><span class="p">]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.infer_active_components_from_modified_files">
+<code class="highlight language-python"><span class="n">infer_active_components_from_modified_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modified_files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns the list of components (as a list of directories paths) potentially affected by changes in the <code>modified_files</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">infer_active_components_from_modified_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modified_files</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns the list of components (as a list of directories paths) potentially affected by changes in the `modified_files`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># We will go over components one by one</span>
+    <span class="n">all_components_in_repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_component_specification_files_using_all</span><span class="p">()</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;List of all components in repo:&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">all_components_in_repo</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">all_components_in_repo</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_is_active</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">modified_files</span><span class="p">):</span>
+            <span class="n">rv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+    <span class="c1"># No need to dedup rv since we are only considering components once</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The active components are:&quot;</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">rv</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rv</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.is_in_additional_includes">
+<code class="highlight language-python"><span class="n">is_in_additional_includes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modified_file</span><span class="p">,</span> <span class="n">component_additional_includes_contents</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns True if 'modified_file' is covered by the additional_includes file 'component_additional_includes_contents'.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_in_additional_includes</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">modified_file</span><span class="p">,</span> <span class="n">component_additional_includes_contents</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns True if &#39;modified_file&#39; is covered by the additional_includes file &#39;component_additional_includes_contents&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># first tackle the trivial case of no additional_includes file</span>
+    <span class="k">if</span> <span class="n">component_additional_includes_contents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;The component&#39;s additional_includes file is empty, returning False.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1"># now the regular scenario</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">component_additional_includes_contents</span><span class="p">:</span>
+        <span class="c1"># when the line from additional_includes is a file, we directly chech its path against that of modified_file</span>
+        <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">modified_file</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span>
+                <span class="n">Path</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+            <span class="p">):</span>  <span class="c1"># can&#39;t use &#39;samefile&#39; here because modified_file is not guaranteed to exist, we resolve the path and do basic == test</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;&#39;&quot;</span>
+                    <span class="o">+</span> <span class="n">modified_file</span>
+                    <span class="o">+</span> <span class="s2">&quot; is directly listed in the additional_includes file.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># slightly more complicated case: when the line in additional_includes is a directory, we can just call the is_in_subfolder function</span>
+        <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_in_subfolder</span><span class="p">(</span><span class="n">modified_file</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;&#39;&quot;</span>
+                    <span class="o">+</span> <span class="n">modified_file</span>
+                    <span class="o">+</span> <span class="s2">&quot; is in one of the directories listed in the additional_includes file.&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;&#39;&quot;</span>
+        <span class="o">+</span> <span class="n">modified_file</span>
+        <span class="o">+</span> <span class="s2">&quot; is NOT referenced by the additional_includes file (neither directly nor indirectly).&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.is_in_subfolder">
+<code class="highlight language-python"><span class="n">is_in_subfolder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modified_file</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>This function returns True if 'modified_file' is in a subfolder of 'component' ('component' can be either the path to a file, or a directory). If the component has been deleted, returns False.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_in_subfolder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modified_file</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns True if &#39;modified_file&#39; is in a subfolder of &#39;component&#39; (&#39;component&#39; can be either the path to a file, or a directory). If the component has been deleted, returns False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Let&#39;s first take care of the case where the component has been deleted</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">component</span> <span class="o">+</span> <span class="s2">&quot;&#39; does not exist, returning False.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1"># Case where the component has not been deleted</span>
+    <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">modified_file</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">samefile</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;&#39;&quot;</span>
+                        <span class="o">+</span> <span class="n">modified_file</span>
+                        <span class="o">+</span> <span class="s2">&quot; is in a subfolder of &#39;&quot;</span>
+                        <span class="o">+</span> <span class="n">component</span>
+                        <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">samefile</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s2">&quot;&#39;&quot;</span>
+                        <span class="o">+</span> <span class="n">modified_file</span>
+                        <span class="o">+</span> <span class="s2">&quot; is in a subfolder of &#39;&quot;</span>
+                        <span class="o">+</span> <span class="n">component</span>
+                        <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="n">modified_file</span> <span class="o">+</span> <span class="s2">&quot; is NOT in a subfolder of &#39;&quot;</span> <span class="o">+</span> <span class="n">component</span> <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.run_with_config">
+<code class="highlight language-python"><span class="n">run_with_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Run the subclasses command with the specified configuration object.
+Before this method is invoked, there is no guarantee that <code>self.config</code>
+will be populated; after it is invoked, that is guaranteed.
+Implementations of this method should NOT mutate the logging tree in
+any way. They should also NOT raise any exceptions; rather they should
+call the <code>register_error</code> method, which will ensure non-zero exit code.
+Implementations can raise specific "status information" (e.g., a
+component is not "active") by calling <code>register_component_status</code>.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">run_with_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running component preparation logic.&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">telemetry_logging</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="s2">&quot;prepare&quot;</span><span class="p">)</span>
+
+    <span class="n">component_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_component_specification_files</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">suppress_adding_repo_pr_tags</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">component_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_repo_and_last_pr_to_tags</span><span class="p">(</span><span class="n">component_files</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;`add_repo_and_last_pr_to_tags` not successful. Please make sure your component files are in Git. Otherwise, please set `suppress_adding_repo_pr_tags` to True.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">signing_mode</span> <span class="o">==</span> <span class="s2">&quot;aml&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_component_cli_installed</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attach_workspace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_all_components</span><span class="p">(</span><span class="n">component_files</span><span class="p">)</span>
+        <span class="n">built_component_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_all_components</span><span class="p">(</span><span class="n">component_files</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">built_component_files</span> <span class="o">=</span> <span class="n">component_files</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">create_catalog_files</span><span class="p">(</span><span class="n">built_component_files</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_create_requirements_files</span><span class="p">(</span><span class="n">component_files</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.build.commands.prepare.Prepare.validate_all_components">
+<code class="highlight language-python"><span class="n">validate_all_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>For each component specification file, run <code>az ml component validate</code>,
+run compliance and customized validation if enabled,
+and register the status (+ register error if validation failed).</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/build/commands/prepare.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_all_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For each component specification file, run `az ml component validate`,</span>
+<span class="sd">    run compliance and customized validation if enabled,</span>
+<span class="sd">    and register the status (+ register error if validation failed).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">validate_component_success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_azure_cli_command</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;ml component validate --file </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="n">compliance_validation_success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">customized_validation_success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">enable_component_validation</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running compliance validation on </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">compliance_validation_success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compliance_validation</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">component_validation</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running customized validation on </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">jsonpath</span><span class="p">,</span> <span class="n">regex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">component_validation</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">customized_validation_success</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">customized_validation_success</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">customized_validation</span><span class="p">(</span><span class="n">jsonpath</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+                        <span class="k">else</span> <span class="kc">False</span>
+                    <span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">validate_component_success</span>
+            <span class="ow">and</span> <span class="n">compliance_validation_success</span>
+            <span class="ow">and</span> <span class="n">customized_validation_success</span>
+        <span class="p">):</span>
+            <span class="c1"># If the az ml validation succeeds, we continue to check whether</span>
+            <span class="c1"># the &quot;code&quot; snapshot parameter is specified in the spec file</span>
+            <span class="c1"># https://componentsdk.z22.web.core.windows.net/components/component-spec-topics/code-snapshot.html</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">spec_file</span><span class="p">:</span>
+                <span class="n">spec</span> <span class="o">=</span> <span class="n">YAML</span><span class="p">(</span><span class="n">typ</span><span class="o">=</span><span class="s2">&quot;safe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">spec_file</span><span class="p">)</span>
+            <span class="n">spec_code</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">spec_code</span> <span class="ow">and</span> <span class="n">spec_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;./&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_component_status</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;validate&quot;</span><span class="p">,</span> <span class="s2">&quot;failed&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_error</span><span class="p">(</span>
+                    <span class="s2">&quot;Code snapshot parameter is not supported. Please use .additional_includes for your component.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Component </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2"> is valid.&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_component_status</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;validate&quot;</span><span class="p">,</span> <span class="s2">&quot;succeeded&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_component_status</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;validate&quot;</span><span class="p">,</span> <span class="s2">&quot;failed&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error when validating component </span><span class="si">{</span><span class="n">component</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../rfc/strict-component-validation/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Component validation
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../register/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              register
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

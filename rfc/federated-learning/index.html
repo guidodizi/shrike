@@ -1,0 +1,1294 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>API design for Federated Learning - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-design-for-federated-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API design for Federated Learning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-structure" class="md-nav__link">
+    Code structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#federated-learning-workflow" class="md-nav__link">
+    Federated learning workflow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-submission-script-submitpy" class="md-nav__link">
+    Main submission script: submit.py
+  </a>
+  
+    <nav class="md-nav" aria-label="Main submission script: submit.py">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#design-1-shrike-handles-the-loop" class="md-nav__link">
+    Design 1: Shrike handles the loop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-2-explicitly-writing-the-loop-by-user" class="md-nav__link">
+    Design 2: explicitly writing the loop by user
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply_federated_runsettings-method" class="md-nav__link">
+    apply_federated_runsettings() method
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compute-settings-eyesoffyaml" class="md-nav__link">
+    Compute settings eyesoff.yaml
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-file-submityaml" class="md-nav__link">
+    Configuration file: submit.yaml
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-a-subgraph-as-usual-pipeline_definitionpy" class="md-nav__link">
+    Define a subgraph as usual: pipeline_definition.py
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flexibility" class="md-nav__link">
+    Flexibility
+  </a>
+  
+    <nav class="md-nav" aria-label="Flexibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-silo-training" class="md-nav__link">
+    Per-silo training
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-anything" class="md-nav__link">
+    Output anything
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug-mode" class="md-nav__link">
+    Debug mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    Open questions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scenarios" class="md-nav__link">
+    Scenarios
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/rfc/federated-learning.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="api-design-for-federated-learning">API design for Federated Learning</h1>
+<p>To facilitate federated learning, we propose some new APIs for shrike.</p>
+<h2 id="code-structure">Code structure</h2>
+<p>The code structure for a federated learning experiment is consistent with the existing one:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span>repo
+<span class="linenos" data-linenos=" 2 "></span>├── components  # contains subfolder corresponds to an AML component
+<span class="linenos" data-linenos=" 3 "></span>│   ├──────── component1
+<span class="linenos" data-linenos=" 4 "></span>│   └──────── component2
+<span class="linenos" data-linenos=" 5 "></span>└── pipelines
+<span class="linenos" data-linenos=" 6 "></span>    ├──────── config
+<span class="linenos" data-linenos=" 7 "></span>    │            ├──────── aml
+<span class="linenos" data-linenos=" 8 "></span>    │            │           └─── eyesoff.yaml  # workspace info: subscription_id, resource_group, etc.
+<span class="linenos" data-linenos=" 9 "></span>    │            ├──────── compute
+<span class="linenos" data-linenos="10 "></span>    │            │           └─── eyesoff.yaml  # see example below; info on compute targets, data stores, silos, etc.
+<span class="linenos" data-linenos="11 "></span>    │            ├──────── experiments
+<span class="linenos" data-linenos="12 "></span>    │            │           └─── submit.yaml  # see example below; info on experiment name, hdi_conf, datasets, etc.
+<span class="linenos" data-linenos="13 "></span>    │            └──────── modules  
+<span class="linenos" data-linenos="14 "></span>    │            │           └─── module_defaults.yaml  # contains some yaml files describing which components in `components` or remote copies will be used
+<span class="linenos" data-linenos="15 "></span>    ├──────── experiments
+<span class="linenos" data-linenos="16 "></span>    │            └── submit.py  # see example below; main script for defining and submiting the experiment
+<span class="linenos" data-linenos="17 "></span>    └──────── subgraphs
+<span class="linenos" data-linenos="18 "></span>                 └─────── pipeline_definition.py  # see example below; subgraphs used in the main script submit.py
+</code></pre></div></p>
+<h2 id="federated-learning-workflow">Federated learning workflow</h2>
+<p>We consider four fundamental building blocks: preprocess pipeline, midprocess pipeline, postprocess pipeline, training pipeline. The workflow is shown as in the diagram:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>preprocess (orchestrator) -&gt; training (silos) -&gt; midprocess (orchestrator) -&gt; training (silos) -&gt; midprocess (orchestrator) ... many rounds -&gt; training (silos) -&gt; postprocess (orchestrator)
+</code></pre></div>
+<img alt="image" src="../img/fl-diagram.png" /></p>
+<p>In Azure ML, each "job" can be implemented as a subgraph, or a simple component. On web UI, it is expected to show as a single experiment, with multiple steps and subgraphs, just like the diagram above.</p>
+<p>Note that this diagram assumes the strategy will be always synchronous and centralized. See "open questions" for scenarios that may not be fitted into this digram.</p>
+<h2 id="main-submission-script-submitpy">Main submission script: submit.py</h2>
+<p>We propose two designs. In the first design, Shrike provides a class <code>FederatedPipelineBase</code> with built-in methods for the user to inherit and override. The second design requires the user to explictly write the loop, and define the hook connecting upstream and downstream pipelines. While the second design provides more flexibility, the first design serves a similar role as <a href="https://pytorch-lightning.readthedocs.io/en/latest/common/lightning_module.html">PyTorch Lightning</a> by provoding an easy structured way to do federated learning.</p>
+<h3 id="design-1-shrike-handles-the-loop">Design 1: Shrike handles the loop</h3>
+<p>Shrike will implement a new <code>FederatedPipelineBase</code> class which extends <code>AMLPipelineHelper</code>. The <code>FederatedPipelineBase</code> class provides the structure for federated learning, through four methods <code>preprocess()</code>, <code>midprocess()</code>, <code>training()</code>, and <code>postprocess()</code>. Each method returns the output data that will be fed into the next pipeline. Shrike will automatically validate, anonymize, and transfer the outputs from upstream pipelines to downstream pipelines (through calling <code>apply_federated_runsettings</code> from the backend). User can override the inherited methods. In this design, we will avoid many user errors that might happen if they write the loop explicitly. However, it could be tricky to define how the pipelines are connected. 
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="kn">from</span> <span class="nn">shrike.pipeline</span> <span class="kn">import</span> <span class="n">FederatedPipelineBase</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="kn">from</span> <span class="nn">.pipeline_definition</span> <span class="kn">import</span> <span class="n">TrainingPipeline</span><span class="p">,</span> <span class="n">PreprocessPipeline</span><span class="p">,</span> <span class="n">MidProcessPipeline</span><span class="p">,</span> <span class="n">PostProcessPipeline</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="k">class</span> <span class="nc">MyCoolPipeline</span><span class="p">(</span><span class="n">FederatedPipelineBase</span><span class="p">):</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="c1"># TODO: what would this look like?</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="c1"># define each pipeline</span>
+<span class="linenos" data-linenos=" 7 "></span>    <span class="c1"># define parameters (groups)</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span>    <span class="nd">@classmethod</span>
+<span class="linenos" data-linenos="11 "></span>    <span class="k">def</span> <span class="nf">required_subgraphs</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="linenos" data-linenos="12 "></span>        <span class="c1"># implement this new method</span>
+<span class="linenos" data-linenos="13 "></span>        <span class="c1"># need a better name</span>
+<span class="linenos" data-linenos="14 "></span>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;TrainingPipeline&quot;</span><span class="p">:</span> <span class="n">TrainingPipeline</span><span class="p">,</span> <span class="s2">&quot;PreprocessPipeline&quot;</span><span class="p">:</span> <span class="n">PreprocessPipeline</span><span class="p">,</span> <span class="s2">&quot;MidProcessPipeline&quot;</span><span class="p">:</span> <span class="n">MidProcessPipeline</span><span class="p">,</span> <span class="s2">&quot;PostProcessPipeline&quot;</span><span class="p">:</span> <span class="n">PostProcessPipeline</span><span class="p">}</span>
+<span class="linenos" data-linenos="15 "></span>
+<span class="linenos" data-linenos="16 "></span>    <span class="c1"># each function returns the output that will pass on to the next pipeline</span>
+<span class="linenos" data-linenos="17 "></span>    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos="18 "></span>        <span class="c1"># required function, will run inside orchestrator</span>
+<span class="linenos" data-linenos="19 "></span>        <span class="n">preprocess_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;PreprocessPipeline&quot;</span><span class="p">)</span>  <span class="c1"># also allowing loading a single component</span>
+<span class="linenos" data-linenos="20 "></span>        <span class="n">preprocess_pipeline_step</span> <span class="o">=</span> <span class="n">preprocess_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">preprocess</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">param</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">preprocess</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
+<span class="linenos" data-linenos="21 "></span>        <span class="k">return</span> <span class="n">preprocess</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span>
+<span class="linenos" data-linenos="22 "></span>
+<span class="linenos" data-linenos="23 "></span>    <span class="k">def</span> <span class="nf">midprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos="24 "></span>        <span class="c1"># required function, will run inside orchestrator</span>
+<span class="linenos" data-linenos="25 "></span>        <span class="n">midprocess_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;MidProcessPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="26 "></span>        <span class="c1"># outputs from all silos will be moved into a shared folder, and midprocess will take this folder as input</span>
+<span class="linenos" data-linenos="27 "></span>        <span class="n">midprocess_pipeline_step</span> <span class="o">=</span> <span class="n">midprocess_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">training</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">)</span>
+<span class="linenos" data-linenos="28 "></span>        <span class="k">return</span> <span class="n">midprocess_pipeline_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span>
+<span class="linenos" data-linenos="29 "></span>
+<span class="linenos" data-linenos="30 "></span>    <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos="31 "></span>        <span class="c1"># required function, will run inside orchestrator</span>
+<span class="linenos" data-linenos="32 "></span>        <span class="n">postprocess_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;PostProcessPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="33 "></span>        <span class="n">postprocess_pipeline_step</span> <span class="o">=</span> <span class="n">postprocess_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">training</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">,</span> <span class="n">param_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">postprocess</span><span class="o">.</span><span class="n">param_1</span><span class="p">,</span> <span class="n">param_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">postprocess</span><span class="o">.</span><span class="n">param_2</span><span class="p">)</span>
+<span class="linenos" data-linenos="34 "></span>        <span class="k">return</span> <span class="n">postprocess_pipeline_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span>
+<span class="linenos" data-linenos="35 "></span>
+<span class="linenos" data-linenos="36 "></span>    <span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+<span class="linenos" data-linenos="37 "></span>        <span class="c1"># required function, will run in each silo</span>
+<span class="linenos" data-linenos="38 "></span>        <span class="c1"># Shrike handles this: input = preprocess.outputs.output1 if self.first_epoch else midprocess.outputs.output1</span>
+<span class="linenos" data-linenos="39 "></span>        <span class="n">training_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;TrainingPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="40 "></span>        <span class="n">training_pipeline_step</span> <span class="o">=</span> <span class="n">training_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">input1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="41 "></span>                                                    <span class="n">weights</span> <span class="o">=</span> <span class="nb">input</span><span class="p">,</span> 
+<span class="linenos" data-linenos="42 "></span>                                                    <span class="n">param1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="43 "></span>                                                    <span class="n">param2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param2</span><span class="p">)</span>
+<span class="linenos" data-linenos="44 "></span>        <span class="k">return</span> <span class="n">training_pipeline_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span>
+<span class="linenos" data-linenos="45 "></span>
+<span class="linenos" data-linenos="46 "></span><span class="c1"># if __name__ == &quot;__main__&quot;:</span>
+<span class="linenos" data-linenos="47 "></span><span class="c1">#     MyCoolPipeline()</span>
+</code></pre></div></p>
+<h3 id="design-2-explicitly-writing-the-loop-by-user">Design 2: explicitly writing the loop by user</h3>
+<p>As the main pipeline script, here we need to define the subgraphs and how they are connected. This solution requires the user to explicity write the loop and the data movement. We provide <code>apply_federated_runsettings(pipeline_instance, silos=*, validation=True, secure_aggregation=True)</code> method and the <code>pipeline_instance</code> will be running in all <code>silos</code> configured in the yaml file. With <code>secure_aggregation=True</code>, Shrike will anonymize the data and make it ready for transfer.
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="kn">from</span> <span class="nn">shrike.pipeline</span> <span class="kn">import</span> <span class="n">AMLPipelineHelper</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="kn">from</span> <span class="nn">.pipeline_definition</span> <span class="kn">import</span> <span class="n">TrainingPipeline</span><span class="p">,</span> <span class="n">PreprocessPipeline</span><span class="p">,</span> <span class="n">MidProcessPipeline</span><span class="p">,</span> <span class="n">PostProcessPipeline</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="k">class</span> <span class="nc">MyCoolPipeline</span><span class="p">(</span><span class="n">AMLPipelineHelper</span><span class="p">):</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="c1"># TODO: what would this look like?</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="c1"># define each pipeline</span>
+<span class="linenos" data-linenos=" 7 "></span>    <span class="c1"># define parameters (groups)</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span>    <span class="nd">@classmethod</span>
+<span class="linenos" data-linenos="11 "></span>    <span class="k">def</span> <span class="nf">required_subgraphs</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="linenos" data-linenos="12 "></span>        <span class="c1"># implement this new method</span>
+<span class="linenos" data-linenos="13 "></span>        <span class="c1"># need a better name</span>
+<span class="linenos" data-linenos="14 "></span>        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;TrainingPipeline&quot;</span><span class="p">:</span> <span class="n">TrainingPipeline</span><span class="p">,</span> <span class="s2">&quot;PreprocessPipeline&quot;</span><span class="p">:</span> <span class="n">PreprocessPipeline</span><span class="p">,</span> <span class="s2">&quot;MidProcessPipeline&quot;</span><span class="p">:</span> <span class="n">MidProcessPipeline</span><span class="p">,</span> <span class="s2">&quot;PostProcessPipeline&quot;</span><span class="p">:</span> <span class="n">PostProcessPipeline</span><span class="p">}</span>
+<span class="linenos" data-linenos="15 "></span>
+<span class="linenos" data-linenos="16 "></span>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos="17 "></span>
+<span class="linenos" data-linenos="18 "></span>        <span class="n">preprocess_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;PreprocessPipeline&quot;</span><span class="p">)</span>  <span class="c1"># also allowing loading a single component</span>
+<span class="linenos" data-linenos="19 "></span>        <span class="n">midprocess_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;MidProcessPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="20 "></span>        <span class="n">postprocess_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;PostProcessPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="21 "></span>        <span class="n">training_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;TrainingPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="22 "></span>        <span class="n">data_transfer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_load</span><span class="p">(</span><span class="s2">&quot;DataTransfer&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="23 "></span>
+<span class="linenos" data-linenos="24 "></span>        <span class="nd">@dsl</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span>
+<span class="linenos" data-linenos="25 "></span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;federated-learning-pipeline&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos="26 "></span>            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos="27 "></span>            <span class="n">default_datastore</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">compute</span><span class="o">.</span><span class="n">compliant_datastore</span><span class="p">,</span>
+<span class="linenos" data-linenos="28 "></span>        <span class="p">)</span>
+<span class="linenos" data-linenos="29 "></span>        <span class="k">def</span> <span class="nf">federated_pipeline_function</span><span class="p">():</span>
+<span class="linenos" data-linenos="30 "></span>            <span class="c1"># initialization     </span>
+<span class="linenos" data-linenos="31 "></span>            <span class="n">preprocess_pipeline_step</span> <span class="o">=</span> <span class="n">preprocess_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">preprocess</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">param</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">preprocess</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
+<span class="linenos" data-linenos="32 "></span>            <span class="c1"># self.apply_smart_runsettings(preprocess_pipeline_step)    # required if preprocess is a component, instead of a subgraph</span>
+<span class="linenos" data-linenos="33 "></span>            <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos" data-linenos="34 "></span>            <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">preprocess_pipeline_step</span><span class="p">)</span>
+<span class="linenos" data-linenos="35 "></span>            <span class="n">data_transfer_step</span> <span class="o">=</span> <span class="n">data_transfer</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">preprocess_pipeline_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">,</span> <span class="n">fanout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos" data-linenos="36 "></span>
+<span class="linenos" data-linenos="37 "></span>            <span class="c1"># iterations</span>
+<span class="linenos" data-linenos="38 "></span>            <span class="k">while</span> <span class="nb">iter</span> <span class="o">&lt;</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">max_iterations</span><span class="p">:</span>
+<span class="linenos" data-linenos="39 "></span>                <span class="n">training_pipeline_step</span> <span class="o">=</span> <span class="n">training_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">input1</span><span class="p">,</span>
+<span class="linenos" data-linenos="40 "></span>                                                           <span class="n">weights</span> <span class="o">=</span> <span class="n">data_transfer_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="41 "></span>                                                           <span class="n">param2</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
+<span class="linenos" data-linenos="42 "></span>                <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">training_pipeline_step</span><span class="p">)</span>    <span class="c1"># apply_federated_runsettings(pipeline_instance, silos = config.federation.silos)</span>
+<span class="linenos" data-linenos="43 "></span>                <span class="n">data_transfer_step</span> <span class="o">=</span> <span class="n">data_transfer</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">training_pipeline_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">,</span> <span class="n">fanout</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="linenos" data-linenos="44 "></span>                <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">data_transfer_step</span><span class="p">)</span>
+<span class="linenos" data-linenos="45 "></span>                <span class="n">midprocess_pipeline_step</span> <span class="o">=</span> <span class="n">midprocess_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">data_transfer_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span>
+<span class="linenos" data-linenos="46 "></span>                                                               <span class="n">param</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">midprocess</span><span class="o">.</span><span class="n">param</span><span class="p">)</span>
+<span class="linenos" data-linenos="47 "></span>                <span class="c1"># self.apply_smart_runsettings(midprocess_pipeline_step)</span>
+<span class="linenos" data-linenos="48 "></span>                <span class="n">data_transfer_step</span> <span class="o">=</span> <span class="n">data_transfer</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">midprocess_pipeline_ste</span><span class="p">,</span> <span class="n">fanout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos" data-linenos="49 "></span>
+<span class="linenos" data-linenos="50 "></span>            <span class="c1"># finalization</span>
+<span class="linenos" data-linenos="51 "></span>            <span class="n">postprocess_pipeline_step</span> <span class="o">=</span> <span class="n">postprocess_pipeline</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">data_transfer_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="52 "></span>                                                             <span class="n">param_1</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">postprocess</span><span class="o">.</span><span class="n">param_1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="53 "></span>                                                             <span class="n">param_2</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">postprocess</span><span class="o">.</span><span class="n">param_2</span><span class="p">)</span>
+<span class="linenos" data-linenos="54 "></span>            <span class="c1"># self.apply_smart_runsettings(postprocess_pipeline_step)</span>
+<span class="linenos" data-linenos="55 "></span>        <span class="k">return</span> <span class="n">federated_pipeline_function</span>
+<span class="linenos" data-linenos="56 "></span>
+<span class="linenos" data-linenos="57 "></span>    <span class="k">def</span> <span class="nf">pipeline_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipeline_function</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos="58 "></span>        <span class="n">my_cool_pipeline</span> <span class="o">=</span> <span class="n">pipeline_function</span><span class="p">()</span>
+<span class="linenos" data-linenos="59 "></span>        <span class="k">return</span> <span class="n">my_cool_pipeline</span>
+<span class="linenos" data-linenos="60 "></span>
+<span class="linenos" data-linenos="61 "></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos" data-linenos="62 "></span>    <span class="n">MyCoolPipeline</span><span class="p">()</span>
+</code></pre></div></p>
+<h2 id="apply_federated_runsettings-method"><code>apply_federated_runsettings()</code> method</h2>
+<p>We will implement the following method so that the user can assign pipeline to silos in a simple way. Also, with <code>validation=True</code> and <code>secure_aggregation=True</code>, Shrike will validate and anonymize the data, thus making it ready for transfer. Secure aggregation is not required in the "fan-out" stage, while validation is required before any cross-silo movement. The arg <code>silos</code> defines in which silos the <code>pipeline_instance</code> will be performing in.
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="k">def</span> <span class="nf">apply_federated_runsettings</span><span class="p">(</span><span class="n">pipeline_instance</span><span class="p">,</span> <span class="n">silos</span><span class="o">=*</span><span class="p">,</span> <span class="n">validation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">secure_aggregation</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="linenos" data-linenos="2 "></span>    <span class="o">...</span>
+</code></pre></div>
+This method should be called after <code>apply_smart_runsettings()</code> by copying the <code>pipeline_instance</code> to multiple silos and ensuring the outputs are safe for transfer, and should be able to override settings already configured in <code>apply_smart_runsettings()</code>.</p>
+<h2 id="compute-settings-eyesoffyaml">Compute settings eyesoff.yaml</h2>
+<p>We add computes and storage info for each silo, also notice the datasets that live in each silo are also specified here, e.g. <code>input1</code>.
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># name of default target</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="nt">default_compute_target</span><span class="p">:</span> <span class="s">&quot;cpu-cluster-0-dc&quot;</span>
+<span class="linenos" data-linenos=" 3 "></span><span class="c1"># where intermediary output is written</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="nt">compliant_datastore</span><span class="p">:</span> <span class="s">&quot;heron_sandbox_storage&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="nt">noncompliant_datastore</span><span class="p">:</span> <span class="s">&quot;cosmos14_office_adhoc&quot;</span>
+<span class="linenos" data-linenos=" 6 "></span>
+<span class="linenos" data-linenos=" 7 "></span><span class="c1"># Linux targets</span>
+<span class="linenos" data-linenos=" 8 "></span><span class="nt">linux_cpu_dc_target</span><span class="p">:</span> <span class="s">&quot;cpu-cluster-0-dc&quot;</span>
+<span class="linenos" data-linenos=" 9 "></span><span class="nt">linux_cpu_prod_target</span><span class="p">:</span> <span class="s">&quot;cpu-cluster-0&quot;</span>
+<span class="linenos" data-linenos="10 "></span><span class="nt">linux_gpu_dc_target</span><span class="p">:</span> <span class="s">&quot;gpu-cluster-dc&quot;</span>
+<span class="linenos" data-linenos="11 "></span><span class="nt">linux_gpu_prod_target</span><span class="p">:</span> <span class="s">&quot;gpu-cluster-0&quot;</span>
+<span class="linenos" data-linenos="12 "></span>
+<span class="linenos" data-linenos="13 "></span><span class="c1"># data I/O for linux modules</span>
+<span class="linenos" data-linenos="14 "></span><span class="nt">linux_input_mode</span><span class="p">:</span> <span class="s">&quot;mount&quot;</span>
+<span class="linenos" data-linenos="15 "></span><span class="nt">linux_output_mode</span><span class="p">:</span> <span class="s">&quot;mount&quot;</span>
+<span class="linenos" data-linenos="16 "></span>
+<span class="linenos" data-linenos="17 "></span><span class="c1"># Windows targets</span>
+<span class="linenos" data-linenos="18 "></span><span class="nt">windows_cpu_prod_target</span><span class="p">:</span> <span class="s">&quot;cpu-cluster-win&quot;</span>
+<span class="linenos" data-linenos="19 "></span><span class="nt">windows_cpu_dc_target</span><span class="p">:</span> <span class="s">&quot;cpu-cluster-win&quot;</span>
+<span class="linenos" data-linenos="20 "></span>
+<span class="linenos" data-linenos="21 "></span><span class="c1"># data I/O for windows modules</span>
+<span class="linenos" data-linenos="22 "></span><span class="nt">windows_input_mode</span><span class="p">:</span> <span class="s">&quot;download&quot;</span>
+<span class="linenos" data-linenos="23 "></span><span class="nt">windows_output_mode</span><span class="p">:</span> <span class="s">&quot;upload&quot;</span>
+<span class="linenos" data-linenos="24 "></span>
+<span class="linenos" data-linenos="25 "></span><span class="c1"># hdi cluster</span>
+<span class="linenos" data-linenos="26 "></span><span class="nt">hdi_prod_target</span><span class="p">:</span> <span class="s">&quot;hdi-cluster&quot;</span>
+<span class="linenos" data-linenos="27 "></span>
+<span class="linenos" data-linenos="28 "></span><span class="c1"># data transfer cluster</span>
+<span class="linenos" data-linenos="29 "></span><span class="nt">datatransfer_target</span><span class="p">:</span> <span class="s">&quot;data-factory&quot;</span>
+<span class="linenos" data-linenos="30 "></span>
+<span class="linenos" data-linenos="31 "></span><span class="c1">## new!</span>
+<span class="linenos" data-linenos="32 "></span><span class="nt">silos</span><span class="p">:</span>
+<span class="linenos" data-linenos="33 "></span>    <span class="c1"># override priority: default_config &lt; customized shared config &lt; per-silo setting</span>
+<span class="linenos" data-linenos="34 "></span>    <span class="nt">default_config</span><span class="p">:</span>
+<span class="linenos" data-linenos="35 "></span>        <span class="nt">compute</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gpu-cluster-1</span>  <span class="c1"># by default, all silos will inherit this default_config</span>
+<span class="linenos" data-linenos="36 "></span>        <span class="nt">param1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="linenos" data-linenos="37 "></span>    <span class="nt">foo_config</span><span class="p">:</span> <span class="c1"># customized config that multiple silos could share</span>
+<span class="linenos" data-linenos="38 "></span>        <span class="nt">compute</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gpu-cluster-foo</span>
+<span class="linenos" data-linenos="39 "></span>    <span class="nt">bar_config</span><span class="p">:</span>
+<span class="linenos" data-linenos="40 "></span>        <span class="nt">datatransfer_target</span><span class="p">:</span> <span class="s">&quot;data-factory-bar&quot;</span>
+<span class="linenos" data-linenos="41 "></span>    <span class="nt">silo1</span><span class="p">:</span>
+<span class="linenos" data-linenos="42 "></span>        <span class="nt">compute</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gpu-cluster-2</span>
+<span class="linenos" data-linenos="43 "></span>        <span class="nt">compliant_datastore</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">heron_sandbox_storage</span>
+<span class="linenos" data-linenos="44 "></span>        <span class="nt">datatransfer_target</span><span class="p">:</span> <span class="s">&quot;data-factory&quot;</span>
+<span class="linenos" data-linenos="45 "></span>        <span class="nt">input1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dummy_dataset_on_silo1</span>
+<span class="linenos" data-linenos="46 "></span>    <span class="nt">silo2</span><span class="p">:</span>
+<span class="linenos" data-linenos="47 "></span>        <span class="nt">inherit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">foo_config, bar_config</span> <span class="c1"># merge default_config, foo_config, and bar_config (highest order)</span>
+<span class="linenos" data-linenos="48 "></span>        <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="linenos" data-linenos="49 "></span>        <span class="nt">input1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dummy_dataset_on_silo2</span>
+<span class="linenos" data-linenos="50 "></span>        <span class="nt">param1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="linenos" data-linenos="51 "></span>    <span class="nt">silo3</span><span class="p">:</span>
+<span class="linenos" data-linenos="52 "></span>        <span class="nt">inherit</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">foo_config</span>
+<span class="linenos" data-linenos="53 "></span>        <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="linenos" data-linenos="54 "></span>        <span class="nt">input1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dummy_dataset_on_silo3</span>
+<span class="linenos" data-linenos="55 "></span>        <span class="nt">param1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+</code></pre></div></p>
+<h2 id="configuration-file-submityaml">Configuration file: submit.yaml</h2>
+<p>The user needs to add an additional section <code>federation</code> with required <code>max_iterations</code> and <code>silos</code>. Also the user can specify the input datasets and parameters for pipelines running inside the orchestrator and silos here. For input dataset in silos, the syntax is <code>&lt;pipeline_input_name&gt;: silos.&lt;dataset_name&gt;</code>, where <code>&lt;dataset_name&gt;</code> is specified for each silo in the compute settings <code>eyesoff.yaml</code>.
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="nt">defaults</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 2 "></span>    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="linenos" data-linenos=" 3 "></span><span class="nt">run</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 4 "></span>    <span class="nt">experiment_name</span><span class="p">:</span> <span class="s">&quot;sample_federated_pipeline&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="c1"># new!</span>
+<span class="linenos" data-linenos=" 7 "></span><span class="nt">federation</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 8 "></span>    <span class="l l-Scalar l-Scalar-Plain">max_iterations = 100</span>
+<span class="linenos" data-linenos=" 9 "></span>    <span class="l l-Scalar l-Scalar-Plain">silos = &quot;silo1, silo2, silo3&quot;</span>   <span class="c1"># each silo corresponds to a section in compute/eyesoff.yaml</span>
+<span class="linenos" data-linenos="10 "></span>    <span class="c1"># could also use: `silos = *`, `silos = &quot;!silo1&quot;`</span>
+<span class="linenos" data-linenos="11 "></span>    <span class="nt">preprocess</span><span class="p">:</span>
+<span class="linenos" data-linenos="12 "></span>        <span class="nt">input</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dummy_dataset</span>
+<span class="linenos" data-linenos="13 "></span>        <span class="nt">param</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="linenos" data-linenos="14 "></span>    <span class="nt">midprocess</span><span class="p">:</span>
+<span class="linenos" data-linenos="15 "></span>        <span class="nt">param</span><span class="p">:</span> <span class="s">&quot;a&quot;</span>
+<span class="linenos" data-linenos="16 "></span>    <span class="nt">postprocess</span><span class="p">:</span>
+<span class="linenos" data-linenos="17 "></span>        <span class="nt">param_1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="linenos" data-linenos="18 "></span>        <span class="nt">param_2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="linenos" data-linenos="19 "></span>    <span class="nt">training</span><span class="p">:</span>
+<span class="linenos" data-linenos="20 "></span>        <span class="nt">input</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">silos.input1</span>    <span class="c1"># per silo input dataset</span>
+<span class="linenos" data-linenos="21 "></span>        <span class="nt">param1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">silos.param1</span>    <span class="c1"># per silo parameter</span>
+<span class="linenos" data-linenos="22 "></span>        <span class="nt">param2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>    <span class="c1"># shared parameters/datasets across all silos</span>
+</code></pre></div></p>
+<h2 id="define-a-subgraph-as-usual-pipeline_definitionpy">Define a subgraph as usual: pipeline_definition.py</h2>
+<p>As usual, the user can define each "job" as a subgraph or a single component, and import using <code>load_component()</code> or <code>load_subgraph()</code> in the pipeline script. Here we
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># skeleton code for defining a pipeline</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="kn">from</span> <span class="nn">azure.ml.component</span> <span class="kn">import</span> <span class="n">dsl</span>
+<span class="linenos" data-linenos=" 3 "></span><span class="kn">from</span> <span class="nn">shrike.pipeline</span> <span class="kn">import</span> <span class="n">AMLPipelineHelper</span>
+<span class="linenos" data-linenos=" 4 "></span>
+<span class="linenos" data-linenos=" 5 "></span><span class="k">class</span> <span class="nc">TrainingPipeline</span><span class="p">(</span><span class="n">AMLPipelineHealer</span><span class="p">):</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos=" 7 "></span>        <span class="c1"># load components</span>
+<span class="linenos" data-linenos=" 8 "></span>        <span class="n">my_component</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_load</span><span class="p">(</span><span class="s2">&quot;my-component&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span>        <span class="c1"># create an instantce of a pipeline function</span>
+<span class="linenos" data-linenos="11 "></span>        <span class="nd">@dsl</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span>
+<span class="linenos" data-linenos="12 "></span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;A-simple-pipeline&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos="13 "></span>            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos="14 "></span>            <span class="n">default_datastore</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">compute</span><span class="o">.</span><span class="n">compliant_datastore</span><span class="p">,</span>
+<span class="linenos" data-linenos="15 "></span>        <span class="p">)</span>
+<span class="linenos" data-linenos="16 "></span>        <span class="k">def</span> <span class="nf">my_pipeline_function</span><span class="p">(</span><span class="n">InputData</span><span class="p">,</span> <span class="n">Weights</span><span class="p">,</span> <span class="n">Param</span><span class="p">):</span>
+<span class="linenos" data-linenos="17 "></span>            <span class="c1"># assume my_component takes three arguments, an input dataset, an epoch that should increments each run, and an parameter that can be dynamically changed in each run</span>
+<span class="linenos" data-linenos="18 "></span>            <span class="n">step</span> <span class="o">=</span> <span class="n">my_component</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">InputData</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">,</span> <span class="n">param</span> <span class="o">=</span> <span class="n">Param</span><span class="p">)</span>
+<span class="linenos" data-linenos="19 "></span>            <span class="bp">self</span><span class="o">.</span><span class="n">apply_smart_runsettings</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+<span class="linenos" data-linenos="20 "></span>
+<span class="linenos" data-linenos="21 "></span>        <span class="k">return</span> <span class="n">my_pipeline_function</span>
+<span class="linenos" data-linenos="22 "></span>
+<span class="linenos" data-linenos="23 "></span><span class="k">class</span> <span class="nc">PreprocessPipeline</span><span class="p">(</span><span class="n">AMLPipelineHealer</span><span class="p">):</span>
+<span class="linenos" data-linenos="24 "></span>    <span class="o">...</span>
+<span class="linenos" data-linenos="25 "></span>
+<span class="linenos" data-linenos="26 "></span><span class="k">class</span> <span class="nc">MidprocessPipeline</span><span class="p">(</span><span class="n">AMLPipelineHealer</span><span class="p">):</span>
+<span class="linenos" data-linenos="27 "></span>    <span class="o">...</span>
+<span class="linenos" data-linenos="28 "></span>
+<span class="linenos" data-linenos="29 "></span><span class="k">class</span> <span class="nc">PostprocessPipeline</span><span class="p">(</span><span class="n">AMLPipelineHealer</span><span class="p">):</span>
+<span class="linenos" data-linenos="30 "></span>    <span class="o">...</span>    
+</code></pre></div></p>
+<h2 id="flexibility">Flexibility</h2>
+<h3 id="per-silo-training">Per-silo training</h3>
+<p>We should allow some per-silo variability, which should be handled through <code>apply_federated_runsettings()</code>.
+For design 1, by default, the pipeline defined in <code>def training()</code> will be applied to all silos with an implicit call <code>apply_federated_runsettings(pipeline_instance, silos=*)</code>. When this function returns more than one pipeline, then the user could specify the mapping, e.g. <code>per_silo_training_1</code> is applied to silo 1 and 2, and <code>per_silo_training_2</code> is applied to all other silos,
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+<span class="linenos" data-linenos=" 2 "></span>    <span class="n">per_silo_training_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;TrainingPipeline&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos=" 3 "></span>    <span class="n">per_silo_training_1_step</span> <span class="o">=</span> <span class="n">per_silo_training_1</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">input1</span><span class="p">,</span> 
+<span class="linenos" data-linenos=" 4 "></span>                                                <span class="n">weights</span> <span class="o">=</span> <span class="nb">input</span><span class="p">,</span> 
+<span class="linenos" data-linenos=" 5 "></span>                                                <span class="n">param1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> 
+<span class="linenos" data-linenos=" 6 "></span>                                                <span class="n">param2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param2</span><span class="p">)</span>
+<span class="linenos" data-linenos=" 7 "></span>    <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">per_silo_training_1_step</span><span class="p">,</span> <span class="n">silos</span> <span class="o">=</span> <span class="s2">&quot;silo1, silo2&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span>    <span class="n">per_silo_training_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgraph_load</span><span class="p">(</span><span class="s2">&quot;TrainingPipeline2&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="10 "></span>    <span class="n">per_silo_training_2_step</span> <span class="o">=</span> <span class="n">per_silo_training_2</span><span class="p">(</span><span class="nb">input</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">input1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="11 "></span>                                                <span class="n">weights</span> <span class="o">=</span> <span class="nb">input</span><span class="p">,</span> 
+<span class="linenos" data-linenos="12 "></span>                                                <span class="n">param1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param1</span><span class="p">,</span> 
+<span class="linenos" data-linenos="13 "></span>                                                <span class="n">param2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">training</span><span class="o">.</span><span class="n">param2</span><span class="p">)</span>
+<span class="linenos" data-linenos="14 "></span>    <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">per_silo_training_2_step</span><span class="p">,</span> <span class="n">silos</span> <span class="o">=</span> <span class="s2">&quot;*silo1, *silo2&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="15 "></span>
+<span class="linenos" data-linenos="16 "></span>    <span class="k">return</span> <span class="p">[</span><span class="n">per_silo_training_1_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">,</span> <span class="n">per_silo_training_2_step</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">output1</span><span class="p">]</span>
+</code></pre></div></p>
+<p>For design 2, it is more straightforward and the user can just define the per-silo training directly.
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="k">while</span> <span class="nb">iter</span> <span class="o">&lt;</span> <span class="n">config</span><span class="o">.</span><span class="n">federation</span><span class="o">.</span><span class="n">max_iterations</span><span class="p">:</span>
+<span class="linenos" data-linenos="2 "></span>  <span class="n">per_silo_training_1_step</span> <span class="o">=</span> <span class="o">...</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">per_silo_training_1_step</span><span class="p">,</span> <span class="n">silos</span> <span class="o">=</span> <span class="s2">&quot;silo1, silo2&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="4 "></span>
+<span class="linenos" data-linenos="5 "></span>  <span class="n">per_silo_training_2_step</span> <span class="o">=</span> <span class="o">...</span>
+<span class="linenos" data-linenos="6 "></span>  <span class="bp">self</span><span class="o">.</span><span class="n">apply_federated_runsettings</span><span class="p">(</span><span class="n">per_silo_training_2_step</span><span class="p">,</span> <span class="n">silos</span> <span class="o">=</span> <span class="s2">&quot;!silo1, !silo2&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="output-anything">Output anything</h3>
+<p>There is no limitation that what the four methods shouls output, i.e. we are not limited to the scenario where we are just outputting and aggregating the model weights. A use case is federated distillation where the server asks for predictions over some public dataset, instead of models or gradients.</p>
+<h3 id="debug-mode">Debug mode</h3>
+<p>The library will also have "debug" mode where it turns off all data transfer and assumes no approval endpoint. This way, data scientists could quickly debug with "dummy" (artificial) silos in eyes-on or reserach context.</p>
+<h2 id="open-questions">Open questions</h2>
+<ol>
+<li>How are the model weights aggregated after each "training" round?<ul>
+<li>User provides a weight in config file.</li>
+<li>Shrike can configure the output path to <code>/output_epoch_&lt;n&gt;/silo&lt;x&gt;</code>, and the downstream pipeline will read from <code>/output_epoch_&lt;n&gt;</code>.</li>
+<li>Platform ask: <code>args</code> (N input datasets) as input to a single component. Worst-case scenario, we can do some kind of "merge folders" hack in advance.</li>
+</ul>
+</li>
+<li>What parameters need to be changed dynamically, i.e. not-fixed for each iteration, other than "input data set"?<ul>
+<li>We should cache things like optimizer state (learning rate, etc.), previous models/gradients on disk so that they can be restored in the next round.</li>
+</ul>
+</li>
+<li>What other parameters are required in <code>federation</code> section in <code>submit.yaml</code>?</li>
+<li>How to handle regional outages? Even though silos are reliable Azure-hosted clusters, they'll occasionally go down. Hopefully, AML pipelines can, as a general feature, allow configurable per-step retry.</li>
+<li>How to handle early stopping? Once conditional components land, those should be configurable as well (maybe after aggregation, if configured, in each round?).</li>
+<li>The design also assumes the orchestrator has significant power over the silos- whoever runs code in the orchestrator can effectively inject any code they want to run in each silo. Maybe the design should allow room for the individual silos to control their own internal train() pipeline and this method is more of an RPC into the silo to execute code owned by the silo.</li>
+<li>How to handle the drop-out or failure of some training processes?</li>
+<li>Does the federated learning pipeline always look like as the diagram shown above? Does the upstream pipeline just generate one output (e.g. weights) to feed into the downstream pipeline?<ul>
+<li>Scenario : asynchronicity, e.g. client A is taking a very long time to do a round, and in the meantime all the other clients can do 5 rounds. In our current design, the downstream pipeline need to wait until all clients finish their work.</li>
+</ul>
+</li>
+<li>How much flexibility do we need to provide to each silo, e.g. <code>PerSiloPipeline</code>?<ul>
+<li>See section Flexibility/Per-silo training.</li>
+</ul>
+</li>
+<li>[Need discussion] Do we support subgraph + component as a "pipeline", or just subgraph?</li>
+<li>What is a good naming for the four methods (preprocess/training/midprocess/postprocess)?</li>
+</ol>
+<h2 id="scenarios">Scenarios</h2>
+<ol>
+<li>Alice creates a FL project with 30 silos, and submits a debugging pipeline to 3 silos.<ul>
+<li>She can specify in <code>submit.yaml</code>: <code>silos = "silo1, silo2, silo3"</code></li>
+</ul>
+</li>
+<li>Alice wants to extend the pipeline to 27 silos.<ul>
+<li>She can specify in <code>submit.yaml</code>: <code>silos = "!silo1, !silo2, !silo3"</code></li>
+</ul>
+</li>
+<li>Alice wants a different training pipeline for silo X.<ul>
+<li>See section Flexibility/Per-silo training.</li>
+</ul>
+</li>
+<li>The previous experiment fails after 10 epochs, and Alice wants to restart from there.</li>
+</ol>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

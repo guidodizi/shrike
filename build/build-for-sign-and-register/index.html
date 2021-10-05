@@ -1,0 +1,1353 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Sign & register components - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creating-an-azure-devops-build-for-signing-and-registering" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sign & register components
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Sign & register components
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Sign & register components
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smart-mode" class="md-nav__link">
+    "Smart" mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation-step" class="md-nav__link">
+    Preparation step
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparation step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customized-validation-on-components-optional" class="md-nav__link">
+    Customized validation on components (optional)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#esrp-codesign" class="md-nav__link">
+    ESRP CodeSign
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-registration" class="md-nav__link">
+    Component registration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-components-which-use-binaries" class="md-nav__link">
+    Handling components which use binaries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ther-style-code-signing" class="md-nav__link">
+    &AElig;ther-style code signing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-component-builds" class="md-nav__link">
+    Per-component builds
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smart-mode" class="md-nav__link">
+    "Smart" mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparation-step" class="md-nav__link">
+    Preparation step
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparation step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customized-validation-on-components-optional" class="md-nav__link">
+    Customized validation on components (optional)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#esrp-codesign" class="md-nav__link">
+    ESRP CodeSign
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-registration" class="md-nav__link">
+    Component registration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-components-which-use-binaries" class="md-nav__link">
+    Handling components which use binaries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ther-style-code-signing" class="md-nav__link">
+    &AElig;ther-style code signing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#per-component-builds" class="md-nav__link">
+    Per-component builds
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/build/build-for-sign-and-register.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="creating-an-azure-devops-build-for-signing-and-registering">Creating an Azure DevOps Build for Signing and Registering</h1>
+<p>By reading through this doc, you will be able to</p>
+<ul>
+<li>have a high-level understanding of how to use <code>shrike.build</code>, and </li>
+<li>create a <strong>single-YAML</strong> pipeline build in Azure DevOps for validating, signing and registering Azure ML components.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>To enjoy this tutorial, you need to </p>
+<ul>
+<li>have at least one <a href="https://componentsdk.azurewebsites.net/components/command_component.html#how-to-write-commandcomponent-yaml-spec">Azure ML component YAML specification file</a> in your team's repository,</li>
+<li>have an <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&amp;tabs=yaml">Azure ML service connection</a> set up in your Azure DevOps for your Azure subscription,</li>
+<li>have an <a href="https://microsoft.sharepoint.com/teams/prss/esrp/info/ESRP%20Onboarding%20Wiki/ESRP%20Onboarding%20Guide%20Wiki.aspx">ESRP service connection</a> set up in your Azure DevOps, and</li>
+<li>have a basic knowledge of Azure DevOps pipeline <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&amp;tabs=schema%2Cparameter-schema">YAML schema</a>.</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>Command line arguments and configuration YAML file are both supported by <code>shrike.build</code>. The order of precedence from least to greatest (the last listed variables override all other variables) is: default values, configuration file, command line arguments.</p>
+<p>An example of configuration YAML file:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Choose from two signing mode: aml, or aether</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="nt">signing_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">aml</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="c1"># Two methods are provided to find &quot;active&quot; components: all, or smart</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="c1"># For &quot;all&quot; option, all the components will be validated/signed/registered</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="c1"># For &quot;smart&quot; option, only those changed components will be processed.</span>
+<span class="linenos" data-linenos=" 7 "></span><span class="nt">activation_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span><span class="c1"># Regular expression that a branch must satisfy in order for this code to</span>
+<span class="linenos" data-linenos="10 "></span><span class="c1"># sign or register components.</span>
+<span class="linenos" data-linenos="11 "></span><span class="nt">compliant_branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^refs/heads/main$</span>
+<span class="linenos" data-linenos="12 "></span>
+<span class="linenos" data-linenos="13 "></span><span class="c1"># Glob path of all component specification files.</span>
+<span class="linenos" data-linenos="14 "></span><span class="nt">component_specification_glob</span><span class="p">:</span> <span class="s">&#39;steps/**/module_spec.yaml&#39;</span>
+<span class="linenos" data-linenos="15 "></span>
+<span class="linenos" data-linenos="16 "></span><span class="nt">log_format</span><span class="p">:</span> <span class="s">&#39;[%(name)s][%(levelname)s]</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(message)s&#39;</span>
+<span class="linenos" data-linenos="17 "></span>
+<span class="linenos" data-linenos="18 "></span><span class="c1"># List of workspace ARM IDs (fill in the &lt;&gt; with the appropriate values for your Azure ML workspace)</span>
+<span class="linenos" data-linenos="19 "></span><span class="nt">workspaces</span><span class="p">:</span> 
+<span class="linenos" data-linenos="20 "></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/subscriptions/&lt;Subscription-Id&gt;/resourcegroups/&lt;Name-Of-Resource-Group&gt;/providers/Microsoft.MachineLearningServices/workspaces/&lt;Azure-ML-Workspace-Name&gt;</span>
+<span class="linenos" data-linenos="21 "></span>
+<span class="linenos" data-linenos="22 "></span><span class="c1"># Boolean argument: What to do when the same version of a component has already been registered.</span>
+<span class="linenos" data-linenos="23 "></span><span class="c1"># Default: False</span>
+<span class="linenos" data-linenos="24 "></span><span class="nt">fail_if_version_exists</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="linenos" data-linenos="25 "></span>
+<span class="linenos" data-linenos="26 "></span><span class="c1"># Boolean argument: Will the build number be used or not</span>
+<span class="linenos" data-linenos="27 "></span><span class="nt">use_build_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</code></pre></div></p>
+<p>To consume this configuration file, we should pass its path to the command line, that is
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>python -m shrike.build.commands.prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE
+</code></pre></div>
+If we want to override the values of <code>activation_method</code> and <code>fail_if_version_exists</code> at runtime, we should append them to the command line:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>python -m shrike.build.commands.prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE --activation-method smart --fail-if-version-exists
+</code></pre></div></p>
+<h3 id="smart-mode">"Smart" mode</h3>
+<p>The <code>shrike</code> package supports a "smart" <code>activation_method</code>. To use it, just include the following line to your build configuration file.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nt">activation_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">smart</span>
+</code></pre></div>
+<p>Using this "smart" mode will only register the components that were modified, given a list of modified files. The logic used to identify which components are modified is as follows.</p>
+<ol>
+<li>The modified file needs to be tracked in git to be picked up by the tool. If it isn't tracked in git, it won't be considered - even if it listed in a component's <code>additional_includes</code> file.</li>
+<li>If a file located in the component folder is changed, then the component is considered to be modified.</li>
+<li>If a file listed in the <code>additional_includes</code> file (file directly listed, or its parent folder listed) is changed, then the component is considered to be modified. <em>The paths listed in the <code>additional_includes</code> file are all assumed to be relative to the location of that file.</em></li>
+</ol>
+<blockquote>
+<p>Note: A corollary of point 2 above is that if you modify a function in a helper file listed in the <code>additional_includes</code>, your component will be considered as modified even if it does not use that function at all. That is why we use quotes around "smart": the logic is not smart enough to detect <em>only</em> the components <em>truly</em> affected by a change (implementing that logic would be a much more complicated task).  </p>
+<p>Note: Another corollary of point 2 is that if you want to use the "smart" mode, you need to be as accurate as possible with the files listed in the <code>additional_includes</code>, otherwise components might be registered even though the changes didn't really affect them. Imagine the extreme case where you have a huge <code>utils</code> directory listed in <code>additional_includes</code> instead of the specific list of utils files: every change to that directory, even if not relevant to your component of interest, will trigger the registration. This would defeat the purpose of having a smart mode in the first place.</p>
+</blockquote>
+<p>:warning: It is worth reiterating that for the tool to work properly, <strong>the name of the compliant branch in your config file should be of the form "<code>^refs/heads/&lt;YourCompliantBranchName&gt;$</code>"</strong>. (Notice how it starts with "<code>^refs/heads/</code>" and ends with "<code>$</code>".) However, <em>regular expressions are not supported by the "smart" mode</em>, since there would be some ambiguity in determining the list of modified files when there are several compliant (i.e. reference) branches.</p>
+<p>:warning: To identify the latest merge into the compliant branch, the tool relies on the Azure DevOps convention that the commit message starts with "Merged PR". <strong>If you customize the commit message, please make sure it still starts with "Merged PR", otherwise the "smart" logic will not work properly.</strong></p>
+<p>:information_source: In some (rare) instances, we have seen pull requests being
+successfully merged, but with the build failing. In these cases, the new
+components introduced/modified in the problematic PR have not been
+signed/registered, and unless they are modified by a subsequent PR, they will
+not be picked up by the "smart" mode. There are 2 common workarounds to this
+issue. The most straightforward is to activate the "all" activation mode in a PR
+following the failed build, then revert to "smart" for the PR after that. This
+will ensure all components are registered, but will also mess up the 
+components results recycling logic:
+some components will wrongly be considered as a new, hence their results won't
+be recycled. The second option is to do a mock PR that just bumps up the
+version numbers or adds a dummy comment to
+the specification files of the components modified in the problematic PR. This
+option has the advantage of not interfering with components results recycling,
+but is harder to implement if the problematic PR affects many components.</p>
+<h2 id="preparation-step">Preparation step</h2>
+<p>In this section, we briefly describe the workflow of the <code>prepare</code> command in the <code>shrike</code> library, that is</p>
+<ol>
+<li>Search all Azure ML components in the working directory by matching the glob path of component specification files,</li>
+<li>Add repo and commit info to "tags" and "description" section of <code>spec.yaml</code>,</li>
+<li>Validate all "active" components,</li>
+<li>Build all "active" components, and</li>
+<li>Create files <code>catlog.json</code> and <code>catalog.json.sig</code> for each "active" component.</li>
+</ol>
+<blockquote>
+<p>Note: While building "active" components, all additional dependency files specified in <code>.additional_includes</code> will be copied into the component build folder by 
+the <code>prepare</code> command. However, for those dependecy files that are not checked into the repository, such as OdinML Jar (from NuGet packages) and .zip files, we need to write extra "tasks" to 
+copy them into the component build folder.</p>
+</blockquote>
+<p>A sample YAML script of preparation step</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="p p-Indicator">-</span> <span class="nt">task</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AzureCLI@2</span>
+<span class="linenos" data-linenos="2 "></span>  <span class="nt">displayName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Preparation</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="nt">inputs</span><span class="p">:</span>
+<span class="linenos" data-linenos="4 "></span>    <span class="nt">azureSubscription</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_AML_WORKSPACE_SERVICE_CONNECTION)</span>
+<span class="linenos" data-linenos="5 "></span>    <span class="nt">scriptLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">inlineScript</span>
+<span class="linenos" data-linenos="6 "></span>    <span class="nt">scriptType</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pscore</span>
+<span class="linenos" data-linenos="7 "></span>    <span class="nt">inlineScript</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+<span class="linenos" data-linenos="8 "></span>      <span class="no">python -m shrike.build.commands.prepare --configuration-file PATH/TO/MY_CONFIGURATION_FILE</span>
+<span class="linenos" data-linenos="9 "></span>    <span class="nt">workingDirectory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_WORK_DIRECTORY)</span>
+</code></pre></div>
+<h3 id="customized-validation-on-components-optional">Customized validation on components (optional)</h3>
+<p>At the <code>prepare</code> step of the signing and registering build,
+the <code>shrike.build.command.prepare.validate_all_components()</code> function
+executes an azure cli command 
+<code>az ml component validate --file ${component_spec_path}</code> to validate
+whether the given component spec YAML file has any syntax errors or matches
+the strucuture of the pre-defined schema.</p>
+<p>Apart from the standard validation via az cli, users can also enforce customized "strict"
+validation on Azure ML components. There are two parameters - <code>enable_component_validation</code> 
+(type: <code>boolean</code>, default: <code>False</code>) and <code>component_validation</code>
+(type: <code>dict</code>, default: <code>None</code>) that could be specified in the 
+configuration file. If <code>config.enable_component_validation is True</code>,
+it will first check whether the components are compliant, then run
+the user-provided customized validation.</p>
+<p>We expect users to write <a href="https://support.smartbear.com/alertsite/docs/monitors/api/endpoint/jsonpath.html">JSONPath expressions</a>
+to query Azure ML component spec YAML elements. For example,
+the path of component name is <code>$.name</code>, while the path of
+image is <code>$.environment.docker.image</code>.
+Then, users are expected to translate their specific "strict" validation rules to 
+regular expression patterns. For example, enforcing the component
+name to start with "smartreply." could be translated to
+a string pattern <code>^smartreply.[A-Za-z0-9-_.]+$</code>. 
+After that, the JSONPath expressions and corresponding regular expressions
+will be combined into a dict and assigned to <code>config.component_validation</code>
+in the configuration file.</p>
+<p>Assuming we enforce two "strict" validation requirements on
+the component: (1)
+the component name starts with <code>smartreply.</code>, (2)
+all the input parameter descriptions start with a
+capital letter. Below is an example of the configuration file that specifies
+the above two validation requirements.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="nt">activation_method</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="nt">compliant_branch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^refs/heads/develop$</span>
+<span class="linenos" data-linenos=" 3 "></span><span class="nt">component_specification_glob</span><span class="p">:</span> <span class="s">&#39;components/**/module_spec.yaml&#39;</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="nt">log_format</span><span class="p">:</span> <span class="s">&#39;[%(name)s][%(levelname)s]</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">%(message)s&#39;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="nt">signing_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">aml</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="nt">workspaces</span><span class="p">:</span> 
+<span class="linenos" data-linenos=" 7 "></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/subscriptions/&lt;Subscription-Id&gt;/resourcegroups/&lt;Name-Of-Resource-Group&gt;/providers/Microsoft.MachineLearningServices/workspaces/&lt;Azure-ML-Workspace-Name&gt;</span>
+<span class="linenos" data-linenos=" 8 "></span><span class="nt">allow_duplicate_versions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="linenos" data-linenos=" 9 "></span><span class="nt">use_build_number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="linenos" data-linenos="10 "></span>
+<span class="linenos" data-linenos="11 "></span><span class="c1"># strict component validation</span>
+<span class="linenos" data-linenos="12 "></span><span class="nt">enable_component_validation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="linenos" data-linenos="13 "></span><span class="nt">component_validation</span><span class="p">:</span>
+<span class="linenos" data-linenos="14 "></span>  <span class="s">&#39;$.name&#39;</span><span class="p p-Indicator">:</span> <span class="s">&#39;^smartreply.[A-Za-z0-9-_.]+$&#39;</span>
+<span class="linenos" data-linenos="15 "></span>  <span class="s">&#39;$.inputs..description&#39;</span><span class="p p-Indicator">:</span> <span class="s">&#39;^[A-Z].*&#39;</span>
+</code></pre></div>
+<p>Please refer to this <a href="https://github.com/Azure/shrike/blob/main/docs/rfc/strict-component-validation.md">proposal doc</a>
+for more details on the customized validation.</p>
+<h2 id="esrp-codesign">ESRP CodeSign</h2>
+<p>After creating <code>catlog.json</code> and <code>catalog.json.sig</code> files for each built component in the preparation step, we leverage the ESRP, that is <em>Engineer Sercurity and Release Platform</em>, to sign
+the contents of components. In the sample YAML script below, we need to customize <code>ConnectedServiceName</code> and <code>FolderPath</code>. In <code>TEEGit</code> repo, the name of ESRP service connection for Torus tenant 
+(Tenant Id: ​cdc5aeea-15c5-4db6-b079-fcadd2505dc2​) is <code>Substrate AI ESRP</code>. For other repos, if the service connection for ESRP has not been set up yet, please refer to the 
+<a href="https://microsoft.sharepoint.com/teams/prss/esrp/info/ESRP%20Onboarding%20Wiki/Integrate%20the%20ESRP%20Scan%20Task%20into%20ADO.aspx">ESRP CodeSign task Wiki</a> for detailed instructions.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="p p-Indicator">-</span> <span class="nt">task</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EsrpCodeSigning@1</span>
+<span class="linenos" data-linenos=" 2 "></span>    <span class="l l-Scalar l-Scalar-Plain">displayName</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ESRP CodeSigning</span>
+<span class="linenos" data-linenos=" 3 "></span>    <span class="l l-Scalar l-Scalar-Plain">inputs</span><span class="p p-Indicator">:</span>
+<span class="linenos" data-linenos=" 4 "></span>    <span class="nt">ConnectedServiceName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_ESRP_SERVICE_CONNECTION)</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="nt">FolderPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_WORK_DIRECTORY)</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="nt">Pattern</span><span class="p">:</span> <span class="s">&#39;*.sig&#39;</span>
+<span class="linenos" data-linenos=" 7 "></span>    <span class="nt">signConfigType</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">inlineSignParams</span>
+<span class="linenos" data-linenos=" 8 "></span>    <span class="nt">inlineOperation</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+<span class="linenos" data-linenos=" 9 "></span>      <span class="no">[</span>
+<span class="linenos" data-linenos="10 "></span>        <span class="no">{</span>
+<span class="linenos" data-linenos="11 "></span>          <span class="no">&quot;KeyCode&quot;: &quot;CP-460703-Pgp&quot;,</span>
+<span class="linenos" data-linenos="12 "></span>          <span class="no">&quot;OperationCode&quot;: &quot;LinuxSign&quot;,</span>
+<span class="linenos" data-linenos="13 "></span>          <span class="no">&quot;parameters&quot;: {},</span>
+<span class="linenos" data-linenos="14 "></span>          <span class="no">&quot;toolName&quot;: &quot;sign&quot;,</span>
+<span class="linenos" data-linenos="15 "></span>          <span class="no">&quot;toolVersion&quot;: &quot;1.0&quot;</span>
+<span class="linenos" data-linenos="16 "></span>        <span class="no">}</span>
+<span class="linenos" data-linenos="17 "></span>      <span class="no">]</span>
+<span class="linenos" data-linenos="18 "></span>    <span class="nt">SessionTimeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="linenos" data-linenos="19 "></span>    <span class="nt">VerboseLogin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<blockquote>
+<p>Note: This step requires one-time authorization from the administrator of your ESRP service connection. Please contact your manager or tech lead for authorization questions.</p>
+</blockquote>
+<h2 id="component-registration">Component registration</h2>
+<p>The last step is to register all signed components in your Azure ML workspaces. The <code>register</code> class in the <code>shrike</code> library implements the registration procedure by executing the
+Azure CLI command <code>az ml component --create --file {component}</code>. The Python call is</p>
+<p><div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">shrike</span><span class="o">.</span><span class="n">build</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">register</span> <span class="o">--</span><span class="n">configuration</span><span class="o">-</span><span class="n">file</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">config</span>
+</code></pre></div>
+In this step, the <code>register</code> class can detect signed and built components.
+There are five configuration parameters related to the registration step: <code>--compliant-branch</code>, <code>--source-branch</code>, <code>--fail-if-version-exists</code>, <code>--use-build-number</code>, and <code>--all-component-version</code>. They should be customized in the <code>configure-file</code> according to your specific use case.</p>
+<ul>
+<li>The <code>register</code> class checks whether the value of <code>source_branch</code> matches that of <code>compliant_branch</code> before starting registration. If their pattern doesn't match, an error message will be logged and the registration step will be terminated.</li>
+<li>If <code>fail_if_version_exists</code> is True, an error is raised and the registration step is terminated when the version number of some signed component already exists in the workspace; Otherwise, only a warning is raised and the registration step continues.</li>
+<li>If <code>all_component_version</code> is not <code>None</code>, the value of <code>all_component_version</code> is used as the version number for all signed components.</li>
+<li>If <code>use_build_number</code> is True, the build number is used as the version number for all signed components (Overriding the value of <code>all_component_version</code> if <code>all_component_version</code> is not <code>None</code>).</li>
+</ul>
+<p>A sample YAML task for registration is 
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="p p-Indicator">-</span> <span class="nt">task</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AzureCLI@2</span>
+<span class="linenos" data-linenos="2 "></span>    <span class="l l-Scalar l-Scalar-Plain">displayName</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">AML Component Registration</span>
+<span class="linenos" data-linenos="3 "></span>    <span class="l l-Scalar l-Scalar-Plain">inputs</span><span class="p p-Indicator">:</span>
+<span class="linenos" data-linenos="4 "></span>    <span class="nt">azureSubscription</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_AML_WORKSPACE_SERVICE_CONNECTION)</span>
+<span class="linenos" data-linenos="5 "></span>    <span class="nt">scriptLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">inlineScript</span>
+<span class="linenos" data-linenos="6 "></span>    <span class="nt">scriptType</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pscore</span>
+<span class="linenos" data-linenos="7 "></span>    <span class="nt">inlineScript</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+<span class="linenos" data-linenos="8 "></span>      <span class="no">python -m shrike.build.commands.register --configuration-file PATH/TO/MY_CONFIGURATION_FILE</span>
+<span class="linenos" data-linenos="9 "></span>    <span class="nt">workingDirectory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_WORK_DIRECTORY)</span>
+</code></pre></div></p>
+<blockquote>
+<p>Note: The <code>shrike</code> library is version-aware. For a component of product-ready version number (e.g., a.b.c), it is set as the default version in the registration step; 
+Otherwise, for a component of non-product-ready version number (e.g., a.b.c-alpha), it will not be labelled as default. </p>
+</blockquote>
+<h2 id="handling-components-which-use-binaries">Handling components which use binaries</h2>
+<p>For some components (e.g., Linux/Windows components running .NET Core DLLs or Windows Exes, or HDI components leveraging the ODIN-ML JAR or Spark .NET), the signed snapshot needs to contain some binaries. As long as <strong>those binaries are compiled from human-reviewed source code or come from internal (authenticated) feeds</strong>, this is fine. Teams may inject essentially arbitrary logic into their Azure DevOps pipeline, either for compiling C# code, or downloading \&amp; extracting NuGets from the Polymer NuGet feed.</p>
+<h2 id="ther-style-code-signing">&AElig;ther-style code signing</h2>
+<p>This tool also assists with &AElig;ther-style code signing. Just write a configuration file like:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nt">component_specification_glob</span><span class="p">:</span> <span class="s">&#39;**/ModuleAutoApprovalManifest.json&#39;</span>
+<span class="linenos" data-linenos="2 "></span><span class="nt">signing_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">aether</span>
+</code></pre></div>
+<p>and then run a code signing step like this just after the "prepare" command. Note: your ESRP service connection will need to have access to the <code>CP-230012</code> key, otherwise you'll encounter the error described in:</p>
+<blockquote>
+<p><a href="https://stackoverflow.microsoft.com/a/256540/">Got unauthorized to access CP-230012 when calling Aether-style signing service</a></p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="p p-Indicator">-</span> <span class="nt">task</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">EsrpCodeSigning@1</span>
+<span class="linenos" data-linenos=" 2 "></span>  <span class="nt">displayName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sign modules</span>
+<span class="linenos" data-linenos=" 3 "></span>  <span class="nt">inputs</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 4 "></span>    <span class="nt">ConnectedServiceName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_ESRP_SERVICE_CONNECTION)</span>
+<span class="linenos" data-linenos=" 5 "></span>    <span class="nt">FolderPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(MY_WORK_DIRECTORY)</span>
+<span class="linenos" data-linenos=" 6 "></span>    <span class="nt">Pattern</span><span class="p">:</span> <span class="s">&#39;*.cat&#39;</span>
+<span class="linenos" data-linenos=" 7 "></span>    <span class="nt">signConfigType</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">inlineSignParams</span>
+<span class="linenos" data-linenos=" 8 "></span>    <span class="nt">inlineOperation</span><span class="p">:</span> <span class="p p-Indicator">|</span>
+<span class="linenos" data-linenos=" 9 "></span>      <span class="no">[</span>
+<span class="linenos" data-linenos="10 "></span>        <span class="no">{</span>
+<span class="linenos" data-linenos="11 "></span>          <span class="no">&quot;keyCode&quot;: &quot;CP-230012&quot;,</span>
+<span class="linenos" data-linenos="12 "></span>          <span class="no">&quot;operationSetCode&quot;: &quot;SigntoolSign&quot;,</span>
+<span class="linenos" data-linenos="13 "></span>          <span class="no">&quot;parameters&quot;: [</span>
+<span class="linenos" data-linenos="14 "></span>              <span class="no">{</span>
+<span class="linenos" data-linenos="15 "></span>                <span class="no">&quot;parameterName&quot;: &quot;OpusName&quot;,</span>
+<span class="linenos" data-linenos="16 "></span>                <span class="no">&quot;parameterValue&quot;: &quot;Microsoft&quot;</span>
+<span class="linenos" data-linenos="17 "></span>              <span class="no">},</span>
+<span class="linenos" data-linenos="18 "></span>              <span class="no">{</span>
+<span class="linenos" data-linenos="19 "></span>                <span class="no">&quot;parameterName&quot;: &quot;OpusInfo&quot;,</span>
+<span class="linenos" data-linenos="20 "></span>                <span class="no">&quot;parameterValue&quot;: &quot;http://www.microsoft.com&quot;</span>
+<span class="linenos" data-linenos="21 "></span>              <span class="no">},</span>
+<span class="linenos" data-linenos="22 "></span>              <span class="no">{</span>
+<span class="linenos" data-linenos="23 "></span>                <span class="no">&quot;parameterName&quot;: &quot;PageHash&quot;,</span>
+<span class="linenos" data-linenos="24 "></span>                <span class="no">&quot;parameterValue&quot;: &quot;/NPH&quot;</span>
+<span class="linenos" data-linenos="25 "></span>              <span class="no">},</span>
+<span class="linenos" data-linenos="26 "></span>              <span class="no">{</span>
+<span class="linenos" data-linenos="27 "></span>                <span class="no">&quot;parameterName&quot;: &quot;FileDigest&quot;,</span>
+<span class="linenos" data-linenos="28 "></span>                <span class="no">&quot;parameterValue&quot;: &quot;/fd sha256&quot;</span>
+<span class="linenos" data-linenos="29 "></span>              <span class="no">},</span>
+<span class="linenos" data-linenos="30 "></span>              <span class="no">{</span>
+<span class="linenos" data-linenos="31 "></span>                <span class="no">&quot;parameterName&quot;: &quot;TimeStamp&quot;,</span>
+<span class="linenos" data-linenos="32 "></span>                <span class="no">&quot;parameterValue&quot;: &quot;/tr \&quot;http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\&quot; /td sha256&quot;</span>
+<span class="linenos" data-linenos="33 "></span>              <span class="no">}</span>
+<span class="linenos" data-linenos="34 "></span>          <span class="no">],</span>
+<span class="linenos" data-linenos="35 "></span>          <span class="no">&quot;toolName&quot;: &quot;signtool.exe&quot;,</span>
+<span class="linenos" data-linenos="36 "></span>          <span class="no">&quot;toolVersion&quot;: &quot;6.2.9304.0&quot;</span>
+<span class="linenos" data-linenos="37 "></span>        <span class="no">}</span>
+<span class="linenos" data-linenos="38 "></span>      <span class="no">]</span>
+<span class="linenos" data-linenos="39 "></span>    <span class="nt">SessionTimeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="linenos" data-linenos="40 "></span>    <span class="nt">VerboseLogin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<p>&AElig;ther does not support "true" CI/CD, but you will be able to use your build drops to register compliant &AElig;ther modules following <a href="https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Fdocs%2FAether-for-compliant-experimentation%2FSigned-Builds.md&amp;_a=preview">Signed Builds</a>.</p>
+<p>For reference, you may imitate <a href="https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fsigned-components%2Fazure-pipelines.yml&amp;version=GBmain&amp;line=118&amp;lineEnd=197&amp;lineStartColumn=1&amp;lineEndColumn=37&amp;lineStyle=plain&amp;_a=contents">this build used by the AML Data Science team</a>.</p>
+<p><em>Note:</em> there is no need to run the Azure ML-style and &AElig;ther-style code signing in separate jobs. So long as they both run in a Windows VM, it may be the same job.</p>
+<h2 id="per-component-builds">Per-component builds</h2>
+<p>If you want your team to be able to manually trigger "&AElig;ther-style" per-component builds from their compliant branches, consider creating a separate build definition with the following changes.</p>
+<p>Top of build definition.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$(Date:yyyyMMdd)$(Rev:.r)-dev</span>
+<span class="linenos" data-linenos=" 2 "></span>
+<span class="linenos" data-linenos=" 3 "></span><span class="nt">parameters</span><span class="p">:</span>
+<span class="linenos" data-linenos=" 4 "></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">aml_component</span>
+<span class="linenos" data-linenos=" 5 "></span>  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">string</span>
+<span class="linenos" data-linenos=" 6 "></span>  <span class="nt">default</span><span class="p">:</span>  <span class="s">&#39;**&#39;</span>
+<span class="linenos" data-linenos=" 7 "></span>  <span class="err">```</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span><span class="l l-Scalar l-Scalar-Plain">Inline script portion of your &quot;prepare&quot; and &quot;register&quot; steps (you will need to customize the configuration file name and glob to your repository).</span>
+<span class="linenos" data-linenos="10 "></span>
+<span class="linenos" data-linenos="11 "></span><span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">bash</span>
+<span class="linenos" data-linenos="12 "></span><span class="l l-Scalar l-Scalar-Plain">python -m shrike.build.commands.register --configuration-file sign-register-config-dev.yaml --component-specification-glob src/steps/${{ parameters.aml_component }}/component_spec.yaml</span>
+</code></pre></div>
+<p>Then, members of your team can manually trigger builds via the Azure DevOps UI, setting the <code>aml_component</code> parameter to the name of the component they want to code-sign and register.</p>
+<p><strong>Tips</strong></p>
+<ul>
+<li>Another way of achieving similar functionality is to run several "smart mode" builds which trigger against <strong>all</strong> <code>compliant/*</code> branches. To do so, you will need several build config files, one for each compliant branch.</li>
+<li>Name your builds something like <code>*-dev</code> so that these versions of the components don't get registered as default.</li>
+<li>See the Search Relevance team's example for something complete: <a href="https://dev.azure.com/eemo/TEE/_build?definitionId=532&amp;_a=summary">[yaml] SearchRelevance AML Components Signing and Registering - dev</a>.</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../compliant_logging/logging/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              logging
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../rfc/strict-component-validation/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Component validation
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

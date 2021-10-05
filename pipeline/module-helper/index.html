@@ -1,0 +1,2139 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>module_helper - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module-helper" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              module_helper
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" checked>
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          module_helper
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        module_helper
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper" class="md-nav__link">
+    shrike.pipeline.module_helper
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader" class="md-nav__link">
+    AMLModuleLoader
+  </a>
+  
+    <nav class="md-nav" aria-label="AMLModuleLoader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.get_from_cache" class="md-nav__link">
+    get_from_cache()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.get_module_manifest_entry" class="md-nav__link">
+    get_module_manifest_entry()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.is_local" class="md-nav__link">
+    is_local()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_config_manifest" class="md-nav__link">
+    load_config_manifest()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_local_module" class="md-nav__link">
+    load_local_module()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_module" class="md-nav__link">
+    load_module()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_modules_manifest" class="md-nav__link">
+    load_modules_manifest()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_prod_module" class="md-nav__link">
+    load_prod_module()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.module_in_cache" class="md-nav__link">
+    module_in_cache()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.put_in_cache" class="md-nav__link">
+    put_in_cache()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.verify_manifest" class="md-nav__link">
+    verify_manifest()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.module_loader_config" class="md-nav__link">
+    module_loader_config
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.module_manifest" class="md-nav__link">
+    module_manifest
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.module_reference" class="md-nav__link">
+    module_reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper" class="md-nav__link">
+    shrike.pipeline.module_helper
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader" class="md-nav__link">
+    AMLModuleLoader
+  </a>
+  
+    <nav class="md-nav" aria-label="AMLModuleLoader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.get_from_cache" class="md-nav__link">
+    get_from_cache()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.get_module_manifest_entry" class="md-nav__link">
+    get_module_manifest_entry()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.is_local" class="md-nav__link">
+    is_local()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_config_manifest" class="md-nav__link">
+    load_config_manifest()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_local_module" class="md-nav__link">
+    load_local_module()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_module" class="md-nav__link">
+    load_module()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_modules_manifest" class="md-nav__link">
+    load_modules_manifest()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.load_prod_module" class="md-nav__link">
+    load_prod_module()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.module_in_cache" class="md-nav__link">
+    module_in_cache()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.put_in_cache" class="md-nav__link">
+    put_in_cache()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.AMLModuleLoader.verify_manifest" class="md-nav__link">
+    verify_manifest()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.module_loader_config" class="md-nav__link">
+    module_loader_config
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.module_manifest" class="md-nav__link">
+    module_manifest
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shrike.pipeline.module_helper.module_reference" class="md-nav__link">
+    module_reference
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/pipeline/module-helper.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="module-helper">Module helper</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="shrike.pipeline.module_helper"></a>
+    <div class="doc doc-contents first">
+
+      <p>Pipeline helper class to create pipelines loading modules from a flexible manifest.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader">
+        <code>AMLModuleLoader</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Helper class to load modules from within an AMLPipelineHelper.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.__init__">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Creates module instances for AMLPipelineHelper.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>config</code></td>
+        <td><code>DictConfig</code></td>
+        <td><p>configuration options</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates module instances for AMLPipelineHelper.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (DictConfig): configuration options</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_local_except_for</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">use_local_except_for</span>
+        <span class="k">if</span> <span class="s2">&quot;use_local_except_for&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span>
+        <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;use_local&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">use_local</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">use_local</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">use_local</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">use_local</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_check_use_local_syntax_valid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">use_local</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Invalid value for `use_local`. Please follow one of the four patterns: </span><span class="se">\n</span><span class="s1">1) use_local=&quot;&quot;, all modules are remote</span><span class="se">\n</span><span class="s1">2) use_local=&quot;*&quot;, all modules are local</span><span class="se">\n</span><span class="s1">3) use_local=&quot;MODULE_KEY_1, MODULE_KEY_2&quot;, only MODULE_KEY_1, MODULE_KEY_2 are local, everything else is remote</span><span class="se">\n</span><span class="s1">4) use_local=&quot;!MODULE_KEY_1, !MODULE_KEY_2&quot;, all except for MODULE_KEY_1, MODULE_KEY_2 are local&#39;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_local_except_for</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;!&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">force_default_module_version</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">force_default_module_version</span>
+        <span class="k">if</span> <span class="s2">&quot;force_default_module_version&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span>
+        <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">force_all_module_version</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">force_all_module_version</span>
+        <span class="k">if</span> <span class="s2">&quot;force_all_module_version&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span>
+        <span class="k">else</span> <span class="kc">None</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">local_steps_folder</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">module_loader</span><span class="o">.</span><span class="n">local_steps_folder</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">module_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># internal manifest built from yaml config</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">modules_manifest</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">load_config_manifest</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;AMLModuleLoader initialized (use_local=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">use_local</span><span class="si">}</span><span class="s2">, force_default_module_version=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">force_default_module_version</span><span class="si">}</span><span class="s2">, force_all_module_version=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">force_all_module_version</span><span class="si">}</span><span class="s2">, local_steps_folder=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">local_steps_folder</span><span class="si">}</span><span class="s2">, manifest=</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules_manifest</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.get_from_cache">
+<code class="highlight language-python"><span class="n">get_from_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_cache_key</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Gets module class from internal cache (dict)</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_from_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_cache_key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets module class from internal cache (dict)&quot;&quot;&quot;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using cached module </span><span class="si">{</span><span class="n">module_cache_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.get_module_manifest_entry">
+<code class="highlight language-python"><span class="n">get_module_manifest_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_key</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Gets a particular entry in the module manifest.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>module_key</code></td>
+        <td><code>str</code></td>
+        <td><p>module key from the manifest</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>modules_manifest</code></td>
+        <td><code>dict</code></td>
+        <td><p>manifest from required_modules() [DEPRECATED]</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>module manifest entry</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_module_manifest_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_key</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets a particular entry in the module manifest.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_key (str): module key from the manifest</span>
+<span class="sd">        modules_manifest (dict): manifest from required_modules() [DEPRECATED]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: module manifest entry</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">module_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules_manifest</span><span class="p">:</span>
+        <span class="n">module_entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules_manifest</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span>
+        <span class="n">module_namespace</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">modules_manifest</span> <span class="ow">and</span> <span class="n">module_key</span> <span class="ow">in</span> <span class="n">modules_manifest</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;We highly recommend substituting the `required_modules` method by the modules.manifest configuration.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">module_entry</span> <span class="o">=</span> <span class="n">modules_manifest</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span>
+        <span class="c1"># map to new format</span>
+        <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;yaml&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;yaml_spec&quot;</span><span class="p">]</span>
+        <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;remote_module_name&quot;</span><span class="p">]</span>
+        <span class="n">module_namespace</span> <span class="o">=</span> <span class="n">module_entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;namespace&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Module key &#39;</span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2">&#39; could not be found in modules.manifest configuration or in required_modules() method.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">module_entry</span><span class="p">,</span> <span class="n">module_namespace</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.is_local">
+<code class="highlight language-python"><span class="n">is_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Tests is module is in local list</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests is module is in local list&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_local_except_for</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;!&quot;</span> <span class="o">+</span> <span class="n">module_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_local</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.load_config_manifest">
+<code class="highlight language-python"><span class="n">load_config_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Fills the internal module manifest based on config object</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_config_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fills the internal module manifest based on config object&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">manifest</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="n">module_key</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">key</span>
+        <span class="k">elif</span> <span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">module_key</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;In module manifest, you have to provide at least key or name.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modules_manifest</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.load_local_module">
+<code class="highlight language-python"><span class="n">load_local_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_spec_path</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Creates one module instance.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>module_spec_path</code></td>
+        <td><code>str</code></td>
+        <td><p>path to local module yaml spec</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>object</code></td>
+      <td><p>module class loaded</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_local_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_spec_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates one module instance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_spec_path (str): path to local module yaml spec</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        object: module class loaded</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">module_cache_key</span> <span class="o">=</span> <span class="n">module_spec_path</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_in_cache</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_from_cache</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building module from local code at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">module_spec_path</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">module_spec_path</span><span class="p">):</span>
+        <span class="n">module_spec_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_steps_folder</span><span class="p">,</span> <span class="n">module_spec_path</span><span class="p">)</span>
+    <span class="n">loaded_module_class</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="n">current_workspace</span><span class="p">(),</span> <span class="n">module_spec_path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">put_in_cache</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">,</span> <span class="n">loaded_module_class</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loaded_module_class</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.load_module">
+<code class="highlight language-python"><span class="n">load_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_key</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Loads a particular module from the manifest.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>module_key</code></td>
+        <td><code>str</code></td>
+        <td><p>module key from the manifest</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>modules_manifest</code></td>
+        <td><code>dict</code></td>
+        <td><p>manifest from required_modules() [DEPRECATED]</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>object</code></td>
+      <td><p>module class loaded</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_key</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads a particular module from the manifest.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_key (str): module key from the manifest</span>
+<span class="sd">        modules_manifest (dict): manifest from required_modules() [DEPRECATED]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        object: module class loaded</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">module_entry</span><span class="p">,</span> <span class="n">module_namespace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module_manifest_entry</span><span class="p">(</span>
+        <span class="n">module_key</span><span class="p">,</span> <span class="n">modules_manifest</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_local</span><span class="p">(</span><span class="n">module_key</span><span class="p">):</span>
+        <span class="n">loaded_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_local_module</span><span class="p">(</span><span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;yaml&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">loaded_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_prod_module</span><span class="p">(</span>
+            <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">],</span>
+            <span class="n">module_namespace</span><span class="o">=</span><span class="n">module_namespace</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">loaded_module</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.load_modules_manifest">
+<code class="highlight language-python"><span class="n">load_modules_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Creates module instances from modules_manifest.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>modules_manifest</code></td>
+        <td><code>dict</code></td>
+        <td><p>manifest of modules to load</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>modules loaded, keys are taken from module_manifest.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>Exception</code></td>
+        <td><p>if loading module has an error or manifest is wrong.</p></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_modules_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates module instances from modules_manifest.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        modules_manifest (dict): manifest of modules to load</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: modules loaded, keys are taken from module_manifest.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: if loading module has an error or manifest is wrong.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading module manifest (use_local=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">use_local</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">test_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">verify_manifest</span><span class="p">(</span><span class="n">modules_manifest</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">test_results</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">&quot;Loading modules from manifest raised errors:</span><span class="se">\n\n</span><span class="s2">MANIFEST: </span><span class="si">{}</span><span class="se">\n\n</span><span class="s2">ERRORS: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">modules_manifest</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">test_results</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">loaded_modules</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">module_key</span> <span class="ow">in</span> <span class="n">modules_manifest</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading module </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2"> from manifest&quot;</span><span class="p">)</span>
+        <span class="n">loaded_modules</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">module_key</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loaded_modules</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.load_prod_module">
+<code class="highlight language-python"><span class="n">load_prod_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_version</span><span class="p">,</span> <span class="n">module_namespace</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Creates one module instance.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>module_name</code></td>
+        <td><code>str) </code></td>
+        <td><p>module name</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>module_version</code></td>
+        <td><code>str) </code></td>
+        <td><p>module version</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>object</code></td>
+      <td><p>module class loaded</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_prod_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">module_version</span><span class="p">,</span> <span class="n">module_namespace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates one module instance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_name (str) : module name</span>
+<span class="sd">        module_version (str) : module version</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        object: module class loaded</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_all_module_version</span><span class="p">:</span>
+        <span class="n">module_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_all_module_version</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">module_version</span> <span class="o">=</span> <span class="n">module_version</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_default_module_version</span>
+
+    <span class="n">module_cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">module_version</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_in_cache</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_from_cache</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Loading remote module </span><span class="si">{</span><span class="n">module_cache_key</span><span class="si">}</span><span class="s2"> (name=</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">, version=</span><span class="si">{</span><span class="n">module_version</span><span class="si">}</span><span class="s2">, namespace=</span><span class="si">{</span><span class="n">module_namespace</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
+    <span class="n">loading_raised_exception</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># try without namespace first</span>
+        <span class="n">loaded_module_class</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="n">current_workspace</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">module_name</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="n">module_version</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># save the exception to raise it if namespace not provided</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">module_namespace</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+
+    <span class="k">if</span> <span class="n">module_namespace</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;    Trying to load module </span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2"> with namespace </span><span class="si">{</span><span class="n">module_namespace</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">module_name</span> <span class="o">=</span> <span class="n">module_namespace</span> <span class="o">+</span> <span class="s2">&quot;://&quot;</span> <span class="o">+</span> <span class="n">module_name</span>
+        <span class="n">loaded_module_class</span> <span class="o">=</span> <span class="n">Component</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="n">current_workspace</span><span class="p">(),</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">module_name</span><span class="p">,</span>
+            <span class="n">version</span><span class="o">=</span><span class="n">module_version</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">put_in_cache</span><span class="p">(</span><span class="n">module_cache_key</span><span class="p">,</span> <span class="n">loaded_module_class</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loaded_module_class</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.module_in_cache">
+<code class="highlight language-python"><span class="n">module_in_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_cache_key</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Tests if module in internal cache (dict)</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">module_in_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_cache_key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests if module in internal cache (dict)&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">module_cache_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_cache</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.put_in_cache">
+<code class="highlight language-python"><span class="n">put_in_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_cache_key</span><span class="p">,</span> <span class="n">module_class</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Puts module class in internal cache (dict)</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">put_in_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_cache_key</span><span class="p">,</span> <span class="n">module_class</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Puts module class in internal cache (dict)&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">module_cache</span><span class="p">[</span><span class="n">module_cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_class</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="shrike.pipeline.module_helper.AMLModuleLoader.verify_manifest">
+<code class="highlight language-python"><span class="n">verify_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Tests a module manifest schema</p>
+
+        <details class="quote">
+          <summary>Source code in <code>shrike/pipeline/module_helper.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">verify_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modules_manifest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests a module manifest schema&quot;&quot;&quot;</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">module_entry</span><span class="p">)</span> <span class="ow">in</span> <span class="n">modules_manifest</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># TODO: merge error checking code with processing code so we do all this in one pass</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_local</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;yaml_spec&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">module_entry</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: You need to specify a yaml_spec for your module to use_local=[&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39;]&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+                <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;yaml_spec&quot;</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_steps_folder</span><span class="p">,</span> <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;yaml_spec&quot;</span><span class="p">])</span>
+            <span class="p">):</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Could not find yaml spec </span><span class="si">{}</span><span class="s2"> for use_local=[&#39;</span><span class="si">{}</span><span class="s2">&#39;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">k</span><span class="p">,</span> <span class="n">module_entry</span><span class="p">[</span><span class="s2">&quot;yaml_spec&quot;</span><span class="p">],</span> <span class="n">k</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;remote_module_name&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">module_entry</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: You need to specify a name for your module to use_local=False&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;namespace&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">module_entry</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: You need to specify a namespace for your module to use_local=False&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;version&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">module_entry</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">force_default_module_version</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_all_module_version</span>
+            <span class="p">):</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">: You need to specify a version for your module to use_local=False, or use either force_default_module_version or force_all_module_version in config&quot;</span>
+                <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">errors</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.pipeline.module_helper.module_loader_config">
+        <code>module_loader_config</code>
+
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Config for the AMLModuleLoader class</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.pipeline.module_helper.module_manifest">
+        <code>module_manifest</code>
+
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>module_manifest(manifest: List[shrike.pipeline.module_helper.module_reference] = <factory>)</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="shrike.pipeline.module_helper.module_reference">
+        <code>module_reference</code>
+
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>module_reference(key: Union[str, NoneType] = None, name: Union[str, NoneType] = None, source: Union[str, NoneType] = 'registered', yaml: Union[str, NoneType] = None, version: Union[str, NoneType] = None)</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../pipeline-helper/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              pipeline_helper
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../canary-helper/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              canary_helper
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1111 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Reuse your AML pipeline - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#general-process-for-reusing-and-configuring-an-existing-aml-experiment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reuse your AML pipeline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/" class="md-nav__link">
+        Logging examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compliant_logging/logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../build/register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Reuse your AML pipeline
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Reuse your AML pipeline
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivations" class="md-nav__link">
+    Motivations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-branch-from-an-existing-experiment" class="md-nav__link">
+    1. Branch from an existing experiment
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivations" class="md-nav__link">
+    Motivations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-branch-from-an-existing-experiment" class="md-nav__link">
+    1. Branch from an existing experiment
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/pipeline/reuse-aml-pipeline.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="general-process-for-reusing-and-configuring-an-existing-aml-experiment">General process for reusing and configuring an existing AML experiment</h1>
+<h2 id="motivations">Motivations</h2>
+<p>Essentially, an experiment is made of:
+- a runnable python script,
+- a configuration file.</p>
+<p>They are checked in a repository, making it reusable and shareable in your team. In many cases, it will be easy to copy an existing experiment to make it your own by just modifying the configuration file. In some instances, you'll want to modify the python script as well to have a more in-depth change on the structure of the graph.</p>
+<h2 id="1-branch-from-an-existing-experiment">1. Branch from an existing experiment</h2>
+<p>In this section, we'll assume you have identified an existing runnable script (<em>e.g.</em>: <code>demograph_eyesoff.py</code> <a href="https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fexperiments%2Fdemograph_eyesoff.py">here</a> in the accelerator repo) and a configuration file (<em>e.g.</em> <code>demograph_eyesoff.yaml</code> <a href="https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fconfig%2Fexperiments%2Fdemograph_eyesoff.yaml">there</a> in the accelerator repo)
+1. Create a new branch in your team's repository (to avoid conflicts).</p>
+<ol>
+<li>
+<p>In the <code>config/experiments/</code> <a href="https://dev.azure.com/msdata/Vienna/_git/aml-ds?path=%2Frecipes%2Fcompliant-experimentation%2Fpipelines%2Fconfig%2Fexperiments">folder</a>, identify a config file you want to start from.</p>
+</li>
+<li>
+<p>Copy this file into a new configuration file of your own.</p>
+</li>
+<li>
+<p>If this configuration file has a module manifest specified in the defaults section, as an example:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nt">defaults</span><span class="p">:</span>
+<span class="linenos" data-linenos="2 "></span>  <span class="p p-Indicator">-</span> <span class="nt">aml</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eyesoff</span> <span class="c1"># default aml references</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="p p-Indicator">-</span> <span class="nt">compute</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eyesoff</span> <span class="c1"># default compute target names</span>
+<span class="linenos" data-linenos="4 "></span>  <span class="p p-Indicator">-</span> <span class="nt">modules</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">module_defaults</span> <span class="c1"># list of modules + versions, see config/modules/</span>
+</code></pre></div>
+<p>Copy the file under <code>config/experiments/demograph_eyesoff.yaml</code> to a file of your own (ex: <code>demograph_eyesoff_modelX.yaml</code>), and rename the name under <code>defaults</code> in your experiment config accordingly.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nt">defaults</span><span class="p">:</span>
+<span class="linenos" data-linenos="2 "></span>  <span class="p p-Indicator">-</span> <span class="nt">aml</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eyesoff</span> <span class="c1"># default aml references</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="p p-Indicator">-</span> <span class="nt">compute</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eyesoff</span> <span class="c1"># default compute target names</span>
+<span class="linenos" data-linenos="4 "></span>  <span class="p p-Indicator">-</span> <span class="nt">modules</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">modules_modelX</span> <span class="c1"># &lt;&lt;&lt; modify here</span>
+</code></pre></div>
+<p>In the following sections, you will be able to pin each component in this manifest to a particular version number, different from your colleagues version numbers.</p>
+</li>
+<li>
+<p>In the <code>run</code> section, modify your experiment name:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nt">run</span><span class="p">:</span> <span class="c1"># params for running pipeline</span>
+<span class="linenos" data-linenos="2 "></span>  <span class="nt">experiment_name</span><span class="p">:</span> <span class="s">&quot;modelX&quot;</span> <span class="c1"># &lt;&lt;&lt; modify here</span>
+</code></pre></div>
+<blockquote>
+<p>Note: we recommend to use a different experiment for each project you work on. Experiments are essentially just a folder to put all your runs in order.</p>
+</blockquote>
+</li>
+<li>
+<p>That's it, at this point we invite you to try running the script for validating the graph (see below as an example):</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="n">python</span> <span class="n">pipelines</span><span class="p">/</span><span class="n">experiments</span><span class="p">/</span><span class="n">demograph_eyesoff</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-config-dir</span> <span class="n">pipelines</span><span class="p">/</span><span class="n">config</span> <span class="p">-</span><span class="n">-config-name</span> <span class="n">experiments</span><span class="p">/</span><span class="n">demograph_eyesoff_modelX</span>
+</code></pre></div>
+<p>This will try to build the graph, but will not submit it as an experiment. You're ready to modify the experiment now.</p>
+</li>
+</ol>
+<h1 id="2-modifying-the-code-best-practices">2. Modifying the code (best practices)</h1>
+<p>Here's a couple recommendations depending on what you want to do.</p>
+<h2 id="your-experiment-consists-in-modifying-components-only">Your experiment consists in modifying components only</h2>
+<p>If your experiment consists in modifying one or several components only (not the structure of the graph).</p>
+<ul>
+<li>work in a branch containing your component code</li>
+<li>use local code to experiment</li>
+<li>create a specific configuration file for your experiment that shows which component versions to use</li>
+<li>when satisfied, merge in to main/master and register the new versions for your team to share.</li>
+</ul>
+<h2 id="your-experiment-consists-in-modifying-the-graph-structure">Your experiment consists in modifying the graph structure</h2>
+<ul>
+<li>work in a branch containing your graph</li>
+<li>identify conflicts of versions with your team and either create a new graph or modify the existing one with options to switch on/off your changes</li>
+<li>create a specific configuration file for your experiment that shows which component versions to use</li>
+<li>when satisfied, merge in to main/master so that the team can reuse the new graph</li>
+</ul>
+<h1 id="3-experiment-with-local-code">3. Experiment with local code</h1>
+<p>If you want to modify a particular component for your experiment, we recommend to iterate on the component code using detonation chamber.</p>
+<p><strong>IMPORTANT</strong>: this is NOT possible for HDI components. If you want to modify HDI components, we recommend to test those first in eyes-on, or to register new versions of those HDI components in parallel of your experiment branch (create a specific branch for your new component versions).</p>
+<p>To use the local code for a given component:</p>
+<h2 id="identify-the-component-key">Identify the component key</h2>
+<p>Identify the component <strong>key</strong>, this is the key used to map to the component in the graphs/subgraphs code.</p>
+<ol>
+<li>
+<p>Go to the graph or subgraph you want to modify, check in the <code>build()</code> function to identify the component load key used. For instance below we want to modify <code>VocabGenerator</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="linenos" data-linenos="2 "></span>    <span class="c1"># ...</span>
+<span class="linenos" data-linenos="3 "></span>    <span class="n">vocab_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_load</span><span class="p">(</span><span class="s2">&quot;VocabGenerator&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="4 "></span>    <span class="c1"># ...</span>
+</code></pre></div>
+</li>
+<li>
+<p>If your pipeline uses the <code>required_modules()</code> method, this key will match with an entry in the required modules dictionary:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nd">@classmethod</span>
+<span class="linenos" data-linenos="2 "></span><span class="k">def</span> <span class="nf">required_modules</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="linenos" data-linenos="3 "></span>    <span class="k">return</span> <span class="p">{</span>
+<span class="linenos" data-linenos="4 "></span>        <span class="s2">&quot;VocabGenerator&quot;</span><span class="p">:{</span>
+<span class="linenos" data-linenos="5 "></span>            <span class="c1"># references of remote module</span>
+<span class="linenos" data-linenos="6 "></span>            <span class="s2">&quot;remote_module_name&quot;</span><span class="p">:</span><span class="s2">&quot;SparkVocabGenerator&quot;</span><span class="p">,</span> <span class="s2">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;microsoft.com/office/smartcompose&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">:</span><span class="kc">None</span><span class="p">,</span>
+<span class="linenos" data-linenos="7 "></span>            <span class="c1"># references of local module</span>
+<span class="linenos" data-linenos="8 "></span>            <span class="s2">&quot;yaml_spec&quot;</span><span class="p">:</span><span class="s2">&quot;spark_vocab_generator/module_spec.yaml&quot;</span>
+<span class="linenos" data-linenos="9 "></span>        <span class="p">},</span>
+</code></pre></div>
+<p>The key here is <code>VocabGenerator</code>, which is not the component name, but its key in the required modules dictionary.</p>
+</li>
+<li>
+<p>If your pipeline uses a module manifest in YAML (recommended!), this key will map to an entry in the modules manifest file <code>config/modules/modules_modelX.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="nt">manifest</span><span class="p">:</span>
+<span class="linenos" data-linenos="2 "></span>  <span class="c1"># ...</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="p p-Indicator">-</span> <span class="nt">key</span><span class="p">:</span> <span class="s">&quot;VocabGenerator&quot;</span>
+<span class="linenos" data-linenos="4 "></span>    <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;microsoft.com/office/smartcompose://SparkVocabGenerator&quot;</span>
+<span class="linenos" data-linenos="5 "></span>    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="linenos" data-linenos="6 "></span>    <span class="nt">yaml</span><span class="p">:</span> <span class="s">&quot;spark_vocab_generator/module_spec.yaml&quot;</span>
+<span class="linenos" data-linenos="7 "></span>  <span class="c1"># ...</span>
+</code></pre></div>
+<p>The key here is <code>VocabGenerator</code>, which is not the component name, but its key in the required modules dictionary.</p>
+<blockquote>
+<p>Note: if no <code>key</code> is specified, the <code>name</code> is used as key.</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="use-component-key-to-run-this-component-locally">Use component key to run this component locally</h2>
+<ol>
+<li>
+<p>Use the <code>use_local</code> command with that key. You can either add it to the command line:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="n">python</span> <span class="n">pipelines</span><span class="p">/</span><span class="n">experiments</span><span class="p">/</span><span class="n">demograph_eyesoff</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-config-dir</span> <span class="n">pipelines</span><span class="p">/</span><span class="n">config</span> <span class="p">-</span><span class="n">-config-name</span> <span class="n">experiments</span><span class="p">/</span><span class="n">demograph_eyesoff_modelX</span> <span class="n">module_loader</span><span class="p">.</span><span class="n">use_local</span><span class="p">=</span><span class="s2">&quot;VocabGenerator&quot;</span>
+</code></pre></div>
+<p>Or you can write it in your configuration file:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="c1"># module_loader </span>
+<span class="linenos" data-linenos="2 "></span><span class="nt">module_loader</span><span class="p">:</span> <span class="c1"># module loading params</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="c1"># IMPORTANT: if you want to modify a given module, add its key here</span>
+<span class="linenos" data-linenos="4 "></span>  <span class="c1"># see the code for identifying the module key</span>
+<span class="linenos" data-linenos="5 "></span>  <span class="c1"># use comma separation in this string to use multiple local modules</span>
+<span class="linenos" data-linenos="6 "></span>  <span class="nt">use_local</span><span class="p">:</span> <span class="s">&quot;VocabGenerator&quot;</span>
+</code></pre></div></p>
+<blockquote>
+<p>Note: this is example for illustrative purposesonly; the accelerator repo and the demo eyes-off graph do not really have a <code>VocabGenerator</code> component.</p>
+</blockquote>
+<p>From <code>shrike v1.4.0</code>, you could also specify "all local except for a few", using the syntax:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="c1"># module_loader</span>
+<span class="linenos" data-linenos="2 "></span><span class="nt">module_loader</span><span class="p">:</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="l l-Scalar l-Scalar-Plain">use_local=&quot;!KEY1, !KEY2&quot;</span>
+</code></pre></div>
+or from command line override:
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="n">python</span> <span class="p">&lt;</span><span class="n">your_pipeline_and_config</span><span class="p">&gt;</span> <span class="n">module_loader</span><span class="p">.</span><span class="n">use_local</span><span class="p">=</span><span class="s2">&quot;&#39;!KEY1, !KEY2&#39;&quot;</span>
+</code></pre></div>
+where only components <code>KEY1</code> and <code>KEY2</code> are remote, and all the other components are local.</p>
+<p>In summary, four patterns are allowed 
+- use_local = "", all components are remote
+- use_local = "*", all components are local
+- use_local = "KEY1, KEY2", components <code>KEY1</code> and <code>KEY2</code> are local
+- use_local = "!KEY1, !KEY2", all components except for <code>KEY1</code> and <code>KEY2</code> are local</p>
+<p>:warning:  <strong>"Mix" (e.g., use_local="KEY1, !KEY2") is not allowed.</strong>
+2. When running the experiment, watch-out in the logs for a line that will indicate this component has loaded from local code:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span>Building subgraph [Encoding as EncodingHdiPipeline]...
+<span class="linenos" data-linenos="2 "></span>--- Building module from local code at spark_vocab_generator/module_spec.yaml
+</code></pre></div>
+</li>
+</ol>
+<h1 id="4-experiment-with-different-versions-of-registered-components">4. Experiment with different versions of (registered) components</h1>
+<p>The way the helper code decides which version to use for a given component M is (in order):</p>
+<ul>
+<li>if <code>module_loader.force_all_module_version</code> is set, use it as version for component M (and all others)</li>
+<li>if a version is set under component M in <code>modules.manifest</code>, use it</li>
+<li>if a version is hardcoded in <code>required_modules()</code> for component M, use it</li>
+<li>if <code>module_loader.force_default_module_version</code> is set, use it as version for component M (and all others non specified versions)</li>
+<li>else, use default version registered in Azure ML (usually, the latest).</li>
+</ul>
+<p>Version management for your experiment components can have multiple use cases.</p>
+<h2 id="use-a-specific-version-for-all-unspecified-force_default_module_version">Use a specific version for all unspecified (<code>force_default_module_version</code>)</h2>
+<p>If all your components versions are synchronized in the registration build, you can use this to use a single version number accross all the graph for all components that have unspecified versions (<code>version:null</code>). If you want to pin down a specific version number outside of this, you can add a specific version in your module manifest, or in the <code>required_modules()</code> method.</p>
+<h2 id="use-a-specific-version-for-all-components">Use a specific version for all components</h2>
+<p>If all your components versions are synchronized in the registration build, you can use this to use a single version number accross all the graph for all components. This will give you an exact replication of the components at a particular point in time. This will override all other version settings.</p>
+<h2 id="use-specific-versions-for-some-components">Use specific versions for some components</h2>
+<p>If you want to pin down a specific version number for some particular components, specify this version in the module manifest:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="c1"># @package _group_</span>
+<span class="linenos" data-linenos="2 "></span><span class="nt">manifest</span><span class="p">:</span>
+<span class="linenos" data-linenos="3 "></span>  <span class="c1"># ...</span>
+<span class="linenos" data-linenos="4 "></span>  <span class="p p-Indicator">-</span> <span class="nt">key</span><span class="p">:</span> <span class="s">&quot;LMPytorchTrainer&quot;</span>
+<span class="linenos" data-linenos="5 "></span>    <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;[SC]</span><span class="nv"> </span><span class="s">[AML]</span><span class="nv"> </span><span class="s">PyTorch</span><span class="nv"> </span><span class="s">LM</span><span class="nv"> </span><span class="s">Trainer&quot;</span>
+<span class="linenos" data-linenos="6 "></span>    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span> <span class="c1"># &lt;&lt;&lt; HERE</span>
+<span class="linenos" data-linenos="7 "></span>    <span class="nt">yaml</span><span class="p">:</span> <span class="s">&quot;pytorch_trainer/module_spec.yaml&quot;</span>
+<span class="linenos" data-linenos="8 "></span>  <span class="c1"># ...</span>
+</code></pre></div>
+<p>or hardcode it (not recommended) in your <code>required_modules()</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span>   <span class="nd">@classmethod</span>
+<span class="linenos" data-linenos=" 2 "></span>    <span class="k">def</span> <span class="nf">required_modules</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="linenos" data-linenos=" 3 "></span>        <span class="k">return</span> <span class="p">{</span>
+<span class="linenos" data-linenos=" 4 "></span>            <span class="s2">&quot;LMPytorchTrainer&quot;</span><span class="p">:{</span>
+<span class="linenos" data-linenos=" 5 "></span>                <span class="s2">&quot;remote_module_name&quot;</span><span class="p">:</span><span class="s2">&quot;[SC] [AML] PyTorch LM Trainer&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos=" 6 "></span>                <span class="s2">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;microsoft.com/office/smartcompose&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos=" 7 "></span>                <span class="s2">&quot;version&quot;</span><span class="p">:</span><span class="kc">None</span><span class="p">,</span> <span class="c1"># &lt;&lt;&lt; HERE</span>
+<span class="linenos" data-linenos=" 8 "></span>                <span class="s2">&quot;yaml_spec&quot;</span><span class="p">:</span><span class="s2">&quot;pytorch_trainer/module_spec.yaml&quot;</span>
+<span class="linenos" data-linenos=" 9 "></span>            <span class="p">}</span>
+<span class="linenos" data-linenos="10 "></span>        <span class="p">}</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../configure-aml-pipeline/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Configure your AML pipeline
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../submission-time-override/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Submission-time override
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>

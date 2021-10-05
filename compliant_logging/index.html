@@ -1,0 +1,1314 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Logging examples - Shrike</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#exception-handling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Shrike" class="md-header__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Shrike
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Logging examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Shrike" class="md-nav__button md-logo" aria-label="Shrike" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Shrike
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/Azure/shrike/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Compliant Logging
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Compliant Logging" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compliant Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Logging examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Logging examples
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exception-handling" class="md-nav__link">
+    Exception Handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prefixing-stack-trace" class="md-nav__link">
+    Prefixing stack trace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-statements" class="md-nav__link">
+    With statements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directly-with-try-except-statements" class="md-nav__link">
+    Directly with try / except statements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-exception-types" class="md-nav__link">
+    Public exception types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exception-or-stack-trace-parsing" class="md-nav__link">
+    Exception or Stack trace parsing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rfc-logging/" class="md-nav__link">
+        Logging design
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="aml-metrics-logging/" class="md-nav__link">
+        Logging metrics in AML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      <label class="md-nav__link" for="__nav_2_4">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="constants/" class="md-nav__link">
+        constants
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exceptions/" class="md-nav__link">
+        exceptions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logging/" class="md-nav__link">
+        logging
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Build
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Build" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Build
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/build-for-sign-and-register/" class="md-nav__link">
+        Sign & register components
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rfc/strict-component-validation/" class="md-nav__link">
+        Component validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      <label class="md-nav__link" for="__nav_3_3">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/prepare/" class="md-nav__link">
+        prepare
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/register/" class="md-nav__link">
+        register
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Pipeline
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Pipeline" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/create-aml-pipeline/" class="md-nav__link">
+        Create an AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/configure-aml-pipeline/" class="md-nav__link">
+        Configure your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/reuse-aml-pipeline/" class="md-nav__link">
+        Reuse your AML pipeline
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/submission-time-override/" class="md-nav__link">
+        Submission-time override
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rfc/pipeline-image-override/" class="md-nav__link">
+        Submission-time override (design)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      <label class="md-nav__link" for="__nav_4_6">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/pipeline-config/" class="md-nav__link">
+        pipeline_config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/pipeline-helper/" class="md-nav__link">
+        pipeline_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/module-helper/" class="md-nav__link">
+        module_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/canary-helper/" class="md-nav__link">
+        canary_helper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/aml-connect/" class="md-nav__link">
+        aml_connect
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/testing-components/" class="md-nav__link">
+        testing.componets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/testing-importer/" class="md-nav__link">
+        testing.importer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/testing-module-run-tests/" class="md-nav__link">
+        testing.module_run_tests
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline/testing-pipeline-class-test/" class="md-nav__link">
+        testing.pipeline_class_test
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Spark
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Spark" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Spark
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spark/examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      <label class="md-nav__link" for="__nav_5_2">
+        API reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="API reference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          API reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spark/spark_net/" class="md-nav__link">
+        spark_net
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exception-handling" class="md-nav__link">
+    Exception Handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prefixing-stack-trace" class="md-nav__link">
+    Prefixing stack trace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-statements" class="md-nav__link">
+    With statements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#directly-with-try-except-statements" class="md-nav__link">
+    Directly with try / except statements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-exception-types" class="md-nav__link">
+    Public exception types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exception-or-stack-trace-parsing" class="md-nav__link">
+    Exception or Stack trace parsing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Azure/shrike/edit/main/docs/compliant_logging/README.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Logging examples</h1>
+                
+                <h2 id="exception-handling">Exception Handling</h2>
+<p>First execute <code>pip install shrike</code> to install this library. Then
+wrap any methods which may throw an exception with the decorator
+<code>prefix_stack_trace</code>. Here's a simple example. Your code may explicitly raise
+the <code>Public*</code> exceptions (<code>PublicValueError</code>, <code>PublicRuntimeError</code>,
+<code>PublicArgumentError</code>, <code>PublicKeyError</code>, <code>PublicTypeError</code>) when you know that
+the content of the exception does not contain any private content. The messages
+in these exceptions will be preserved, even if <code>keep_message</code> is set to <code>False</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.exceptions</span> <span class="kn">import</span> <span class="n">prefix_stack_trace</span>
+<span class="linenos" data-linenos="2 "></span>
+<span class="linenos" data-linenos="3 "></span><span class="nd">@prefix_stack_trace</span><span class="p">()</span>
+<span class="linenos" data-linenos="4 "></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos" data-linenos="5 "></span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="6 "></span>
+<span class="linenos" data-linenos="7 "></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos" data-linenos="8 "></span>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="logging">Logging</h2>
+<p>Call <code>shrike.compliant_logging.enable_compliant_logging</code> to set up 
+data-category-aware logging. Then continue to use standard Python logging
+functionality as before! Add a <code>category=DataCategory.PUBLIC</code> argument to have
+your log lines prefixed with <code>SystemLog:</code>. Here is a full-fledged example:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="c1"># Licensed under the MIT license.</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="kn">import</span> <span class="nn">shrike</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.constants</span> <span class="kn">import</span> <span class="n">DataCategory</span>
+<span class="linenos" data-linenos=" 7 "></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos" data-linenos="10 "></span>    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="linenos" data-linenos="11 "></span>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--prefix&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;SystemLog:&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="12 "></span>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--log_level&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="13 "></span>    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="linenos" data-linenos="14 "></span>
+<span class="linenos" data-linenos="15 "></span>    <span class="n">shrike</span><span class="o">.</span><span class="n">compliant_logging</span><span class="o">.</span><span class="n">enable_compliant_logging</span><span class="p">(</span>
+<span class="linenos" data-linenos="16 "></span>        <span class="n">args</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span>
+<span class="linenos" data-linenos="17 "></span>        <span class="n">level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">,</span>
+<span class="linenos" data-linenos="18 "></span>        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(prefix)s%(levelname)s</span><span class="s2">:</span><span class="si">%(name)s</span><span class="s2">:</span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="linenos" data-linenos="19 "></span>    <span class="p">)</span>
+<span class="linenos" data-linenos="20 "></span>
+<span class="linenos" data-linenos="21 "></span>    <span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="22 "></span>    <span class="c1"># WARNING:root:private info</span>
+<span class="linenos" data-linenos="23 "></span>    <span class="c1"># SystemLog:WARNING:root:public info</span>
+<span class="linenos" data-linenos="24 "></span>    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;private info&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="25 "></span>    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;public info&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">)</span>
+<span class="linenos" data-linenos="26 "></span>
+<span class="linenos" data-linenos="27 "></span>    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="linenos" data-linenos="28 "></span>
+<span class="linenos" data-linenos="29 "></span>    <span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="30 "></span>    <span class="c1"># SystemLog:INFO:__main__:public info</span>
+<span class="linenos" data-linenos="31 "></span>    <span class="c1"># SystemLog:WARNING:__main__:public info</span>
+<span class="linenos" data-linenos="32 "></span>    <span class="c1"># WARNING:__main__:private info</span>
+<span class="linenos" data-linenos="33 "></span>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;public info&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">)</span>
+<span class="linenos" data-linenos="34 "></span>    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;public info&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataCategory</span><span class="o">.</span><span class="n">PUBLIC</span><span class="p">)</span>
+<span class="linenos" data-linenos="35 "></span>    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;private info&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="examples">Examples</h2>
+<p>The simplest use case (wrap your <code>main</code> method in a decorator) is:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="c1"># Licensed under the MIT license.</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="sd">Simplest example of how to use the prefix_stack_trace decorator.</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 7 "></span>
+<span class="linenos" data-linenos=" 8 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.exceptions</span> <span class="kn">import</span> <span class="n">prefix_stack_trace</span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span>
+<span class="linenos" data-linenos="11 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="12 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="13 "></span><span class="c1"># SystemLog:   File &quot;.\hello-world.py&quot;, line 11, in main</span>
+<span class="linenos" data-linenos="14 "></span><span class="c1"># SystemLog:     print(1 / 0)</span>
+<span class="linenos" data-linenos="15 "></span><span class="c1"># SystemLog: ZeroDivisionError: **Exception message scrubbed**</span>
+<span class="linenos" data-linenos="16 "></span><span class="nd">@prefix_stack_trace</span><span class="p">()</span>
+<span class="linenos" data-linenos="17 "></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos" data-linenos="18 "></span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="19 "></span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="20 "></span>
+<span class="linenos" data-linenos="21 "></span>
+<span class="linenos" data-linenos="22 "></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos" data-linenos="23 "></span>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="prefixing-stack-trace">Prefixing stack trace</h3>
+<p><code>shrike</code> offers some configuration options around prefixing the stack trace. You can:</p>
+<ul>
+<li>customize the prefix and the exception message;</li>
+<li>keep the original exception message (don't scrub);</li>
+<li>pass an allow_list of strings. Exception messages will be scrubbed unless the message or the
+exception type regex match one of the allow_list strings.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="c1"># Licensed under the MIT license.</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="sd">Demonstrate how scrubbing options.</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 7 "></span>
+<span class="linenos" data-linenos=" 8 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.exceptions</span> <span class="kn">import</span> <span class="n">prefix_stack_trace</span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="11 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="12 "></span><span class="c1"># MyCustomPrefix Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="13 "></span><span class="c1"># MyCustomPrefix   File &quot;.\prefix-stack-trace.py&quot;, line 11, in main</span>
+<span class="linenos" data-linenos="14 "></span><span class="c1"># MyCustomPrefix     print(1 / 0)</span>
+<span class="linenos" data-linenos="15 "></span><span class="c1"># MyCustomPrefix ZeroDivisionError: **Exception message scrubbed**</span>
+<span class="linenos" data-linenos="16 "></span><span class="nd">@prefix_stack_trace</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;MyCustomPrefix&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="17 "></span><span class="k">def</span> <span class="nf">custom_prefix</span><span class="p">():</span>
+<span class="linenos" data-linenos="18 "></span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="19 "></span>
+<span class="linenos" data-linenos="20 "></span>
+<span class="linenos" data-linenos="21 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="22 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="23 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="24 "></span><span class="c1"># SystemLog:   File &quot;/mnt/c/code/shrike/docs/samples/prefix-stack-trace.py&quot;, line 20, in scrub2</span>
+<span class="linenos" data-linenos="25 "></span><span class="c1"># SystemLog:     print(1 / 0)</span>
+<span class="linenos" data-linenos="26 "></span><span class="c1"># SystemLog: ZeroDivisionError: Private data was divided by zero</span>
+<span class="linenos" data-linenos="27 "></span><span class="nd">@prefix_stack_trace</span><span class="p">(</span><span class="n">scrub_message</span><span class="o">=</span><span class="s2">&quot;Private data was divided by zero&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="28 "></span><span class="k">def</span> <span class="nf">custom_message</span><span class="p">():</span>
+<span class="linenos" data-linenos="29 "></span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="30 "></span>
+<span class="linenos" data-linenos="31 "></span>
+<span class="linenos" data-linenos="32 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="33 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="34 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="35 "></span><span class="c1"># SystemLog:   File &quot;/mnt/c/code/shrike/docs/samples/prefix-stack-trace.py&quot;, line 24, in scrub3</span>
+<span class="linenos" data-linenos="36 "></span><span class="c1"># SystemLog:     print(1 / 0)</span>
+<span class="linenos" data-linenos="37 "></span><span class="c1"># SystemLog: ZeroDivisionError: division by zero</span>
+<span class="linenos" data-linenos="38 "></span><span class="nd">@prefix_stack_trace</span><span class="p">(</span><span class="n">keep_message</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos" data-linenos="39 "></span><span class="k">def</span> <span class="nf">keep_exception_message</span><span class="p">():</span>
+<span class="linenos" data-linenos="40 "></span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="41 "></span>
+<span class="linenos" data-linenos="42 "></span>
+<span class="linenos" data-linenos="43 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="44 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="45 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="46 "></span><span class="c1"># SystemLog:   File &quot;/mnt/c/code/shrike/docs/samples/prefix-stack-trace.py&quot;, line 28, in scrub4</span>
+<span class="linenos" data-linenos="47 "></span><span class="c1"># SystemLog:     print(1 / 0)</span>
+<span class="linenos" data-linenos="48 "></span><span class="c1"># SystemLog: ZeroDivisionError: division by zero</span>
+<span class="linenos" data-linenos="49 "></span><span class="nd">@prefix_stack_trace</span><span class="p">(</span><span class="n">keep_message</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ZeroDivision&quot;</span><span class="p">])</span>
+<span class="linenos" data-linenos="50 "></span><span class="k">def</span> <span class="nf">keep_allowed_exceptions</span><span class="p">():</span>
+<span class="linenos" data-linenos="51 "></span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="52 "></span>
+<span class="linenos" data-linenos="53 "></span>
+<span class="linenos" data-linenos="54 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="55 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="56 "></span><span class="c1"># SystemLog: 2020-11-12 16:56:59 Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="57 "></span><span class="c1"># SystemLog: 2020-11-12 16:56:59   File &quot;prefix-stack-trace.py&quot;, line 56, in keep_allowed_exceptions</span>
+<span class="linenos" data-linenos="58 "></span><span class="c1"># SystemLog: 2020-11-12 16:56:59     print(1 / 0)</span>
+<span class="linenos" data-linenos="59 "></span><span class="c1"># SystemLog: 2020-11-12 16:56:59 ZeroDivisionError: **Exception message scrubbed**</span>
+<span class="linenos" data-linenos="60 "></span><span class="nd">@prefix_stack_trace</span><span class="p">(</span><span class="n">add_timestamp</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos" data-linenos="61 "></span><span class="k">def</span> <span class="nf">add_timestamp</span><span class="p">():</span>
+<span class="linenos" data-linenos="62 "></span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="63 "></span>
+<span class="linenos" data-linenos="64 "></span>
+<span class="linenos" data-linenos="65 "></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos" data-linenos="66 "></span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="67 "></span>        <span class="n">custom_prefix</span><span class="p">()</span>
+<span class="linenos" data-linenos="68 "></span>    <span class="k">except</span><span class="p">:</span>
+<span class="linenos" data-linenos="69 "></span>        <span class="k">pass</span>
+<span class="linenos" data-linenos="70 "></span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="71 "></span>        <span class="n">custom_message</span><span class="p">()</span>
+<span class="linenos" data-linenos="72 "></span>    <span class="k">except</span><span class="p">:</span>
+<span class="linenos" data-linenos="73 "></span>        <span class="k">pass</span>
+<span class="linenos" data-linenos="74 "></span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="75 "></span>        <span class="n">keep_exception_message</span><span class="p">()</span>
+<span class="linenos" data-linenos="76 "></span>    <span class="k">except</span><span class="p">:</span>
+<span class="linenos" data-linenos="77 "></span>        <span class="k">pass</span>
+<span class="linenos" data-linenos="78 "></span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="79 "></span>        <span class="n">keep_allowed_exceptions</span><span class="p">()</span>
+<span class="linenos" data-linenos="80 "></span>    <span class="k">except</span><span class="p">:</span>
+<span class="linenos" data-linenos="81 "></span>        <span class="k">pass</span>
+<span class="linenos" data-linenos="82 "></span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="83 "></span>        <span class="n">add_timestamp</span><span class="p">()</span>
+<span class="linenos" data-linenos="84 "></span>    <span class="k">except</span><span class="p">:</span>
+<span class="linenos" data-linenos="85 "></span>        <span class="k">pass</span>
+</code></pre></div>
+<h3 id="with-statements">With statements</h3>
+<p>Use this library with <code>with</code> statements:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="c1"># Licensed under the MIT license.</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="sd">Simple script with examples of how to use &quot;with statements&quot; to capture</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="sd">information about failed module imports.</span>
+<span class="linenos" data-linenos=" 7 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.exceptions</span> <span class="kn">import</span> <span class="n">PrefixStackTrace</span>
+<span class="linenos" data-linenos="10 "></span>
+<span class="linenos" data-linenos="11 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="12 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="13 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="14 "></span><span class="c1"># SystemLog:   File &quot;.\docs\logging\with-statement.py&quot;, line 11, in &lt;module&gt;</span>
+<span class="linenos" data-linenos="15 "></span><span class="c1"># SystemLog:     import my_custom_library  # noqa: F401</span>
+<span class="linenos" data-linenos="16 "></span><span class="c1"># SystemLog: ModuleNotFoundError: **Exception message scrubbed**</span>
+<span class="linenos" data-linenos="17 "></span>
+<span class="linenos" data-linenos="18 "></span><span class="k">with</span> <span class="n">PrefixStackTrace</span><span class="p">():</span>
+<span class="linenos" data-linenos="19 "></span>    <span class="c1"># Import statement which could raise an exception containing sensitive</span>
+<span class="linenos" data-linenos="20 "></span>    <span class="c1"># data.</span>
+<span class="linenos" data-linenos="21 "></span>    <span class="kn">import</span> <span class="nn">my_custom_library</span>  <span class="c1"># noqa: F401</span>
+<span class="linenos" data-linenos="22 "></span>
+<span class="linenos" data-linenos="23 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="24 "></span><span class="c1">#</span>
+<span class="linenos" data-linenos="25 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="26 "></span><span class="c1"># SystemLog:   File &quot;.\docs\logging\with-statement.py&quot;, line 22, in &lt;module&gt;</span>
+<span class="linenos" data-linenos="27 "></span><span class="c1"># SystemLog:     import another_custom_library  # noqa: F401</span>
+<span class="linenos" data-linenos="28 "></span><span class="c1"># SystemLog: ModuleNotFoundError: No module named &#39;another_custom_library&#39;</span>
+<span class="linenos" data-linenos="29 "></span><span class="k">with</span> <span class="n">PrefixStackTrace</span><span class="p">(</span><span class="n">keep_message</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="linenos" data-linenos="30 "></span>    <span class="c1"># Import statement which will never raise an exception containing sensitive</span>
+<span class="linenos" data-linenos="31 "></span>    <span class="c1"># data.</span>
+<span class="linenos" data-linenos="32 "></span>    <span class="kn">import</span> <span class="nn">another_custom_library</span>  <span class="c1"># noqa: F401</span>
+</code></pre></div>
+<h3 id="directly-with-try-except-statements">Directly with try / except statements</h3>
+<p>Using this library directly inside <code>try</code> / <code>except</code> statements:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="c1"># Licensed under the MIT license.</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="sd">Simple script with examples of how to directly use the function</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="sd">print_prefixed_stack_trace to capture information about failed module imports.</span>
+<span class="linenos" data-linenos=" 7 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 8 "></span>
+<span class="linenos" data-linenos=" 9 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.exceptions</span> <span class="kn">import</span> <span class="n">print_prefixed_stack_trace_and_raise</span>
+<span class="linenos" data-linenos="10 "></span>
+<span class="linenos" data-linenos="11 "></span><span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="12 "></span>    <span class="c1"># Import statement which could raise an exception containing sensitive</span>
+<span class="linenos" data-linenos="13 "></span>    <span class="c1"># data.</span>
+<span class="linenos" data-linenos="14 "></span>    <span class="kn">import</span> <span class="nn">my_custom_library</span>  <span class="c1"># noqa: F401</span>
+<span class="linenos" data-linenos="15 "></span><span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="linenos" data-linenos="16 "></span>    <span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="17 "></span>    <span class="c1">#</span>
+<span class="linenos" data-linenos="18 "></span>    <span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="19 "></span>    <span class="c1"># SystemLog:   File &quot;.\try-except.py&quot;, line 10, in &lt;module&gt;</span>
+<span class="linenos" data-linenos="20 "></span>    <span class="c1"># SystemLog:     import my_custom_library</span>
+<span class="linenos" data-linenos="21 "></span>    <span class="c1"># SystemLog: ModuleNotFoundError: **Exception message scrubbed**</span>
+<span class="linenos" data-linenos="22 "></span>    <span class="n">print_prefixed_stack_trace_and_raise</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+<span class="linenos" data-linenos="23 "></span>
+<span class="linenos" data-linenos="24 "></span><span class="k">try</span><span class="p">:</span>
+<span class="linenos" data-linenos="25 "></span>    <span class="c1"># Import statement which will never raise an exception containing sensitive</span>
+<span class="linenos" data-linenos="26 "></span>    <span class="c1"># data.</span>
+<span class="linenos" data-linenos="27 "></span>    <span class="kn">import</span> <span class="nn">another_custom_library</span>  <span class="c1"># noqa: F401</span>
+<span class="linenos" data-linenos="28 "></span><span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="linenos" data-linenos="29 "></span>    <span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="30 "></span>    <span class="c1">#</span>
+<span class="linenos" data-linenos="31 "></span>    <span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="32 "></span>    <span class="c1"># SystemLog:   File &quot;.\try-except.py&quot;, line 17, in &lt;module&gt;</span>
+<span class="linenos" data-linenos="33 "></span>    <span class="c1"># SystemLog:     import another_custom_library</span>
+<span class="linenos" data-linenos="34 "></span>    <span class="c1"># SystemLog: ModuleNotFoundError: No module named &#39;another_custom_library&#39;</span>
+<span class="linenos" data-linenos="35 "></span>    <span class="n">print_prefixed_stack_trace_and_raise</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">keep_message</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="public-exception-types">Public exception types</h3>
+<p>Using the <code>Public*</code> exception types:</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos=" 1 "></span><span class="c1"># Copyright (c) Microsoft Corporation.</span>
+<span class="linenos" data-linenos=" 2 "></span><span class="c1"># Licensed under the MIT license.</span>
+<span class="linenos" data-linenos=" 3 "></span>
+<span class="linenos" data-linenos=" 4 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 5 "></span><span class="sd">Sample use of Public* exception types.</span>
+<span class="linenos" data-linenos=" 6 "></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos" data-linenos=" 7 "></span>
+<span class="linenos" data-linenos=" 8 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.exceptions</span> <span class="kn">import</span> <span class="n">prefix_stack_trace</span><span class="p">,</span> <span class="n">PublicValueError</span>
+<span class="linenos" data-linenos=" 9 "></span>
+<span class="linenos" data-linenos="10 "></span>
+<span class="linenos" data-linenos="11 "></span><span class="k">def</span> <span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos" data-linenos="12 "></span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">b</span><span class="p">:</span>
+<span class="linenos" data-linenos="13 "></span>        <span class="k">raise</span> <span class="n">PublicValueError</span><span class="p">(</span><span class="s2">&quot;Second argument cannot be null or zero.&quot;</span><span class="p">)</span>
+<span class="linenos" data-linenos="14 "></span>    <span class="k">return</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="linenos" data-linenos="15 "></span>
+<span class="linenos" data-linenos="16 "></span>
+<span class="linenos" data-linenos="17 "></span><span class="c1"># Output will be:</span>
+<span class="linenos" data-linenos="18 "></span><span class="c1"># SystemLog: Traceback (most recent call last):</span>
+<span class="linenos" data-linenos="19 "></span><span class="c1"># SystemLog:   File &quot;.\docs\logging\public-exceptions.py&quot;, line 24, in main</span>
+<span class="linenos" data-linenos="20 "></span><span class="c1"># SystemLog:     divide(1, 0)</span>
+<span class="linenos" data-linenos="21 "></span><span class="c1"># SystemLog:   File &quot;.\docs\logging\public-exceptions.py&quot;, line 13, in divide</span>
+<span class="linenos" data-linenos="22 "></span><span class="c1"># SystemLog:     raise PublicValueError(&quot;Second argument cannot be null or zero.&quot;)</span>
+<span class="linenos" data-linenos="23 "></span><span class="c1"># SystemLog: compliant_logging.exceptions.PublicValueError: SystemLog:Second argument cannot be null or zero.</span>
+<span class="linenos" data-linenos="24 "></span><span class="nd">@prefix_stack_trace</span><span class="p">()</span>
+<span class="linenos" data-linenos="25 "></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos" data-linenos="26 "></span>    <span class="n">divide</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos" data-linenos="27 "></span>
+<span class="linenos" data-linenos="28 "></span>
+<span class="linenos" data-linenos="29 "></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos" data-linenos="30 "></span>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="exception-or-stack-trace-parsing">Exception or Stack trace parsing</h2>
+<p>The <code>stack_trace_extractor</code> namespace contains simple tools to grab Python or C#
+stack traces and exceptions from log files. Sometimes the file that has the
+stack trace you need may also contain sensitive data. Use this tool to parse and
+print the stack trace, exception type and optionally exception message (careful
+as  exception messages may also potentially hold private data).</p>
+<div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">from</span> <span class="nn">shrike.compliant_logging.stack_trace_extractor</span> <span class="kn">import</span> <span class="n">StacktraceExtractor</span>
+<span class="linenos" data-linenos="2 "></span>
+<span class="linenos" data-linenos="3 "></span><span class="n">extractor</span> <span class="o">=</span> <span class="n">StacktraceExtractor</span><span class="p">()</span>
+<span class="linenos" data-linenos="4 "></span><span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="s2">&quot;log_file&quot;</span><span class="p">)</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href=".." class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="rfc-logging/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Logging design
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>
