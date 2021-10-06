@@ -1391,6 +1391,7 @@ class AMLPipelineHelper:
             # is different from "azureml.pipeline.core.PipelineRun"
             pipeline_run = pipeline.submit(
                 experiment_name=self.config.run.experiment_name,
+                description=self.config.run.experiment_description,
                 tags=pipeline_tags,
                 default_compute_target=self.config.compute.default_compute_target,
                 regenerate_outputs=self.config.run.regenerate_outputs,

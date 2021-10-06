@@ -14,6 +14,7 @@ defaults:
 # run parameters are command line arguments for running your experiment
 run: # params for running pipeline
   experiment_name: "demo_count_rows_and_log" # IMPORTANT
+  experiment_description: "Demo of a component that reads a dataset and counts the rows."
   regenerate_outputs: false
   continue_on_failure: false
   verbose: false

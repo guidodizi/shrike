@@ -26,6 +26,7 @@ class pipeline_cli_config:  # pylint: disable=invalid-name
     silent: bool = False
     wait: bool = False
     experiment_name: str = MISSING
+    experiment_description: Optional[str] = None
     pipeline_run_id: str = MISSING
     tags: Optional[Any] = None
     config_dir: Optional[str] = None

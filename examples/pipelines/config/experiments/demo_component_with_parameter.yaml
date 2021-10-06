@@ -14,6 +14,7 @@ defaults:
 # run parameters are command line arguments for running your experiment
 run: # params for running pipeline
   experiment_name: "demo_component_with_parameter" # IMPORTANT
+  experiment_description: "The demo of a component that operates on a parameter"
   regenerate_outputs: false
   continue_on_failure: false
   verbose: false

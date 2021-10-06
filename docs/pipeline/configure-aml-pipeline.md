@@ -88,6 +88,7 @@ In this section, you configure the parameters controlling how to run your experi
 # run parameters are command line arguments for running your experiment
 run: # params for running pipeline
   experiment_name: "demo_graph_eyeson" # IMPORTANT
+  experiment_description: "Demo for eyeson graph"
   regenerate_outputs: false
   continue_on_failure: false
   verbose: false
